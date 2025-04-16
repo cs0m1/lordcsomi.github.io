@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Érettségi Visszaszámláló</title>
+    <link rel="stylesheet" href="./styles-old/base.css">
+    <link rel="stylesheet" href="./styles-old/countdown.css">
+    <link rel="stylesheet" href="./styles-old/cards/pomodoro.css">
+    <link rel="stylesheet" href="./styles-old/cards/music.css">
+    <link rel="stylesheet" href="./styles-old/cards/subjects.css">
+    <link rel="stylesheet" href="./styles-old/cards/calendar.css">
+    <link rel="stylesheet" href="./styles-old/cards/resources.css">
+    <link rel="stylesheet" href="./styles-old/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">⏳ Érettségi 2025</div>
+        <div class="nav-links">
+            <a href="#home" class="active"><i class="fas fa-home"></i> Kezdőlap</a>
+            <a href="#pomodoro"><i class="fas fa-clock"></i> Pomodoro</a>
+            <a href="#music"><i class="fas fa-music"></i> Zene</a>
+            <a href="#subjects"><i class="fas fa-book"></i> Tantárgyak</a>
+            <a href="#calendar"><i class="fas fa-calendar"></i> Vizsganaptár</a>
+            <a href="#resources"><i class="fas fa-graduation-cap"></i> Források</a>
+        </div>
+        <div class="nav-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <section id="home" class="section landing-section">
+        <canvas id="particles"></canvas>
+        <div class="container">
+            <div class="countdown-wrapper">
+                <h1>Érettségi Szezon Kezdete</h1>
+                <div class="countdown">
+                    <div class="time-section">
+                        <div class="time-container">
+                            <div class="time-value" id="days">000</div>
+                            <div class="time-circle" id="days-circle"></div>
+                        </div>
+                        <div class="label">Nap</div>
+                    </div>
+                    <div class="time-section">
+                        <div class="time-container">
+                            <div class="time-value" id="hours">00</div>
+                            <div class="time-circle" id="hours-circle"></div>
+                        </div>
+                        <div class="label">Óra</div>
+                    </div>
+                    <div class="time-section">
+                        <div class="time-container">
+                            <div class="time-value" id="minutes">00</div>
+                            <div class="time-circle" id="minutes-circle"></div>
+                        </div>
+                        <div class="label">Perc</div>
+                    </div>
+                    <div class="time-section">
+                        <div class="time-container">
+                            <div class="time-value" id="seconds">00</div>
+                            <div class="time-circle" id="seconds-circle"></div>
+                        </div>
+                        <div class="label">Mp</div>
+                    </div>
+                </div>
+                <div class="date">2025. május 5. - 9:00</div>
+                <div style="margin-top: 1rem; opacity: 0.8;">💫 Mozgasd az egeret motivációért!</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tools" class="section tools-section">
+        <div class="container">
+            <h2 class="section-title">Tanulási Eszközök</h2>
+            <div class="tools-grid">
+                <!-- Pomodoro Card -->
+                <div id="pomodoro" class="tool-card">
+                    <h3><i class="fas fa-clock"></i> pomodoro időzítő</h3>
+                    <div class="card-content">
+                        <div class="pomodoro-controls">
+                            <button class="pomodoro-btn active" onclick="setTimer('pomodoro')">
+                                <i class="fas fa-brain"></i> Tanulás
+                            </button>
+                            <button class="pomodoro-btn" onclick="setTimer('shortBreak')">
+                                <i class="fas fa-coffee"></i> Rövid szünet
+                            </button>
+                            <button class="pomodoro-btn" onclick="setTimer('longBreak')">
+                                <i class="fas fa-couch"></i> Hosszú szünet
+                            </button>
+                        </div>
+                        <div class="timer-display">
+                            <div class="remaining-time">25:00</div>
+                            <div class="timer-title">Idő a tanulásra!</div>
+                            <div class="timer-buttons">
+                                <button id="startBtn" class="start-btn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <button id="resetBtn" class="reset-btn">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Music Card -->
+                <div id="music" class="tool-card">
+                    <h3><i class="fas fa-music"></i> lofi</h3>
+                    <div class="card-content">
+                        <div class="music-player">
+                            <iframe src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?autoplay=0" title="Lofi Tanulózene" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subjects Card -->
+                <div id="subjects" class="tool-card">
+                    <h3><i class="fas fa-book"></i> tantárgyak</h3>
+                    <div class="card-content">
+                        <div class="tabs">
+                            <button class="tab-btn active" onclick="openTab('math')">
+                                <i class="fas fa-calculator"></i> Matematika
+                            </button>
+                            <button class="tab-btn" onclick="openTab('hungarian')">
+                                <i class="fas fa-pen-fancy"></i> Magyar
+                            </button>
+                            <button class="tab-btn" onclick="openTab('history')">
+                                <i class="fas fa-landmark"></i> Történelem
+                            </button>
+                            <button class="tab-btn" onclick="openTab('english')">
+                                <i class="fas fa-language"></i> Angol
+                            </button>
+                        </div>
+
+                        <div class="tab-contents">
+                            <div id="math" class="tab-content active">
+                                <div class="resource-grid">
+                                    <a href="https://www.nkp.hu/tankonyv/matematika_12_nat2020/" class="resource-link" target="_blank">
+                                        <i class="fas fa-book"></i>
+                                        <span>12. Osztályos Tankönyv</span>
+                                    </a>
+                                    <a href="https://www.nkp.hu/tankonyv/matematika_12_nat2020_b/" class="resource-link" target="_blank">
+                                        <i class="fas fa-list-check"></i>
+                                        <span>Középszintű Összefoglaló</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div id="hungarian" class="tab-content">
+                                <div class="resource-grid">
+                                    <div class="resource-link">
+                                        <i class="fas fa-book-open"></i>
+                                        <span>Kötelező Olvasmányok</span>
+                                    </div>
+                                    <div class="resource-link">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        <span>Szövegalkotás Gyakorlás</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="history" class="tab-content">
+                                <div class="resource-grid">
+                                    <div class="resource-link">
+                                        <i class="fas fa-scroll"></i>
+                                        <span>Forráselemzés</span>
+                                    </div>
+                                    <div class="resource-link">
+                                        <i class="fas fa-timeline"></i>
+                                        <span>Kronológia</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="english" class="tab-content">
+                                <div class="resource-grid">
+                                    <div class="resource-link">
+                                        <i class="fas fa-comments"></i>
+                                        <span>Beszédkészség</span>
+                                    </div>
+                                    <div class="resource-link">
+                                        <i class="fas fa-headphones"></i>
+                                        <span>Hallott Szöveg</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar Card -->
+                <div id="calendar" class="tool-card">
+                    <h3><i class="fas fa-calendar-alt"></i> vizsganaptár</h3>
+                    <div class="card-content">
+                        <div class="calendar">
+                            <div class="exam-date">
+                                <div class="date-block">
+                                    <span class="month">Május</span>
+                                    <span class="day">5</span>
+                                </div>
+                                <div class="exam-info">
+                                    <h4>Magyar Nyelv és Irodalom</h4>
+                                    <span>9:00</span>
+                                </div>
+                            </div>
+                            <div class="exam-date">
+                                <div class="date-block">
+                                    <span class="month">Május</span>
+                                    <span class="day">6</span>
+                                </div>
+                                <div class="exam-info">
+                                    <h4>Matematika</h4>
+                                    <span>9:00</span>
+                                </div>
+                            </div>
+                            <div class="exam-date">
+                                <div class="date-block">
+                                    <span class="month">Május</span>
+                                    <span class="day">7</span>
+                                </div>
+                                <div class="exam-info">
+                                    <h4>Történelem</h4>
+                                    <span>9:00</span>
+                                </div>
+                            </div>
+                            <div class="exam-date">
+                                <div class="date-block">
+                                    <span class="month">Május</span>
+                                    <span class="day">8</span>
+                                </div>
+                                <div class="exam-info">
+                                    <h4>Angol Nyelv</h4>
+                                    <span>9:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources Card -->
+                <div id="resources" class="tool-card">
+                    <h3><i class="fas fa-graduation-cap"></i> források</h3>
+                    <div class="card-content">
+                        <div class="resources-list">
+                            <a href="https://www.oktatas.hu/kozneveles/erettsegi/feladatsorok" class="resource-link" target="_blank">
+                                <i class="fas fa-file-alt"></i>
+                                <span>Korábbi Érettségi Feladatsorok</span>
+                            </a>
+                            <a href="https://www.oktatas.hu/kozneveles/erettsegi/altalanos_tajekoztatas/vizsgakovetelmenyek2024" class="resource-link" target="_blank">
+                                <i class="fas fa-list-check"></i>
+                                <span>Vizsgakövetelmények</span>
+                            </a>
+                            <div class="resource-link">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Általános Tudnivalók</span>
+                            </div>
+                            <div class="resource-link">
+                                <i class="fas fa-question-circle"></i>
+                                <span>Gyakori Kérdések</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script-old.js"></script>
+</body>
+</html>
