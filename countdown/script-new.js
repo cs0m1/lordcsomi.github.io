@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Countdown Target Date ---
-    const targetDate = new Date('2025-05-05T09:00:00');
+    const targetDate = new Date('2025-06-24T16:00:00');
     const targetTimestamp = targetDate.getTime() / 1000;
 
     // --- Initialize Flipdown Clock ---
@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Motivational Quotes ---
     const messages = [
-        "Csak így tovább! Hajrá! 💪", "Minden perc tanulás közelebb visz a sikerhez! 📚",
-        "Megéri a befektetett munka! ✨", "Koncentrálj és kitartás! 🎯",
-        "A siker apró lépésekből épül! 👣", "Napról napra erősebb és okosabb vagy! 💡",
-        "A jövő azoké, akik készülnek rá! 🚀", "Hiszünk benned! 🙌",
-        "Minden perc befektetés a jövődbe! ⏳", "A célod elérhető! 🏆",
-        "Ne add fel, már majdnem ott vagy! 🌟", "Minden hiba egy tanulási lehetőség! 🌱"
+        "A gyakorlás teszi a mestert! 🎯", "Magabiztosan és érthetően! 🎤",
+        "Minden szó számít! ✨", "Nyugodtan és értelmesen! 💫",
+        "Jól felkészültél, csak nyugodtan! 🌟", "A tudásod már megvan, csak add át! 💡",
+        "A gondolataid értékesek! 🚀", "Hiszünk benned! 🙌",
+        "Nyugodt légzés, tiszta beszéd! 🌈", "A célod karnyújtásnyira! 🎉",
+        "Már csak egy kis lépés! ⭐", "A felkészülésed meghozza gyümölcsét! 🌱"
     ];
     const scrollContainer = document.querySelector('.motivation-scroll');
     if (scrollContainer) {
