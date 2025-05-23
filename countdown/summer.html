@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Élvezd a nyarat!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="./styles-new/summer.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="summer-title">Élvezd a nyarat!</h1>
+        
+        <div class="content-wrapper">
+            <div class="todo-section">
+                <h2>Nyári teendők 📝</h2>
+                <div class="todo-list">
+                    <div class="todo-item">
+                        <input type="checkbox" id="todo1">
+                        <label for="todo1">Nyári playlist készítése (min. 50 szám)</label>
+                    </div>
+                    <div class="todo-item">
+                        <input type="checkbox" id="todo2">
+                        <label for="todo2">5 különböző koktél kikísérletezése</label>
+                    </div>
+                    <div class="todo-item">
+                        <input type="checkbox" id="todo3">
+                        <label for="todo3">Beach party szervezése min. 10 fővel</label>
+                    </div>
+                    <div class="todo-item">
+                        <input type="checkbox" id="todo4">
+                        <label for="todo4">Éjszakai fürdőzés a haverokkal</label>
+                    </div>
+                    <div class="todo-item">
+                        <input type="checkbox" id="todo5">
+                        <label for="todo5">TikTok summer challenge teljesítése</label>
+                    </div>
+                    <div class="todo-item">
+                        <input type="checkbox" id="todo6">
+                        <label for="todo6">Streetfood fesztivál végigevése</label>
+                    </div>
+                    <div class="todo-item">
+                        <input type="checkbox" id="todo7">
+                        <label for="todo7">Spontán road trip barátokkal</label>
+                    </div>
+                    <div class="todo-item">
+                        <input type="checkbox" id="todo8">
+                        <label for="todo8">Szabadtéri mozi szervezése</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bingo-section">
+                <h2>Nyári Bingo 🎯</h2>
+                <div class="bingo-board">
+                    <div class="bingo-item" data-id="1">24 órás maraton Netflix-ezés</div>
+                    <div class="bingo-item" data-id="2">Rooftop party </div>
+                    <div class="bingo-item" data-id="3">Festival</div>
+                    <div class="bingo-item" data-id="4">Tölts el egy napot a Római-parton</div>
+                    <div class="bingo-item" data-id="5">Próbálj ki egy új kézműves sört	</div>
+
+                    <div class="bingo-item" data-id="6">6 shot fejenként</div>
+                    <div class="bingo-item" data-id="7">Strandröpi bajnokság</div>
+                    <div class="bingo-item" data-id="8">Vízibomba csata</div>
+                    <div class="bingo-item" data-id="9">Karaoke est</div>
+                    <div class="bingo-item" data-id="10">Fotózkodj a Szabadság-szobornál</div>
+
+                    <div class="bingo-item" data-id="11">Silent disco buli</div>
+                    <div class="bingo-item" data-id="12">Sunset fotó</div>
+                    <div class="bingo-item free-space" data-id="free">NYÁRI SZABADSÁG</div>
+                    <div class="bingo-item" data-id="13">Tengerpart látogatás</div>
+                    <div class="bingo-item" data-id="14">HB túlélése</div>
+
+                    <div class="bingo-item" data-id="15">Éjszakai fürdőzés</div>
+                    <div class="bingo-item" data-id="16">3 új barát szerzése</div>
+                    <div class="bingo-item" data-id="17">Slackline</div>
+                    <div class="bingo-item" data-id="18">Koktél workshop</div>
+                    <div class="bingo-item" data-id="19">SUP-ozás Balatonon</div>
+
+                    <div class="bingo-item" data-id="20">Biciklizés</div>
+                    <div class="bingo-item" data-id="21">Via ferrata/kalandpark</div>
+                    <div class="bingo-item" data-id="22">Sátorozás + buli</div>
+                    <div class="bingo-item" data-id="23">Hajnalig partizás</div>
+                    <div class="bingo-item" data-id="24">Escape room csapattal</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summer-extras">
+            <div class="map-section">
+                <h2>Legjobb nyári helyek 🗺️</h2>
+                <div id="map"></div>
+            </div>
+
+            <div class="summer-vibes">
+                <h2>Nyári vibes 🌊</h2>
+                <div class="vibes-grid">
+                    <div class="vibe-card">
+                        <h3>🎵 Top Nyári Slágerek</h3>
+                        <ul>
+                            <li>Azariah x Desh - Pullup</li>
+                            <li>YUNG BEGE - JACK</li>
+                            <li>T.Danny - TOTÁL</li>
+                            <li>Gábor Máté - VNSZ</li>
+                            <li>Manuel - Te vagy minden álmom</li>
+                        </ul>
+                    </div>
+
+                    <div class="vibe-card">
+                        <h3>🍹 Menő Helyek</h3>
+                        <ul>
+                            <li>Lupa Beach</li>
+                            <li>Plázs Siófok</li>
+                            <li>Sziget Fesztivál</li>
+                            <li>SZIN</li>
+                            <li>Strand Fesztivál</li>
+                        </ul>
+                    </div>
+
+                    <div class="vibe-card">
+                        <h3>📸 Instagram Spotok</h3>
+                        <ul>
+                            <li>360 Bar Budapest</li>
+                            <li>High Note SkyBar</li>
+                            <li>Hello Park</li>
+                            <li>Pontoon</li>
+                            <li>Római-part</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="summer.js"></script>
+</body>
+</html>

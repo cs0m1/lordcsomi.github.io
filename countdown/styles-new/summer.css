@@ -1,0 +1,368 @@
+:root {
+    --primary-color: #ff8a00;
+    --secondary-color: #4CAF50;
+    --background-color: #f0f9ff;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --gradient-start: #ff8a00;
+    --gradient-end: #ffcc00;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.summer-title {
+    text-align: center;
+    font-size: 3.5rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+    animation: fadeIn 1s ease-in;
+}
+
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.todo-section, .bingo-section, .vibe-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.todo-section:hover, .bingo-section:hover, .vibe-card:hover {
+    transform: translateY(-5px);
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+/* Todo List Styles */
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.todo-item input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+    accent-color: var(--secondary-color);
+}
+
+.todo-item label {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.todo-item input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+    color: #888;
+}
+
+/* Progress Display */
+.bingo-progress {
+    text-align: center;
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin: -0.5rem 0 1rem;
+    font-size: 1.1rem;
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Bingo Board Styles */
+.bingo-section {
+    overflow: hidden;
+}
+
+.bingo-board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    margin: 0 auto;
+}
+
+.bingo-item {
+    background: #fff;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+}
+
+.bingo-item:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+    z-index: 1;
+}
+
+.bingo-item.completed {
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
+}
+
+.bingo-item.free-space {
+    background: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+}
+
+/* Summer Extras */
+.summer-extras {
+    margin-top: 3rem;
+}
+
+.map-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.summer-vibes {
+    margin-top: 2rem;
+}
+
+.vibes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.vibe-card h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.vibe-card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.vibe-card li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.vibe-card li:last-child {
+    border-bottom: none;
+}
+
+/* Map styles */
+.map-marker {
+    font-size: 30px;
+    text-align: center;
+    line-height: 35px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+}
+
+.map-marker:hover {
+    transform: scale(1.2) translate(-8px, -8px);
+    z-index: 1000;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.leaflet-popup-content {
+    text-align: center;
+    margin: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.leaflet-popup-content h3 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.leaflet-control-zoom {
+    border: none !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+}
+
+.leaflet-control-zoom a {
+    background-color: white !important;
+    color: var(--primary-color) !important;
+    border: none !important;
+}
+
+.leaflet-control-zoom a:hover {
+    background-color: #f0f0f0 !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .content-wrapper {
+        grid-template-columns: 1fr;
+    }
+    
+    .bingo-board {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .summer-title {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .content-wrapper {
+        gap: 1.5rem;
+    }
+    
+    .todo-section, .bingo-section, .map-section {
+        padding: 1.5rem 1rem;
+    }
+
+    .bingo-board {
+        gap: 0.35rem;
+    }
+
+    .bingo-item {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.75rem;
+        min-height: 2.8rem;
+    }
+
+    .bingo-item.free-space {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .summer-title {
+        font-size: 2rem;
+    }
+    
+    .container {
+        padding: 0.75rem;
+    }
+
+    .todo-section, .bingo-section, .map-section {
+        padding: 1rem 0.75rem;
+    }
+
+    .bingo-item {
+        font-size: 0.7rem;
+        min-height: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .vibe-card {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .bingo-item {
+        font-size: 0.65rem;
+        min-height: 2.3rem;
+        padding: 0.35rem 0.2rem;
+    }
+
+    .bingo-board {
+        gap: 0.25rem;
+    }
+}

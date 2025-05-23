@@ -6,9 +6,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialize Flipdown Clock ---
     try {
+        // Check if countdown is up
+        if (Date.now() >= targetDate.getTime()) {
+            window.location.href = 'summer.html';
+            return;
+        }
+
         const flipdown = new FlipDown(targetTimestamp, 'flipdown', {
             theme: 'light'
-        }).start();
+        })
+        .start()
+        .ifEnded(() => {
+            window.location.href = 'summer.html';
+        });
     } catch (e) {
         console.error("Failed to initialize FlipDown:", e);
         const clockElement = document.getElementById('flipdown');
