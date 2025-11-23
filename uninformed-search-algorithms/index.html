@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Search Visualization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        canvas {
+            border: 1px solid #e5e7eb;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .control-btn {
+            transition: all 0.2s;
+        }
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .log-entry {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm p-4 z-10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-indigo-600">Search Algorithm Visualizer</h1>
+            <div class="text-sm text-gray-500">Goal Node: <span class="font-bold text-green-600">G</span></div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar Controls -->
+        <aside class="w-80 bg-white border-r border-gray-200 p-6 flex flex-col shadow-inner z-10 overflow-y-auto">
+            <div class="space-y-6">
+                
+                <!-- Algorithm Selection -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Algorithms</h3>
+                    <div class="space-y-2">
+                        <button onclick="startSearch('bfs')" id="btn-bfs" class="control-btn w-full text-left px-4 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg font-medium flex items-center">
+                            <span class="w-8 h-8 rounded-full bg-indigo-200 text-indigo-700 flex items-center justify-center mr-3 text-xs font-bold">A</span>
+                            BFS (Breadth-First)
+                        </button>
+                        <button onclick="startSearch('dfs')" id="btn-dfs" class="control-btn w-full text-left px-4 py-3 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg font-medium flex items-center">
+                            <span class="w-8 h-8 rounded-full bg-blue-200 text-blue-700 flex items-center justify-center mr-3 text-xs font-bold">B</span>
+                            DFS (Depth-First)
+                        </button>
+                        <button onclick="startSearch('dls')" id="btn-dls" class="control-btn w-full text-left px-4 py-3 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-lg font-medium flex items-center">
+                            <span class="w-8 h-8 rounded-full bg-purple-200 text-purple-700 flex items-center justify-center mr-3 text-xs font-bold">C</span>
+                            DFS (Limit d=2)
+                        </button>
+                        <button onclick="startSearch('iddfs')" id="btn-iddfs" class="control-btn w-full text-left px-4 py-3 bg-pink-50 hover:bg-pink-100 text-pink-700 rounded-lg font-medium flex items-center">
+                            <span class="w-8 h-8 rounded-full bg-pink-200 text-pink-700 flex items-center justify-center mr-3 text-xs font-bold">D</span>
+                            IDDFS (Iterative)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Playback Controls -->
+                <div class="pt-4 border-t border-gray-100">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Controls</h3>
+                    <div class="flex space-x-2">
+                         <button onclick="resetVisualization()" class="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md font-medium transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <div class="mt-4">
+                        <label class="text-xs text-gray-500 font-medium">Animation Speed</label>
+                        <input type="range" id="speedRange" min="200" max="2000" value="1000" class="w-full mt-1 accent-indigo-600">
+                        <div class="flex justify-between text-xs text-gray-400 mt-1">
+                            <span>Fast</span>
+                            <span>Slow</span>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Status Log -->
+                 <div class="pt-4 border-t border-gray-100 flex-1 flex flex-col min-h-0">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Execution Log</h3>
+                    <div id="log-container" class="bg-gray-900 text-green-400 font-mono text-xs p-3 rounded-lg overflow-y-auto flex-1 h-48 shadow-inner leading-relaxed">
+                        <div class="opacity-50 italic">Waiting to start...</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Canvas Area -->
+        <main class="flex-1 bg-gray-100 p-8 flex items-center justify-center relative overflow-hidden">
+            <div class="relative w-full max-w-4xl h-full flex flex-col">
+                <canvas id="treeCanvas" class="w-full h-full block"></canvas>
+                
+                <!-- Legend -->
+                <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur p-3 rounded-lg shadow-sm border border-gray-200 text-xs space-y-2">
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-white border-2 border-gray-800 mr-2"></span> Unvisited</div>
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-yellow-100 border-2 border-yellow-500 mr-2"></span> Current</div>
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-blue-100 border-2 border-blue-500 mr-2"></span> Visited</div>
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-green-500 border-2 border-green-700 mr-2"></span> Goal Found</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+/**
+ * TREE DATA STRUCTURE & COORDINATES
+ * Based on the user's provided image
+ */
+const treeData = {
+    nodes: {
+        'A': { x: 400, y: 50,  children: ['B', 'C'] },
+        'B': { x: 250, y: 150, children: ['D', 'E'] },
+        'C': { x: 550, y: 150, children: ['G', 'H'] },
+        'D': { x: 180, y: 250, children: ['F'] },
+        'E': { x: 320, y: 250, children: [] },
+        'G': { x: 480, y: 250, children: [] }, // Goal
+        'H': { x: 620, y: 250, children: ['I', 'J'] },
+        'F': { x: 180, y: 350, children: ['K', 'L'] },
+        'I': { x: 580, y: 350, children: [] },
+        'J': { x: 660, y: 350, children: [] },
+        'K': { x: 140, y: 450, children: [] },
+        'L': { x: 220, y: 450, children: [] }
+    },
+    root: 'A',
+    goal: 'G'
+};
+
+// Canvas Setup
+const canvas = document.getElementById('treeCanvas');
+const ctx = canvas.getContext('2d');
+let animationId = null;
+let currentAnimationStep = 0;
+let animationQueue = []; // Array of states to render
+let isAnimating = false;
+
+// State management
+let nodeStates = {}; // 'unvisited', 'visited', 'current', 'goal'
+let activeArrow = null; // {x, y, label}
+
+function resizeCanvas() {
+    const parent = canvas.parentElement;
+    canvas.width = parent.clientWidth;
+    canvas.height = parent.clientHeight;
+    // Scale coordinates to fit canvas roughly
+    drawTree();
+}
+window.addEventListener('resize', resizeCanvas);
+
+/**
+ * UTILITY FUNCTIONS
+ */
+function getScaledCoords(nodeId) {
+    const node = treeData.nodes[nodeId];
+    // Base coordinate system is roughly 800x600 centered at 400
+    // We scale this to fit the current canvas
+    const scaleX = canvas.width / 800;
+    const scaleY = canvas.height / 600;
+    
+    // Apply a slight margin/centering logic
+    const x = node.x * scaleX;
+    const y = node.y * scaleY + 20; // +20 top padding
+    return { x, y };
+}
+
+function resetVisualization() {
+    stopAnimation();
+    nodeStates = {};
+    for (let n in treeData.nodes) {
+        nodeStates[n] = 'unvisited';
+    }
+    activeArrow = null;
+    document.getElementById('log-container').innerHTML = '<div class="opacity-50 italic">Ready.</div>';
+    drawTree();
+    enableButtons();
+}
+
+function log(message, type = 'info') {
+    const container = document.getElementById('log-container');
+    const div = document.createElement('div');
+    div.className = 'log-entry mb-1';
+    
+    if (type === 'success') div.classList.add('text-green-400', 'font-bold');
+    else if (type === 'highlight') div.classList.add('text-yellow-300');
+    else if (type === 'backtrack') div.classList.add('text-red-300');
+    else div.classList.add('text-gray-300');
+    
+    div.innerText = `> ${message}`;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+}
+
+function disableButtons() {
+    document.querySelectorAll('.control-btn').forEach(b => b.disabled = true);
+}
+function enableButtons() {
+    document.querySelectorAll('.control-btn').forEach(b => b.disabled = false);
+}
+
+/**
+ * DRAWING LOGIC
+ */
+function drawTree() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 1. Draw Edges
+    ctx.strokeStyle = '#9ca3af'; // gray-400
+    ctx.lineWidth = 2;
+    
+    for (let id in treeData.nodes) {
+        const node = treeData.nodes[id];
+        const start = getScaledCoords(id);
+        
+        if (node.children) {
+            node.children.forEach(childId => {
+                const end = getScaledCoords(childId);
+                ctx.beginPath();
+                ctx.moveTo(start.x, start.y);
+                ctx.lineTo(end.x, end.y);
+                ctx.stroke();
+            });
+        }
+    }
+
+    // 2. Draw Nodes
+    for (let id in treeData.nodes) {
+        const coords = getScaledCoords(id);
+        const state = nodeStates[id] || 'unvisited';
+        
+        ctx.beginPath();
+        ctx.arc(coords.x, coords.y, 20, 0, 2 * Math.PI);
+        
+        // Fill based on state
+        if (state === 'goal') {
+            ctx.fillStyle = '#22c55e'; // green-500
+            ctx.strokeStyle = '#15803d';
+        } else if (state === 'current') {
+            ctx.fillStyle = '#fde047'; // yellow-300
+            ctx.strokeStyle = '#eab308';
+        } else if (state === 'visited') {
+            ctx.fillStyle = '#bfdbfe'; // blue-200
+            ctx.strokeStyle = '#3b82f6';
+        } else {
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = '#4b5563'; // gray-600
+        }
+        
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        // Text
+        ctx.fillStyle = '#000000';
+        ctx.font = 'bold 14px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(id, coords.x, coords.y);
+    }
+
+    // 3. Draw Arrow if active
+    if (activeArrow) {
+        drawArrow(activeArrow.nodeId);
+    }
+}
+
+function drawArrow(targetNodeId) {
+    const coords = getScaledCoords(targetNodeId);
+    const arrowLen = 40;
+    const arrowX = coords.x;
+    const arrowY = coords.y - 30; // Point to top of node circle (radius 20 + padding 10)
+    
+    // Animate hover effect
+    const bounce = Math.sin(Date.now() / 100) * 5; 
+    
+    ctx.save();
+    ctx.translate(arrowX, arrowY - arrowLen + bounce);
+    
+    // Draw Arrow Body
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, arrowLen);
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = '#ef4444'; // red-500
+    ctx.stroke();
+    
+    // Draw Arrow Head
+    ctx.beginPath();
+    ctx.moveTo(-8, arrowLen - 10);
+    ctx.lineTo(0, arrowLen);
+    ctx.lineTo(8, arrowLen - 10);
+    ctx.fillStyle = '#ef4444';
+    ctx.fill();
+    
+    ctx.restore();
+}
+
+/**
+ * ANIMATION ENGINE
+ */
+function animate() {
+    if (currentAnimationStep >= animationQueue.length) {
+        isAnimating = false;
+        enableButtons();
+        return;
+    }
+
+    const step = animationQueue[currentAnimationStep];
+    
+    // Apply state changes
+    if (step.type === 'visit') {
+        // Mark previous current as visited
+        for (let n in nodeStates) {
+            if (nodeStates[n] === 'current') nodeStates[n] = 'visited';
+        }
+        nodeStates[step.node] = 'current';
+        activeArrow = { nodeId: step.node };
+        log(step.msg, 'highlight');
+    } 
+    else if (step.type === 'found') {
+        nodeStates[step.node] = 'goal';
+        activeArrow = { nodeId: step.node };
+        log(step.msg, 'success');
+        isAnimating = false; // Stop immediately on success
+        enableButtons(); // Re-enable
+        drawTree(); // Ensure final state is drawn
+        return; 
+    }
+    else if (step.type === 'backtrack') {
+        // Just log and move arrow, usually don't change color back to unvisited unless needed
+        // For visual clarity, we keep visited nodes blue.
+        // We might highlight the node we are returning TO as current again.
+        for (let n in nodeStates) {
+            if (nodeStates[n] === 'current') nodeStates[n] = 'visited';
+        }
+        nodeStates[step.node] = 'current';
+        activeArrow = { nodeId: step.node };
+        log(step.msg, 'backtrack');
+    }
+    else if (step.type === 'info') {
+        log(step.msg);
+    }
+    else if (step.type === 'reset_visited') {
+        // For IDDFS - clear visited states between iterations
+        for(let n in nodeStates) nodeStates[n] = 'unvisited';
+        log(step.msg, 'info');
+    }
+
+    drawTree();
+    currentAnimationStep++;
+
+    const speed = document.getElementById('speedRange').value;
+    // Reverse logic: high value = slow speed, so we use value directly as ms delay
+    // The slider is min=200 (fast) max=2000 (slow)
+    setTimeout(() => {
+        if (isAnimating) requestAnimationFrame(animate);
+    }, speed);
+}
+
+function stopAnimation() {
+    isAnimating = false;
+    currentAnimationStep = 0;
+    animationQueue = [];
+}
+
+/**
+ * SEARCH ALGORITHMS
+ */
+function startSearch(type) {
+    resetVisualization();
+    disableButtons();
+    isAnimating = true;
+    
+    if (type === 'bfs') runBFS();
+    if (type === 'dfs') runDFS();
+    if (type === 'dls') runDLS();
+    if (type === 'iddfs') runIDDFS();
+    
+    // Start animation loop
+    animate();
+}
+
+function runBFS() {
+    log("Starting Breadth-First Search (Szélességi keresés)...");
+    let queue = [treeData.root];
+    let visitedOrder = []; // To prevent re-adding if graph was cyclic, though tree isn't.
+
+    while (queue.length > 0) {
+        let currentNode = queue.shift();
+        
+        animationQueue.push({ type: 'visit', node: currentNode, msg: `Visiting ${currentNode}` });
+
+        if (currentNode === treeData.goal) {
+            animationQueue.push({ type: 'found', node: currentNode, msg: `Goal ${currentNode} found!` });
+            return;
+        }
+
+        let children = treeData.nodes[currentNode].children;
+        if (children.length > 0) {
+            animationQueue.push({ type: 'info', msg: `Adding children of ${currentNode}: ${children.join(', ')} to queue` });
+            queue.push(...children);
+        }
+    }
+}
+
+function runDFS() {
+    log("Starting Depth-First Search (Mélységi keresés)...");
+    
+    function dfs(node) {
+        animationQueue.push({ type: 'visit', node: node, msg: `Visiting ${node}` });
+        
+        if (node === treeData.goal) {
+            animationQueue.push({ type: 'found', node: node, msg: `Goal ${node} found!` });
+            return true;
+        }
+
+        let children = treeData.nodes[node].children;
+        for (let child of children) {
+            if (dfs(child)) return true;
+            // Backtracking visual step
+             animationQueue.push({ type: 'backtrack', node: node, msg: `Backtracking to ${node}` });
+        }
+        return false;
+    }
+
+    dfs(treeData.root);
+}
+
+function runDLS() {
+    const LIMIT = 2;
+    log(`Starting DFS with Depth Limit d=${LIMIT}...`);
+    
+    function dls(node, depth) {
+        animationQueue.push({ type: 'visit', node: node, msg: `Visiting ${node} (Depth ${depth})` });
+
+        if (node === treeData.goal) {
+            animationQueue.push({ type: 'found', node: node, msg: `Goal ${node} found at depth ${depth}!` });
+            return true;
+        }
+
+        if (depth >= LIMIT) {
+            animationQueue.push({ type: 'info', msg: `Depth limit ${LIMIT} reached at ${node}. Backtracking.` });
+            return false;
+        }
+
+        let children = treeData.nodes[node].children;
+        for (let child of children) {
+            if (dls(child, depth + 1)) return true;
+             animationQueue.push({ type: 'backtrack', node: node, msg: `Backtracking to ${node}` });
+        }
+        return false;
+    }
+
+    dls(treeData.root, 0);
+}
+
+function runIDDFS() {
+    log("Starting Iterative Deepening DFS...");
+    let maxDepth = 4; // Since we know the tree depth
+    
+    for (let limit = 0; limit <= maxDepth; limit++) {
+        animationQueue.push({ type: 'reset_visited', msg: `--- Starting Iteration with Limit: ${limit} ---` });
+        
+        let found = iddfs_worker(treeData.root, 0, limit);
+        if (found) return; // Stop if found
+    }
+    
+    function iddfs_worker(node, currentDepth, limit) {
+        animationQueue.push({ type: 'visit', node: node, msg: `Visiting ${node} (Depth ${currentDepth}, Limit ${limit})` });
+
+        if (node === treeData.goal) {
+            animationQueue.push({ type: 'found', node: node, msg: `Goal ${node} found!` });
+            return true;
+        }
+
+        if (currentDepth >= limit) {
+             // Don't expand further
+             return false;
+        }
+
+        let children = treeData.nodes[node].children;
+        for (let child of children) {
+            if (iddfs_worker(child, currentDepth + 1, limit)) return true;
+             animationQueue.push({ type: 'backtrack', node: node, msg: `Backtracking to ${node}` });
+        }
+        return false;
+    }
+}
+
+// Initial draw
+resizeCanvas();
+</script>
+</body>
+</html>
