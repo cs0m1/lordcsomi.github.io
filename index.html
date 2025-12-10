@@ -1,20 +1,354 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Landing Page - Csomós Ádám</title>
-  </head>
-  <body>
-    <canvas id="canvas"></canvas>
-    <div class="text-container">
-      <h1>Csomós Ádám</h1>
-      <p>Game Developerish</p>
-      <p>Karinthy Frigyes Gimnázium - 12th grade</p>
-      <p style="font-size: 1.5em; color: #ff6347; font-weight: bold; text-align: center; margin-top: 20px;">New website coming soon</p>
-    </div>
-    <script src="index.js"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Csomi's Portfolio</title>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link href="fonts/remixicon.css" rel="stylesheet">
+  <script type="text/javascript">
+    (function() {
+      emailjs.init("cY7t3hxh8UxecCYUE");
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <section id="landing">
+      <canvas id="blobCanvas"></canvas>
+      <div class="landing-content">
+        <nav class="top-nav">
+          <div class="nav-left">
+            <a href="#landing" class="logo-link">csomi.online</a>
+            <div class="construction-notice">
+              <i class="ri-tools-line"></i>
+              <span>Site Under Construction</span>
+            </div>
+          </div>
+          <div class="nav-right">
+            <a href="https://github.com/cs0m1" target="_blank" class="nav-icon">
+              <i class="ri-github-fill"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/csomos-adam" target="_blank" class="nav-icon">
+              <i class="ri-linkedin-fill"></i>
+            </a>
+            <a href="#technologies" class="nav-icon">
+              <i class="ri-code-s-slash-line"></i>
+            </a>
+            <a href="#contact" class="nav-icon">
+              <i class="ri-mail-line"></i>
+            </a>
+          </div>
+        </nav>
+        <a href="#contact" class="job-bubble">
+          Currently looking for a job. <span class="link-underline">Get in touch</span>
+        </a>
+        <div class="profile-container">
+          <img src="images/me.jpg" alt="Csomós Ádám's profile picture" class="profile-picture">
+          <div class="info">
+            <h1 class="desktop-title">Hello! I am <span class="highlight">Csomós Ádám</span></h1>
+            <h1 class="mobile-title">Hello! I am <span class="highlight">Csomós Ádám</span></h1>
+            <div class="location">
+              <span class="highlight"><i class="ri-map-pin-line"></i></span>
+              <span>Budapest, Hungary</span>
+            </div>
+            <p><span class="highlight" id="age">20</span> years old Computer Science Engineering student at <span class="highlight">ÓE NIK</span>, focusing on <span class="highlight">C#</span>, <span class="highlight">Python</span>, and <span class="highlight">full stack</span> web development. Open to learning new technologies.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="technologies">
+      <h2>Current Technologies</h2>
+      <p class="section-desc">As a student, I've gained practical experience with these modern technologies through various projects. While still learning, I'm confident in using these tools to create effective solutions.</p>
+      
+      <div class="tech-grid">
+        <div class="tech-card">
+          <div class="tech-icon">
+            <i class="ri-terminal-box-line"></i>
+          </div>
+          <div class="tech-content">
+            <h3>C#</h3>
+            <p>Programming Language</p>
+          </div>
+        </div>
+        
+        <div class="tech-card">
+          <div class="tech-icon">
+            <img src="images/python.svg" alt="Python" class="svg-icon">
+          </div>
+          <div class="tech-content">
+            <h3>Python</h3>
+            <p>Programming Language</p>
+          </div>
+        </div>
+        
+        <div class="tech-card">
+          <div class="tech-icon">
+            <i class="ri-figma-line"></i>
+          </div>
+          <div class="tech-content">
+            <h3>Figma</h3>
+            <p>Design Tool</p>
+          </div>
+        </div>
+        
+        <div class="tech-card">
+          <div class="tech-icon">
+            <i class="ri-javascript-line"></i>
+          </div>
+          <div class="tech-content">
+            <h3>JavaScript</h3>
+            <p>Programming Language</p>
+          </div>
+        </div>
+        
+        <div class="tech-card">
+          <div class="tech-icon">
+            <i class="ri-reactjs-line"></i>
+          </div>
+          <div class="tech-content">
+            <h3>React</h3>
+            <p>JavaScript Library</p>
+          </div>
+        </div>
+        
+        <div class="tech-card">
+          <div class="tech-icon">
+            <i class="ri-nextjs-line"></i>
+          </div>
+          <div class="tech-content">
+            <h3>NextJS</h3>
+            <p>React framework</p>
+          </div>
+        </div>
+        
+        <div class="tech-card">
+          <div class="tech-icon">
+            <i class="ri-git-branch-line"></i>
+          </div>
+          <div class="tech-content">
+            <h3>Git</h3>
+            <p>Version control</p>
+          </div>
+        </div>
+        
+        <div class="tech-card">
+          <div class="tech-icon">
+            <i class="ri-supabase-line"></i>
+          </div>
+          <div class="tech-content">
+            <h3>Supabase</h3>
+            <p>Backend tool</p>
+          </div>
+        </div>
+        
+        <div class="tech-card">
+          <div class="tech-icon">
+            <i class="ri-nodejs-line"></i>
+          </div>
+          <div class="tech-content">
+            <h3>Node.js</h3>
+            <p>JavaScript Runtime</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <h2>Work Experience</h2>
+      <p class="section-desc">My professional journey in software development, from early projects to current roles.</p>
+      
+      <div class="work-timeline">
+        <div class="work-item">
+          <div class="work-date">
+            <div class="date">July 2023 - Aug 2024</div>
+            <div class="duration">1 year, 1 month</div>
+          </div>
+          <div class="work-content">
+            <h3>Developer & Architect</h3>
+            <div class="company">Clawer</div>
+            <ul>
+              <li>Developed initial prototype using Pygame</li>
+              <li>Led transition to Kivy framework</li>
+              <li>Architected system design</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-date">
+            <div class="date">Sept 2024 - Nov 2024</div>
+            <div class="duration">2 months</div>
+          </div>
+          <div class="work-content">
+            <h3>Full Stack Web Developer</h3>
+            <div class="company">Freelance</div>
+            <ul>
+              <li>Designed custom website using Figma</li>
+              <li>Developed full-stack solution with HTML, CSS, JavaScript and Node.js</li>
+              <li>Managed client requirements and delivery</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <p class="section-desc">Here are some of the projects I've worked on, showcasing my experience with different technologies.</p>
+      
+      <div class="projects-grid">
+        <div class="project-card">
+          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link">
+            <i class="ri-github-fill"></i>
+          </a>
+          <a href="projects/face-grouping.html" class="project-link">
+            <div class="project-image">
+              <img src="images/face.jpg" alt="Face Grouping Project">
+            </div>
+            <div class="project-content">
+              <h3>Face Grouping Project</h3>
+              <p>Automated facial recognition and photo organization tool</p>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">OpenCV</span>
+                <span class="tech-tag">face_recognition</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="project-card">
+          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link">
+            <i class="ri-github-fill"></i>
+          </a>
+          <a href="projects/kahoot-ai.html" class="project-link">
+            <div class="project-image">
+              <img src="images/kahoot.jpg" alt="KahootAI Assistant">
+            </div>
+            <div class="project-content">
+              <h3>KahootAI Assistant</h3>
+              <p>Chrome extension providing AI-powered Kahoot answers</p>
+              <div class="tech-tags">
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Chrome Extension</span>
+                <span class="tech-tag">Gemini AI</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="project-card">
+          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link">
+            <i class="ri-github-fill"></i>
+          </a>
+          <a href="projects/take-6.html" class="project-link">
+            <div class="project-image">
+              <img src="images/take6.jpg" alt="Take 6! Online Card Game">
+            </div>
+            <div class="project-content">
+              <h3>Take 6! Online Card Game</h3>
+              <p>Multiplayer card game with real-time gameplay</p>
+              <div class="tech-tags">
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Socket.IO</span>
+                <span class="tech-tag">JavaScript</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="project-card">
+          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link">
+            <i class="ri-github-fill"></i>
+          </a>
+          <a href="projects/moscow-metro-quiz.html" class="project-link">
+            <div class="project-image">
+              <img src="images/metro.jpg" alt="Moscow Metro Quiz Game">
+            </div>
+            <div class="project-content">
+              <h3>Moscow Metro Quiz Game</h3>
+              <p>Interactive multiplayer quiz about Moscow Metro</p>
+              <div class="tech-tags">
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Socket.IO</span>
+                <span class="tech-tag">Docker</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="project-card ghost-card">
+          <div class="ghost-content">
+            <i class="ri-hammer-line"></i>
+            <p>Working on more cool stuff...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="contact-container">
+        <div class="contact-info">
+          <h2>Get in Touch</h2>
+          <p class="contact-description">Feel free to reach out! I'm always open to discussing new opportunities, projects, or just having a chat about technology.</p>
+          
+          <div class="contact-details">
+            <div class="contact-item">
+              <i class="ri-mail-line"></i>
+              <a href="mailto:csomos.adam.benedek@gmail.com">csomos.adam.benedek@gmail.com</a>
+            </div>
+            <div class="contact-item">
+              <i class="ri-map-pin-line"></i>
+              <span>Budapest, Hungary</span>
+            </div>
+            <div class="contact-socials">
+              <a href="https://github.com/cs0m1" target="_blank" class="social-link">
+                <i class="ri-github-fill"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/csomos-adam" target="_blank" class="social-link">
+                <i class="ri-linkedin-fill"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <form id="contactForm" novalidate>
+            <input type="hidden" name="to_name" value="Csomi">
+            
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required placeholder=" " minlength="2">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required placeholder=" " pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required placeholder=" " minlength="10" maxlength="1000"></textarea>
+              <span class="char-counter"><span id="charCount">0</span>/<span id="charLimit">10</span> <span id="charLimitText">characters minimum</span></span>
+            </div>
+            <button type="submit" class="submit-btn">
+                <div class="button-content">
+                Send Message <i class="ri-send-plane-line"></i>
+                </div>
+              <div class="success-content">
+                <svg class="checkmark" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+                <span>Sent!</span>
+              </div>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
 </html>

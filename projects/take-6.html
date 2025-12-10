@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take 6! Online Card Game - Portfolio</title>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body>
+    <a href="../index.html" class="minimalist-back">
+        <i class="ri-arrow-left-line"></i>
+    </a>
+    <div class="project-nav">
+        <a href="../index.html#projects">Personal Projects</a>
+        <span class="separator">/</span>
+        <span class="current">Take 6! Online Card Game</span>
+    </div>
+
+    <div class="project-header">
+        <h1>Take 6! Online Card Game</h1>
+        <div class="project-tech-tags">
+            <span class="tag">Node.js</span>
+            <span class="tag">Express.js</span>
+            <span class="tag">Socket.IO</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">HTML/CSS</span>
+        </div>
+        <div class="project-actions">
+            <a href="#" class="github-link">
+                <i class="ri-github-fill"></i>
+            </a>
+            <a href="#" class="visit-link">
+                <i class="ri-external-link-line"></i>
+                Play Game
+            </a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-section">
+            <h2>Project Description</h2>
+            <p>An online multiplayer implementation of the popular card game "Take 6!" (also known as 6 Nimmt!). The game is a digital adaptation that allows players to enjoy this strategic card game over the internet with real-time multiplayer functionality.</p>
+        </div>
+
+        <div class="project-section">
+            <h2>Technologies Used</h2>
+            <h3>Frontend</h3>
+            <ul>
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript (Vanilla)</li>
+                <li>Socket.IO Client (for real-time communication)</li>
+                <li>Google Fonts (Poppins font family)</li>
+            </ul>
+
+            <h3>Backend</h3>
+            <ul>
+                <li>Node.js</li>
+                <li>Express.js (Web server framework)</li>
+                <li>Socket.IO (Real-time bidirectional communication)</li>
+            </ul>
+        </div>
+
+        <div class="project-section">
+            <h2>Key Features</h2>
+            <ul>
+                <li>Real-time Multiplayer Gaming</li>
+                <li>Player Lobby System</li>
+                <li>Dynamic Game Interface</li>
+                <li>Responsive Design (mobile-friendly)</li>
+                <li>Player Status Tracking</li>
+                <li>Real-time Notifications</li>
+                <li>Waiting Room with Player List</li>
+                <li>Ready System for Game Start</li>
+            </ul>
+        </div>
+
+        <div class="project-section">
+            <h2>Game Flow</h2>
+            <ul>
+                <li>Players enter their name to join</li>
+                <li>Waiting room shows current players</li>
+                <li>Players can indicate when they're ready</li>
+                <li>Game starts when all players are ready</li>
+                <li>Real-time card gameplay with interactive UI</li>
+            </ul>
+        </div>
+
+        <div class="project-section">
+            <h2>Technical Implementation</h2>
+            <ul>
+                <li>Uses Socket.IO for real-time game state synchronization</li>
+                <li>Express.js handles HTTP server and API endpoints</li>
+                <li>Separate client/server architecture for clean code organization</li>
+                <li>Modular code structure with separate card generation and game management</li>
+                <li>Responsive design that works on both desktop and mobile devices</li>
+            </ul>
+        </div>
+
+        <div class="project-section">
+            <h2>Project Structure</h2>
+            <pre>
+├── client/             # Frontend files
+│   ├── app.js         # Client-side game logic
+│   ├── CardGenerator.js# Card generation utilities
+│   ├── index.html     # Main game interface
+│   ├── style.css      # Game styling
+│   └── bull.png       # Game icon
+│
+├── server/            # Backend files
+│   ├── server.js     # Main server file
+│   ├── GameManager.js # Game state management
+│   └── CardGenerator.js# Server-side card utilities</pre>
+        </div>
+    </div>
+</body>
+</html>

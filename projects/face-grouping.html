@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Grouping Project - Portfolio</title>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body>
+    <a href="../index.html" class="minimalist-back">
+        <i class="ri-arrow-left-line"></i>
+    </a>
+    <div class="project-nav">
+        <a href="../index.html#projects">Personal Projects</a>
+        <span class="separator">/</span>
+        <span class="current">Face Grouping Project</span>
+    </div>
+
+    <div class="project-header">
+        <h1>Face Grouping Project</h1>
+        <div class="project-tech-tags">
+            <span class="tag">Python</span>
+            <span class="tag">OpenCV</span>
+            <span class="tag">face_recognition</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">Dash</span>
+        </div>
+        <div class="project-actions">
+            <a href="#" class="visit-link">
+                <i class="ri-external-link-line"></i>
+                View Demo
+            </a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-section">
+            <h2>Project Description</h2>
+            <p>An automated facial recognition and photo organization tool designed to process and group photos based on facial detection. The primary use case demonstrated is organizing photos from a "Szalagavato" (Hungarian graduation ceremony) event, making it easier to sort and categorize large collections of photos by the people appearing in them.</p>
+        </div>
+
+        <div class="project-section">
+            <h2>Technologies Used</h2>
+            <ul>
+                <li>Python (core programming language)</li>
+                <li>face_recognition library (for face detection and encoding)</li>
+                <li>PIL (Python Imaging Library) for image manipulation and drawing</li>
+                <li>OpenCV (computer vision library for image processing)</li>
+                <li>NumPy (for numerical operations on image data)</li>
+                <li>Pickle (for saving and loading processing state)</li>
+                <li>CSV (for metrics tracking and analysis)</li>
+                <li>Dash (for interactive web-based visualization)</li>
+                <li>Matplotlib (for statistical graphs and analysis)</li>
+                <li>Pandas (for data manipulation and analysis)</li>
+            </ul>
+        </div>
+
+        <div class="project-section">
+            <h2>Key Features</h2>
+            <h3>Advanced Face Processing</h3>
+            <ul>
+                <li>Configurable face detection models (HOG or CNN)</li>
+                <li>Adjustable matching threshold for face similarity</li>
+                <li>Face location detection and encoding</li>
+                <li>Visual feedback with customizable bounding boxes</li>
+                <li>Specialized group photo handling</li>
+            </ul>
+
+            <h3>Smart Processing Features</h3>
+            <ul>
+                <li>Resume capability (saves state between runs)</li>
+                <li>Progress tracking with time estimation</li>
+                <li>Intelligent cleanup operations</li>
+                <li>Metrics collection and analysis</li>
+                <li>Folder structure optimization</li>
+            </ul>
+
+            <h3>Performance Optimization</h3>
+            <ul>
+                <li>Choice between fast (HOG) and accurate (CNN) detection models</li>
+                <li>Efficient face encoding and matching algorithms</li>
+                <li>Progress tracking with estimated time remaining</li>
+            </ul>
+
+            <h3>Data Analysis and Metrics</h3>
+            <ul>
+                <li>Detailed CSV metrics for each processed image</li>
+                <li>Track processing time, face counts, and match rates</li>
+                <li>Graph-based analysis of face relationships</li>
+                <li>Interactive visualization dashboard</li>
+                <li>Comprehensive statistical analysis</li>
+            </ul>
+        </div>
+
+        <div class="project-section">
+            <h2>Technical Implementation</h2>
+            <ul>
+                <li>Face Detection: Uses the face_recognition library with support for both HOG and CNN models</li>
+                <li>Face Matching: Implements face distance calculations with configurable threshold</li>
+                <li>State Management: Utilizes pickle for saving processing state</li>
+                <li>Metrics Tracking: Records detailed processing metrics in CSV format</li>
+                <li>Image Handling: Uses PIL for image manipulation and drawing detection boxes</li>
+                <li>Error Handling: Robust error handling and progress tracking</li>
+                <li>Directory Management: Smart organization and optimization of photo collections</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
