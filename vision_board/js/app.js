@@ -55,10 +55,13 @@ const App = {
     
     applyDarkMode() {
         const saved = localStorage.getItem('visionBoard_darkMode');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         
-        if (saved === 'dark' || (!saved && prefersDark)) {
+        // Only apply dark mode if explicitly saved as 'dark'
+        // Default to light mode on first visit (no saved preference)
+        if (saved === 'dark') {
             document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
         
         this.updateDarkModeIcon();
