@@ -1,0 +1,468 @@
+/* Vision Board Custom Styles */
+
+body { 
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* Smooth page transitions */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Dark Mode Styles */
+html.dark body {
+    background-color: #111827;
+    color: #e5e7eb;
+}
+
+html.dark nav {
+    background-color: rgba(17, 24, 39, 0.8);
+    border-color: #374151;
+}
+
+html.dark .bg-white:not(footer) {
+    background-color: #1f2937 !important;
+}
+
+html.dark .bg-gray-50 {
+    background-color: #111827 !important;
+}
+
+html.dark .text-gray-900 {
+    color: #f9fafb !important;
+}
+
+html.dark .text-gray-800 {
+    color: #e5e7eb !important;
+}
+
+html.dark .text-gray-700 {
+    color: #d1d5db !important;
+}
+
+html.dark .text-gray-600 {
+    color: #9ca3af !important;
+}
+
+html.dark .text-gray-500 {
+    color: #6b7280 !important;
+}
+
+html.dark .border-gray-100,
+html.dark .border-gray-200 {
+    border-color: #374151 !important;
+}
+
+html.dark footer {
+    background-color: #111827 !important;
+    border-color: #374151 !important;
+}
+
+html.dark footer p,
+html.dark footer strong {
+    color: #9ca3af !important;
+}
+
+html.dark footer strong {
+    color: #e5e7eb !important;
+}
+
+html.dark .shadow-sm {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+html.dark .hover\:bg-gray-50:hover {
+    background-color: #374151 !important;
+}
+
+html.dark .bg-gray-200 {
+    background-color: #374151 !important;
+}
+
+html.dark #mobile-menu {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+/* Quote section dark mode - override themed backgrounds */
+html.dark [class*="bg-blue-50"],
+html.dark [class*="bg-teal-50"],
+html.dark [class*="bg-violet-50"],
+html.dark [class*="bg-amber-50"] {
+    background-color: #374151 !important;
+}
+
+html.dark [class*="border-blue-"],
+html.dark [class*="border-teal-"],
+html.dark [class*="border-violet-"],
+html.dark [class*="border-amber-"] {
+    border-color: #4b5563 !important;
+}
+
+.font-serif { 
+    font-family: 'Playfair Display', serif; 
+}
+
+/* Smooth Animations */
+.fade-in { 
+    animation: fadeIn 0.5s ease-out forwards; 
+}
+
+.slide-up { 
+    animation: slideUp 0.5s ease-out forwards; 
+}
+
+@keyframes fadeIn { 
+    from { opacity: 0; } 
+    to { opacity: 1; } 
+}
+
+@keyframes slideUp { 
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    } 
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    } 
+}
+
+/* Staggered animations for board detail */
+.animate-delay-1 { animation-delay: 0.1s; }
+.animate-delay-2 { animation-delay: 0.2s; }
+.animate-delay-3 { animation-delay: 0.3s; }
+.animate-delay-4 { animation-delay: 0.4s; }
+.animate-delay-5 { animation-delay: 0.5s; }
+.animate-delay-6 { animation-delay: 0.6s; }
+
+.slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.bounce-in {
+    animation: bounceIn 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Todo item hover animation */
+.todo-item:hover {
+    transform: translateX(4px);
+}
+
+/* Visual card pulse on hover */
+.visual-card:hover {
+    animation: pulse 0.3s ease-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { 
+    width: 8px; 
+}
+
+::-webkit-scrollbar-track { 
+    background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb { 
+    background: #cbd5e1; 
+    border-radius: 4px; 
+}
+
+::-webkit-scrollbar-thumb:hover { 
+    background: #94a3b8; 
+}
+
+/* Card Hover Effects */
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Todo Item Transitions */
+.todo-item {
+    transition: background-color 0.2s ease;
+}
+
+/* Progress Bar Animation */
+#progress-bar {
+    transition: width 0.5s ease-out;
+}
+
+/* Mobile Menu Animation */
+#mobile-menu {
+    transition: all 0.3s ease;
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Visual Card Overlay */
+.visual-card-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+}
+
+/* Quote Block Styling */
+.quote-block {
+    position: relative;
+}
+
+.quote-block::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    font-size: 4rem;
+    opacity: 0.1;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Roadmap Timeline Styles */
+.roadmap-pulse {
+    animation: roadmapPulse 2s ease-in-out infinite;
+}
+
+@keyframes roadmapPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(99, 102, 241, 0);
+    }
+}
+
+.roadmap-step {
+    /* No transform on the whole step - only content moves */
+}
+
+.roadmap-content {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    padding: 0.25rem 0.5rem;
+    margin-left: -0.5rem;
+    border-radius: 0.5rem;
+}
+
+.roadmap-step:hover .roadmap-content {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.roadmap-step:active .roadmap-content {
+    transform: translateX(2px) scale(0.99);
+}
+
+/* Focus States for Accessibility */
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+}
+
+/* Floating animation for dashboard panels */
+.float-subtle {
+    animation: floatSubtle 6s ease-in-out infinite;
+}
+
+.float-subtle-delayed {
+    animation: floatSubtle 6s ease-in-out infinite;
+    animation-delay: -2s;
+}
+
+@keyframes floatSubtle {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* Glow effect for stats pills */
+.stat-pill {
+    transition: all 0.3s ease;
+}
+
+.stat-pill:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Hero image zoom on hover */
+.hero-zoom:hover img {
+    transform: scale(1.05);
+}
+
+.hero-zoom img {
+    transition: transform 0.5s ease;
+}
+
+/* Shimmer effect for loading */
+.shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Section card animations */
+.section-card {
+    transition: all 0.3s ease;
+}
+
+.section-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Todo checkbox animation */
+.todo-check-animate {
+    animation: checkPop 0.3s ease-out;
+}
+
+@keyframes checkPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* Navbar scroll effect */
+.nav-scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Icon hover spin */
+.icon-hover-spin:hover i {
+    animation: spinOnce 0.5s ease-out;
+}
+
+@keyframes spinOnce {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Underline grow effect for links */
+.underline-grow {
+    position: relative;
+}
+
+.underline-grow::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s ease;
+}
+
+.underline-grow:hover::after {
+    width: 100%;
+}
+
+/* Nav tooltip - ensure hidden by default */
+.nav-tooltip {
+    opacity: 0 !important;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.nav-icon-btn:hover .nav-tooltip {
+    opacity: 1 !important;
+    visibility: visible;
+}
+
+/* Print Styles */
+@media print {
+    nav, footer, button {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+    }
+    
+    .shadow-sm, .shadow-md, .shadow-lg {
+        box-shadow: none !important;
+    }
+}

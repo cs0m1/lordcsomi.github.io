@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Board | Csomós Ádám</title>
+    
+    <!-- Favicon using SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%236366f1'/%3E%3Ccircle cx='50' cy='50' r='30' fill='white'/%3E%3Ccircle cx='50' cy='50' r='18' fill='%236366f1'/%3E%3Ccircle cx='50' cy='50' r='6' fill='white'/%3E%3C/svg%3E">
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Personal Vision Board 2026 - Learning, Fitness, Projects, and Lifestyle goals by Csomós Ádám Benedek">
+    <meta name="author" content="Csomós Ádám Benedek">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Tailwind Config -->
+    <script src="js/tailwind.config.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-14">
+                <!-- Logo -->
+                <div class="flex items-center cursor-pointer hover:opacity-80 transition-opacity" onclick="app.renderDashboard()">
+                    <span class="text-lg tracking-tight"><span class="font-bold">Csomós Ádám's</span> <span class="text-indigo-600 font-medium">Vision Board</span></span>
+                </div>
+                
+                <!-- Right Side: Nav Icons + Separator + Dark Mode -->
+                <div class="hidden md:flex items-center gap-1">
+                    <!-- Desktop Nav Icons -->
+                    <div class="flex items-center gap-1" id="desktop-nav">
+                        <!-- Nav items injected by JS -->
+                    </div>
+                    
+                    <!-- Separator -->
+                    <div class="w-px h-6 bg-gray-300 mx-2"></div>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="app.toggleDarkMode()" class="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Toggle dark mode" id="dark-mode-btn">
+                        <i class="ph ph-sun text-xl text-gray-500" id="sun-icon"></i>
+                        <i class="ph ph-moon text-xl text-gray-500 hidden" id="moon-icon"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button onclick="app.toggleMobileMenu()" class="text-gray-600 p-2">
+                        <i class="ph ph-list text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 py-2 space-y-1 shadow-lg absolute w-full">
+            <!-- Mobile items injected by JS -->
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="app-root" class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <!-- Content injected by JS -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 mt-auto bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+            <p><strong>Csomós Ádám Benedek</strong> • Learning Methodology • ÓE NIK Computer Science</p>
+            <div class="flex gap-4 mt-4 md:mt-0" id="footer-stats">
+                <!-- Stats injected by JS -->
+            </div>
+        </div>
+    </footer>
+
+    <!-- Application Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
