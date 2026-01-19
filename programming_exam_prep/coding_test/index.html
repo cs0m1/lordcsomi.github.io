@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Practice - PSUP</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen bg-black text-gray-200">
+
+    <!-- Problem Selection View -->
+    <div id="selection-view" class="view">
+        <div class="max-w-6xl mx-auto px-6 md:px-12 py-8 min-h-screen flex flex-col">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-8 fade-in">
+                <div class="space-y-1">
+                    <h1 class="text-2xl md:text-3xl font-bold text-white">Coding Practice</h1>
+                    <a href="../countdown/index.html" class="text-sm text-white/40 hover:text-blue-400 transition-colors">← Back to Countdown</a>
+                </div>
+                <button id="api-settings-btn" class="glass-card glass-card-hover rounded-lg px-4 py-2 text-xs text-white/50 flex items-center gap-2">
+                    <i data-lucide="key" width="14"></i>
+                    <span id="api-status">API Key</span>
+                </button>
+            </div>
+
+            <!-- Mode Selection -->
+            <div class="glass-card rounded-lg p-6 mb-6 fade-in" style="animation-delay: 0.1s;">
+                <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-4">Select Mode</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <label class="mode-option">
+                        <input type="radio" name="test-mode" value="random" checked>
+                        <span class="mode-label">Random Problem</span>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="test-mode" value="sequential">
+                        <span class="mode-label">Sequential</span>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="test-mode" value="weak">
+                        <span class="mode-label">Weak Areas</span>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="test-mode" value="choose">
+                        <span class="mode-label">Choose Problem</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Problem Selector (Hidden by default) -->
+            <div id="problem-selector" class="glass-card rounded-lg p-6 mb-6 fade-in hidden">
+                <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-4">Select Problem</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-64 overflow-y-auto" id="problem-list">
+                    <!-- Problems injected via JS -->
+                </div>
+            </div>
+
+            <!-- Start Button -->
+            <button id="start-test" class="glass-card glass-card-hover rounded-lg px-6 py-4 text-center fade-in" style="animation-delay: 0.2s;">
+                <span class="text-sm font-bold text-blue-400">Start Coding Practice →</span>
+            </button>
+
+            <!-- Resume Section -->
+            <div id="resume-section" class="glass-card rounded-lg p-6 mt-6 border-yellow-500/30 hidden fade-in">
+                <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-yellow-400/70 mb-2">Saved Session Found</div>
+                <div class="text-sm text-white/50 mb-4" id="resume-info"></div>
+                <div class="flex gap-3">
+                    <button id="resume-btn" class="glass-card glass-card-hover rounded-lg px-4 py-2 text-sm font-bold text-green-400">Resume</button>
+                    <button id="clear-session-btn" class="glass-card rounded-lg px-4 py-2 text-sm font-bold text-red-400 hover:bg-red-500/10">Discard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Coding View -->
+    <div id="coding-view" class="view hidden">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 py-6 min-h-screen flex flex-col">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-6 fade-in">
+                <div class="space-y-1">
+                    <h1 class="text-xl md:text-2xl font-bold text-white" id="problem-title">Problem Title</h1>
+                    <div class="flex items-center gap-4 text-xs text-white/40">
+                        <span id="problem-id">ID: P001</span>
+                        <span id="problem-difficulty">Difficulty: 5/10</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="back-to-selection" class="glass-card glass-card-hover rounded-lg px-4 py-2 text-sm text-white/60">← Back</button>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow fade-in" style="animation-delay: 0.1s;">
+                <!-- Left: Problem Description -->
+                <div class="glass-card rounded-lg p-6 flex flex-col">
+                    <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-4">Problem Description</div>
+                    <div class="text-sm text-white/70 leading-relaxed flex-grow overflow-y-auto" id="problem-description">
+                        <!-- Description injected via JS -->
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/5">
+                        <button id="show-hint" class="text-xs text-yellow-400/70 hover:text-yellow-400">Show Hint →</button>
+                        <div id="hint-content" class="mt-2 text-sm text-white/50 hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Right: Code Editor -->
+                <div class="glass-card rounded-lg p-6 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30">Your Solution (C#)</div>
+                        <div class="text-xs text-white/30" id="autosave-status">Auto-saved</div>
+                    </div>
+                    <textarea id="code-editor" class="code-editor flex-grow" placeholder="// Write your C# solution here..." spellcheck="false"></textarea>
+                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+                        <button id="clear-code" class="text-xs text-white/40 hover:text-red-400">Clear</button>
+                        <button id="submit-code" class="glass-card glass-card-hover rounded-lg px-6 py-2 text-sm font-bold text-blue-400">
+                            Submit for AI Grading →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Feedback Section -->
+            <div id="feedback-section" class="glass-card rounded-lg p-6 mt-6 hidden fade-in">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30">AI Feedback</div>
+                    <div class="text-2xl font-bold" id="grade-score">--</div>
+                </div>
+                <div id="feedback-content" class="text-sm text-white/70 leading-relaxed">
+                    <!-- Feedback injected via JS -->
+                </div>
+                <div class="flex gap-3 mt-6 pt-4 border-t border-white/5">
+                    <button id="next-problem" class="glass-card glass-card-hover rounded-lg px-6 py-2 text-sm font-bold text-green-400">Next Problem →</button>
+                    <button id="retry-problem" class="glass-card rounded-lg px-6 py-2 text-sm text-white/50 hover:text-white">Try Again</button>
+                    <button id="show-solution" class="glass-card rounded-lg px-6 py-2 text-sm text-white/50 hover:text-yellow-400">Show Solution</button>
+                </div>
+            </div>
+
+            <!-- Solution Section -->
+            <div id="solution-section" class="glass-card rounded-lg p-6 mt-6 hidden fade-in">
+                <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-4">Reference Solution</div>
+                <pre id="solution-code" class="code-display"></pre>
+                <div class="mt-4 pt-4 border-t border-white/5 text-xs text-white/40">
+                    <span id="solution-complexity"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Key Modal -->
+    <div id="api-key-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 hidden">
+        <div class="glass-card rounded-lg p-8 max-w-md w-full mx-4 fade-in">
+            <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400/70 mb-2">AI Settings</div>
+            <h2 class="text-xl font-bold text-white mb-4">Gemini API Configuration</h2>
+            
+            <!-- API Key -->
+            <div class="mb-6">
+                <label class="text-xs text-white/50 mb-2 block">API Key</label>
+                <input type="password" id="api-key-input" 
+                       class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:border-blue-400/50 focus:outline-none" 
+                       placeholder="AIzaSy...">
+                <div class="text-xs text-white/30 mt-2">
+                    <a href="https://aistudio.google.com/apikey" target="_blank" class="text-blue-400 hover:underline">Get a free API key from Google AI Studio →</a>
+                </div>
+            </div>
+            
+            <!-- Model Selection -->
+            <div class="mb-6">
+                <label class="text-xs text-white/50 mb-2 block">AI Model</label>
+                <select id="model-select" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:border-blue-400/50 focus:outline-none">
+                    <option value="gemini-flash-latest">Gemini Flash (Fastest) - least accurate</option>
+                    <option value="gemini-3-flash-preview" selected>Gemini 3 Flash (Balanced) - recommended</option>
+                    <option value="gemini-3-pro-preview">Gemini 3 Pro (Smartest) - most accurate, slowest</option>
+                </select>
+                <div class="text-xs text-white/30 mt-2">Pro = most accurate but slow. Flash 3 = good balance. Flash = fastest but may hallucinate.</div>
+            </div>
+            
+            <div class="flex gap-3">
+                <button id="save-api-key" class="flex-1 glass-card glass-card-hover rounded-lg px-4 py-3 text-sm font-bold text-green-400">Save Settings</button>
+                <button id="skip-api-key" class="glass-card rounded-lg px-4 py-3 text-sm text-white/40 hover:text-white/60">Skip</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
+        <div class="text-center">
+            <div class="animate-spin w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full mb-4 mx-auto"></div>
+            <div class="text-sm text-white/50">AI is grading your solution...</div>
+        </div>
+    </div>
+
+    <script src="../problems_data.json" type="application/json" id="problems-data"></script>
+    <script src="js/test-engine.js"></script>
+    <script src="js/grader.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Exam Countdown</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen">
+
+    <!-- Fluid Background Canvas -->
+    <canvas id="fluid-canvas"></canvas>
+
+    <!-- UI Layer -->
+    <div id="ui-layer" class="max-w-6xl mx-auto px-6 md:px-12 py-8 flex flex-col min-h-screen">
+        
+        <!-- Main Display -->
+        <main id="main-content" class="flex-grow flex flex-col justify-center">
+            <!-- Content Injected via JS -->
+        </main>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/fluid.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>

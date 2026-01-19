@@ -1,24 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Countdown Target Date ---
-    const targetDate = new Date('2025-06-24T16:00:00');
+    const targetDate = new Date('2026-01-09T12:30:00');
     const targetTimestamp = targetDate.getTime() / 1000;
 
     // --- Initialize Flipdown Clock ---
     try {
-        // Check if countdown is up
-        if (Date.now() >= targetDate.getTime()) {
-            window.location.href = 'summer.html';
-            return;
-        }
-
         const flipdown = new FlipDown(targetTimestamp, 'flipdown', {
             theme: 'light'
         })
-        .start()
-        .ifEnded(() => {
-            window.location.href = 'summer.html';
-        });
+        .start();
     } catch (e) {
         console.error("Failed to initialize FlipDown:", e);
         const clockElement = document.getElementById('flipdown');
@@ -147,3 +138,4 @@ document.addEventListener('DOMContentLoaded', () => {
     updateFullscreenButton();
 
 });
+    document.addEventListener('webkitfullscreenchange', updateFullscreenButton);

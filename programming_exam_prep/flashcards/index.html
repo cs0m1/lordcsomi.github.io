@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Review - PSUP</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen bg-black text-gray-200">
+
+    <!-- Settings View -->
+    <div id="settings-view" class="view">
+        <div class="max-w-4xl mx-auto px-6 md:px-12 py-8 min-h-screen flex flex-col">
+            <!-- Header -->
+            <div class="space-y-1 mb-8 fade-in">
+                <h1 class="text-2xl md:text-3xl font-bold text-white">Flashcard Review</h1>
+                <a href="../countdown/index.html" class="text-sm text-white/40 hover:text-blue-400 transition-colors">← Back to Countdown</a>
+            </div>
+
+            <!-- Review Mode -->
+            <div class="glass-card rounded-lg p-6 mb-6 fade-in" style="animation-delay: 0.1s;">
+                <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-4">Review Mode</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <label class="mode-option">
+                        <input type="radio" name="review-mode" value="all" checked>
+                        <span class="mode-label">All (<span id="count-all">0</span>)</span>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="review-mode" value="need-review">
+                        <span class="mode-label">Need Review (<span id="count-review">0</span>)</span>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="review-mode" value="dont-know">
+                        <span class="mode-label">Don't Know (<span id="count-unknown">0</span>)</span>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="review-mode" value="weak">
+                        <span class="mode-label">Weak Areas (<span id="count-weak">0</span>)</span>
+                    </label>
+                </div>
+
+                <label class="checkbox-option mt-4">
+                    <input type="checkbox" id="shuffle-cards" checked>
+                    <span>Randomize Order</span>
+                </label>
+            </div>
+
+            <!-- Problem List for Selected Mode -->
+            <div class="glass-card rounded-lg p-6 mb-6 fade-in" style="animation-delay: 0.15s;">
+                <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-4">Problems in Selected Mode</div>
+                <div id="problems-preview" class="max-h-48 overflow-y-auto space-y-1">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <!-- Display Settings -->
+            <div class="glass-card rounded-lg p-6 mb-6 fade-in" style="animation-delay: 0.2s;">
+                <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-4">Display Settings</div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Front Settings -->
+                    <div>
+                        <div class="text-xs text-white/50 mb-3">Show on Front</div>
+                        <div class="space-y-2">
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-title" checked>
+                                <span>Algorithm Name</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-description-front" checked>
+                                <span>Description</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-id" checked>
+                                <span>Problem ID</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-difficulty" checked>
+                                <span>Difficulty Rating</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-source" checked>
+                                <span>Source (Page/Slide)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Back Settings -->
+                    <div>
+                        <div class="text-xs text-white/50 mb-3">Show on Back</div>
+                        <div class="space-y-2">
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-hint" checked>
+                                <span>Hint</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-algorithm" checked>
+                                <span>Algorithm Steps</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-complexity" checked>
+                                <span>Complexity</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-solution" checked>
+                                <span>Solution Code</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Start Button -->
+            <button id="start-review" class="glass-card glass-card-hover rounded-lg px-6 py-4 text-center fade-in" style="animation-delay: 0.3s;">
+                <span class="text-sm font-bold text-green-400">Start Review →</span>
+            </button>
+
+            <!-- Resume Section -->
+            <div id="resume-section" class="glass-card rounded-lg p-6 mt-6 border-yellow-500/30 hidden fade-in">
+                <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-yellow-400/70 mb-2">Saved Session Found</div>
+                <div class="text-sm text-white/50 mb-4" id="resume-info"></div>
+                <div class="flex gap-3">
+                    <button id="resume-btn" class="glass-card glass-card-hover rounded-lg px-4 py-2 text-sm font-bold text-green-400">Resume</button>
+                    <button id="clear-session-btn" class="glass-card rounded-lg px-4 py-2 text-sm font-bold text-red-400 hover:bg-red-500/10">Discard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flashcard View -->
+    <div id="flashcard-view" class="view hidden">
+        <div class="max-w-4xl mx-auto px-6 md:px-12 py-8 min-h-screen flex flex-col">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-6 fade-in">
+                <div class="flex items-center gap-6">
+                    <span class="text-lg font-bold text-white tabular-nums" id="progress-display">1/40</span>
+                    <div class="flex items-center gap-4 text-xs text-white/40">
+                        <span>Know: <strong class="text-green-400" id="stat-know-header">0</strong></span>
+                        <span>Review: <strong class="text-yellow-400" id="stat-review-header">0</strong></span>
+                        <span>Unknown: <strong class="text-red-400" id="stat-unknown-header">0</strong></span>
+                        <span>Mastery: <strong class="text-blue-400" id="stat-mastery-header">0%</strong></span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="settings-btn" class="glass-card glass-card-hover rounded-lg px-4 py-2 text-xs text-white/50">Settings</button>
+                    <a href="../countdown/index.html" class="glass-card glass-card-hover rounded-lg px-4 py-2 text-xs text-white/50">Home</a>
+                </div>
+            </div>
+
+            <!-- Flashcard -->
+            <div class="flashcard-container flex-grow flex items-center justify-center fade-in" style="animation-delay: 0.1s;">
+                <div id="flashcard" class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front glass-card rounded-lg">
+                            <div class="card-content" id="front-content"></div>
+                            <div class="flip-hint">Click to flip →</div>
+                        </div>
+                        <div class="flashcard-back glass-card rounded-lg">
+                            <div class="card-content" id="back-content"></div>
+                            <div class="flip-hint">← Click to flip</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mastery Buttons -->
+            <div class="flex justify-center gap-4 mt-6 fade-in" style="animation-delay: 0.2s;">
+                <button id="know-it" class="mastery-btn mastery-know">
+                    <i data-lucide="check" width="20"></i>
+                    <span>Know It</span>
+                </button>
+                <button id="need-review" class="mastery-btn mastery-review">
+                    <i data-lucide="alert-triangle" width="20"></i>
+                    <span>Need Review</span>
+                </button>
+                <button id="dont-know" class="mastery-btn mastery-unknown">
+                    <i data-lucide="x" width="20"></i>
+                    <span>Don't Know</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results View -->
+    <div id="results-view" class="view hidden">
+        <div class="max-w-4xl mx-auto px-6 md:px-12 py-8 min-h-screen flex flex-col justify-center">
+            <div class="text-center fade-in">
+                <h1 class="text-3xl font-bold text-white mb-2">Session Complete</h1>
+                <div class="text-6xl font-light text-blue-400 my-8" id="summary-mastery">0%</div>
+                <div class="text-xs uppercase tracking-[0.3em] text-white/30 mb-12">Overall Mastery</div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-12 fade-in" style="animation-delay: 0.1s;">
+                <div class="glass-card rounded-lg p-6 text-center">
+                    <div class="text-3xl font-bold text-green-400" id="results-know">0</div>
+                    <div class="text-xs text-white/40 mt-2">Know It</div>
+                </div>
+                <div class="glass-card rounded-lg p-6 text-center">
+                    <div class="text-3xl font-bold text-yellow-400" id="results-review">0</div>
+                    <div class="text-xs text-white/40 mt-2">Need Review</div>
+                </div>
+                <div class="glass-card rounded-lg p-6 text-center">
+                    <div class="text-3xl font-bold text-red-400" id="results-unknown">0</div>
+                    <div class="text-xs text-white/40 mt-2">Don't Know</div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-3 fade-in" style="animation-delay: 0.2s;">
+                <a href="index.html" class="glass-card glass-card-hover rounded-lg px-6 py-4 text-center text-sm font-bold text-green-400">New Session →</a>
+                <a href="../statistics/index.html" class="glass-card glass-card-hover rounded-lg px-6 py-4 text-center text-sm text-white/50">View Statistics</a>
+                <a href="../countdown/index.html" class="glass-card rounded-lg px-6 py-4 text-center text-sm text-white/40">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/flashcard-engine.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

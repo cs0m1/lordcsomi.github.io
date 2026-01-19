@@ -1,0 +1,1185 @@
+{
+  "metadata": {
+    "total_problems": 40,
+    "successful_generations": 40,
+    "generated_date": "2026-01-19T12:35:31.130199Z",
+    "model_used": "gemini-3-pro-preview",
+    "language": "csharp",
+    "course": "PSUP - Programming and Software Using Programming",
+    "validated": true
+  },
+  "problems": [
+    {
+      "id": "PROB_001",
+      "title": "Count Words in String",
+      "description": "Write a function that accepts a string as input and returns the total number of words contained within it. The solution must correctly handle multiple consecutive spaces, leading/trailing whitespace, and various whitespace characters (like tabs or newlines).",
+      "difficulty": 2,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "4",
+        "page": 1
+      },
+      "hint": "Think about how to separate the string based on spaces. Be careful with double spaces—splitting a string simply by a space character might create empty strings in your result array that shouldn't be counted.",
+      "algorithm": {
+        "description": "The approach utilizes string tokenization to separate the input based on whitespace delimiters while filtering out empty results.",
+        "steps": [
+          "Step 1: Validate the input string; if it is null or strictly whitespace, return 0.",
+          "Step 2: Identify the delimiter characters (spaces, tabs, newlines).",
+          "Step 3: Split the string using the delimiters, ensuring that the 'RemoveEmptyEntries' option is enabled to handle consecutive spaces.",
+          "Step 4: Return the length of the resulting array, which represents the word count."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class Program\n{\n    public static int CountWords(string input)\n    {\n        // Check if input is null or consists only of whitespace\n        if (string.IsNullOrWhiteSpace(input))\n        {\n            return 0;\n        }\n\n        // Define separators: space, tab, newline, carriage return\n        char[] delimiters = new char[] { ' ', '\\t', '\\n', '\\r' };\n\n        // Split the string and remove empty entries to handle multiple spaces\n        string[] words = input.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);\n\n        return words.Length;\n    }\n\n    public static void Main()\n    {\n        // Example usage\n        string testString = \"Hello,   World!  This is   a test.\";\n        int count = CountWords(testString);\n        \n        Console.WriteLine($\"Original: '{testString}'\");\n        Console.WriteLine($\"Word Count: {count}\");\n    }\n}",
+        "explanation": "The solution utilizes the C# `Split` method. By passing `StringSplitOptions.RemoveEmptyEntries`, we ensure that if there are multiple spaces between words (e.g., 'Hello   World'), the split method does not include empty strings in the result array. This provides an accurate count of actual words without needing a complex manual state-machine loop.",
+        "time_complexity": "O(n)",
+        "space_complexity": "O(n)"
+      }
+    },
+    {
+      "id": "PROB_002",
+      "title": "Selection Sort (Iterative)",
+      "description": "Implement the Selection Sort algorithm to arrange an array of integers in ascending order. This method works by repeatedly finding the minimum element from the unsorted portion of the array and moving it to the beginning of that portion.",
+      "difficulty": 3,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "5",
+        "page": 1
+      },
+      "hint": "Think of the array as having two parts: a sorted section on the left and an unsorted section on the right. In each iteration, scan the unsorted section to find the index of the smallest value, then swap that value with the first element of the unsorted section.",
+      "algorithm": {
+        "description": "Selection sort is an in-place comparison sorting algorithm that divides the input list into two parts: the sublist of items already sorted (built from left to right) and the sublist of items remaining to be sorted.",
+        "steps": [
+          "Step 1: Iterate from the first element of the array to the second-to-last element (index i).",
+          "Step 2: Assume the element at index i is the minimum (store this index as min_idx).",
+          "Step 3: Iterate through the remaining unsorted elements (from i + 1 to the end) to find the actual minimum value.",
+          "Step 4: If a smaller element is found, update min_idx to that element's index.",
+          "Step 5: Swap the element at index i with the element at min_idx to place the smallest unsorted element in its correct position."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class Program\n{\n    public static void SelectionSort(int[] arr)\n    {\n        int n = arr.Length;\n\n        // One by one move boundary of unsorted subarray\n        for (int i = 0; i < n - 1; i++)\n        {\n            // Find the minimum element in unsorted array\n            int min_idx = i;\n            for (int j = i + 1; j < n; j++)\n            {\n                if (arr[j] < arr[min_idx])\n                {\n                    min_idx = j;\n                }\n            }\n\n            // Swap the found minimum element with the first element\n            // of the unsorted subarray\n            int temp = arr[min_idx];\n            arr[min_idx] = arr[i];\n            arr[i] = temp;\n        }\n    }\n\n    public static void Main()\n    {\n        int[] arr = { 64, 25, 12, 22, 11 };\n        Console.WriteLine(\"Original array: \" + string.Join(\", \", arr));\n        \n        SelectionSort(arr);\n        \n        Console.WriteLine(\"Sorted array: \" + string.Join(\", \", arr));\n    }\n}",
+        "explanation": "The solution uses two nested loops. The outer loop moves the boundary of the unsorted subarray. The inner loop searches through the unsorted portion to find the index of the minimum element. Once the minimum is found, a swap operation places it at the beginning of the unsorted portion, effectively appending it to the sorted portion of the array.",
+        "time_complexity": "O(n²)",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_003",
+      "title": "Sum of Multiples (3 or 5)",
+      "description": "Calculate the sum of all natural numbers below a specified limit (typically 1000) that are multiples of either 3 or 5. For instance, the multiples of 3 or 5 below 10 are 3, 5, 6, and 9, and their sum is 23.",
+      "difficulty": 2,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "6",
+        "page": 1
+      },
+      "hint": "Use the modulo operator (%) to check for divisibility. Be careful not to double-count numbers that are multiples of both 3 and 5 (like 15); using a logical OR condition handles this automatically.",
+      "algorithm": {
+        "description": "The approach involves iterating through all integers from 1 up to the limit and accumulating those that satisfy the divisibility condition.",
+        "steps": [
+          "Step 1: Initialize a variable 'sum' to 0 to store the running total.",
+          "Step 2: Start a loop from 1 up to (but not including) the target limit.",
+          "Step 3: Inside the loop, check if the current number is divisible by 3 OR divisible by 5 using the modulo operator.",
+          "Step 4: If the condition is true, add the current number to 'sum'.",
+          "Step 5: Once the loop completes, output the final value of 'sum'."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class Program\n{\n    public static void Main()\n    {\n        int limit = 1000;\n        long totalSum = GetSumOfMultiples(limit);\n        Console.WriteLine($\"The sum of multiples of 3 or 5 below {limit} is: {totalSum}\");\n    }\n\n    public static long GetSumOfMultiples(int n)\n    {\n        long sum = 0;\n        // Loop from 1 up to n-1\n        for (int i = 1; i < n; i++)\n        {\n            // Check divisibility by 3 or 5\n            if (i % 3 == 0 || i % 5 == 0)\n            {\n                sum += i;\n            }\n        }\n        return sum;\n    }\n}",
+        "explanation": "This solution uses a simple iterative approach. By looping from 1 to the limit and using the logical OR operator (`||`), we ensure that numbers divisible by 3, 5, or both (e.g., 15) are added to the sum exactly once. The modulo operator (`%`) returns 0 if a number is perfectly divisible.",
+        "time_complexity": "O(n)",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_004",
+      "title": "Fibonacci Sequence (Even terms)",
+      "description": "Calculate the sum of the even-valued terms in the Fibonacci sequence whose values do not exceed four million. The sequence starts with 1 and 2, and each new term is generated by adding the previous two terms.",
+      "difficulty": 3,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "7",
+        "page": 1
+      },
+      "hint": "You don't need to store all the numbers in an array. You only need to keep track of the current two numbers to generate the next one, checking for evenness using the modulo operator (%) as you go.",
+      "algorithm": {
+        "description": "An iterative approach that generates Fibonacci numbers one by one, checking for parity before accumulation.",
+        "steps": [
+          "Step 1: Initialize variables for the first two terms (1 and 2) and a variable for the sum (initially 0).",
+          "Step 2: Start a loop that continues as long as the current term is less than or equal to the limit (4,000,000).",
+          "Step 3: Inside the loop, check if the current term is even (term % 2 == 0). If it is, add it to the sum.",
+          "Step 4: Calculate the next term by adding the previous term and the current term.",
+          "Step 5: Update the 'previous' variable to hold the 'current' value, and the 'current' variable to hold the 'next' value.",
+          "Step 6: Once the loop finishes, output the final sum."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class Program\n{\n    public static void Main()\n    {\n        // Define the limit as specified in the problem\n        const int LIMIT = 4000000;\n        \n        long sum = 0;\n        int prevTerm = 1;\n        int currTerm = 2;\n\n        // Loop until the current term exceeds the limit\n        while (currTerm <= LIMIT)\n        {\n            // Check if the current term is even\n            if (currTerm % 2 == 0)\n            {\n                sum += currTerm;\n            }\n\n            // Calculate the next term in the sequence\n            int nextTerm = prevTerm + currTerm;\n            \n            // Shift variables forward\n            prevTerm = currTerm;\n            currTerm = nextTerm;\n        }\n\n        Console.WriteLine($\"The sum of even-valued terms is: {sum}\");\n    }\n}",
+        "explanation": "The code uses a while loop to generate Fibonacci numbers dynamically. Instead of using recursion (which could be inefficient) or an array (which wastes memory), it maintains only the two most recent numbers needed to calculate the next one. The modulo operator checks for evenness, and a running total accumulates the valid terms.",
+        "time_complexity": "O(N), where N is the number of terms generated (logarithmic relative to the limit value)",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_005",
+      "title": "Largest Prime Factor",
+      "description": "The prime factors of 13195 are 5, 7, 13 and 29, making 29 the largest prime factor. The goal of this problem is to calculate the largest prime factor of a given large integer, such as 600851475143.",
+      "difficulty": 3,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "8, 9",
+        "page": 1
+      },
+      "hint": "You do not need to generate a list of prime numbers. Instead, try continuously dividing the target number by the smallest possible integer (starting at 2) until it is no longer divisible, effectively reducing the target number to its largest prime component.",
+      "algorithm": {
+        "description": "The approach uses Trial Division. By systematically dividing out the smallest factors (2, 3, 4...), we ensure that any factor we find is prime because composite factors would have been removed by their own smaller prime constituents earlier.",
+        "steps": [
+          "Step 1: Initialize a variable 'n' with the target number (use a 64-bit integer type like long).",
+          "Step 2: Initialize a 'divisor' variable starting at 2.",
+          "Step 3: Create a loop that continues while 'divisor' squared is less than or equal to 'n'.",
+          "Step 4: Inside the loop, check if 'n' is divisible by 'divisor'. If it is, divide 'n' by 'divisor' (n = n / divisor) to remove that factor. Do not increment the divisor yet, as the number might be divisible by the same factor multiple times.",
+          "Step 5: If 'n' is not divisible by 'divisor', increment 'divisor' by 1.",
+          "Step 6: Once the loop finishes, the remaining value of 'n' is the largest prime factor."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\nnamespace ProjectEuler\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            // The number from Project Euler Problem 3\n            long targetNumber = 600851475143;\n            long result = GetLargestPrimeFactor(targetNumber);\n            \n            Console.WriteLine($\"The largest prime factor of {targetNumber} is: {result}\");\n        }\n\n        static long GetLargestPrimeFactor(long n)\n        {\n            long divisor = 2;\n\n            // Loop until the divisor exceeds the square root of the remaining n\n            while (divisor * divisor <= n)\n            {\n                if (n % divisor == 0)\n                {\n                    // Divide n by the divisor to remove this factor\n                    n /= divisor;\n                }\n                else\n                {\n                    // Only increment if not divisible\n                    divisor++;\n                }\n            }\n\n            // Whatever is left in n is the largest prime factor\n            return n;\n        }\n    }\n}",
+        "explanation": "This solution works by reducing the target number 'n'. By starting the divisor at 2 and incrementing, we guarantee that every number we successfully divide by is a prime number (because if it were composite, its smaller prime factors would have already divided 'n'). The loop condition `divisor * divisor <= n` is a mathematical optimization: if 'n' has no factors less than or equal to its square root, then 'n' itself must be prime. This dramatically reduces execution time compared to looping up to 'n'.",
+        "time_complexity": "O(sqrt(N))",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_006",
+      "title": "Palindrome Check (Numeric)",
+      "description": "Determine whether a given integer is a palindrome. An integer is a palindrome when it reads the same backward as forward (e.g., 121 is a palindrome, but 123 is not).",
+      "difficulty": 3,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "10, 11",
+        "page": 1
+      },
+      "hint": "Try to reverse the number mathematically using the modulo operator (%) to get the last digit and integer division (/) to remove it, rather than converting the number to a string.",
+      "algorithm": {
+        "description": "The approach involves mathematically reversing the integer and comparing the reversed version to the original input.",
+        "steps": [
+          "Step 1: Check if the number is negative; if so, return false (negative numbers like -121 are not palindromes).",
+          "Step 2: Store the original number in a temporary variable to preserve it for the final comparison.",
+          "Step 3: Initialize a variable 'reversed' to 0.",
+          "Step 4: Loop while the number is greater than 0.",
+          "Step 5: Inside the loop, extract the last digit using 'number % 10'.",
+          "Step 6: Update 'reversed' by multiplying it by 10 and adding the extracted digit.",
+          "Step 7: Remove the last digit from the number using integer division 'number / 10'.",
+          "Step 8: After the loop, compare 'reversed' with the original number and return the result."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class PalindromeChecker\n{\n    public static bool IsPalindrome(int x)\n    {\n        // Negative numbers are not palindromes (e.g. -121 reads 121-)\n        if (x < 0) return false;\n\n        int original = x;\n        int reversed = 0;\n\n        while (x > 0)\n        {\n            int digit = x % 10;\n            reversed = (reversed * 10) + digit;\n            x = x / 10;\n        }\n\n        return original == reversed;\n    }\n\n    public static void Main(string[] args)\n    {\n        int testNum = 12321;\n        Console.WriteLine($\"Is {testNum} a palindrome? {IsPalindrome(testNum)}\");\n        \n        testNum = 123;\n        Console.WriteLine($\"Is {testNum} a palindrome? {IsPalindrome(testNum)}\");\n    }\n}",
+        "explanation": "The solution avoids string conversion for better performance and algorithmic rigor. It works by reconstructing the number in reverse. In every iteration of the while loop, we take the last digit of the current number (x % 10) and add it to the reversed number. Before adding, we multiply the existing reversed number by 10 to shift its digits to the left. We then truncate the last digit of x (x / 10). Finally, we compare the mathematically reversed number with the original input.",
+        "time_complexity": "O(log₁₀(n))",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_007",
+      "title": "Smallest Multiple (LCM 1 to 20)",
+      "description": "2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder. The problem asks to find the smallest positive number that is evenly divisible by all of the numbers from 1 to 20.",
+      "difficulty": 4,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "12, 13, 14",
+        "page": 1
+      },
+      "hint": "Calculating the Least Common Multiple (LCM) of a sequence can be done iteratively. Remember the mathematical relationship: LCM(a, b) = (a * b) / GCD(a, b).",
+      "algorithm": {
+        "description": "The most efficient approach avoids brute force by mathematically calculating the Least Common Multiple (LCM) of the sequence. We can compute the LCM of a range of numbers by iteratively calculating the LCM of the current result and the next number in the sequence.",
+        "steps": [
+          "Step 1: Implement a helper function `GCD(a, b)` using the Euclidean algorithm to find the Greatest Common Divisor.",
+          "Step 2: Implement a helper function `LCM(a, b)` using the formula `(a * b) / GCD(a, b)`. Note: perform division before multiplication to avoid potential integer overflow.",
+          "Step 3: Initialize a variable `result` to 1.",
+          "Step 4: Loop through numbers `i` from 2 to 20.",
+          "Step 5: In each iteration, update `result` to be `LCM(result, i)`.",
+          "Step 6: Print the final `result`."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class SmallestMultiple\n{\n    // Helper method to calculate Greatest Common Divisor\n    public static long Gcd(long a, long b)\n    {\n        while (b != 0)\n        {\n            long temp = b;\n            b = a % b;\n            a = temp;\n        }\n        return a;\n    }\n\n    // Helper method to calculate Least Common Multiple\n    public static long Lcm(long a, long b)\n    {\n        if (a == 0 || b == 0) return 0;\n        // Divide first to prevent overflow during multiplication\n        return (a / Gcd(a, b)) * b;\n    }\n\n    public static void Main(string[] args)\n    {\n        long result = 1;\n        \n        // Iteratively calculate LCM for numbers 1 to 20\n        for (long i = 2; i <= 20; i++)\n        {\n            result = Lcm(result, i);\n        }\n\n        Console.WriteLine($\"The smallest multiple of 1 to 20 is: {result}\");\n    }\n}",
+        "explanation": "This solution relies on the property that the LCM of a set of numbers can be computed sequentially. By calculating LCM(1, 2), then taking that result and calculating LCM(result, 3), and so on up to 20, we find the number divisible by all of them. We use the Euclidean algorithm for GCD because it is highly efficient (logarithmic time), which allows the LCM calculation to be very fast compared to a brute-force approach that checks every number.",
+        "time_complexity": "O(N * log(M)) where N is the range (20) and M is the magnitude of the LCM",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_008",
+      "title": "Sum Square Difference",
+      "description": "Calculate the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum of the same numbers. This problem involves translating mathematical series definitions into iterative programming logic.",
+      "difficulty": 2,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "15, 16",
+        "page": 1
+      },
+      "hint": "You can solve this using a single loop to calculate both the sum of the numbers and the sum of their squares simultaneously. Alternatively, recall the mathematical formulas for the sum of the first n integers and the sum of the first n squares.",
+      "algorithm": {
+        "description": "The approach utilizes a linear iteration to accumulate the necessary sums required to perform the final subtraction.",
+        "steps": [
+          "Step 1: Initialize two integer variables, 'sumOfSquares' and 'sum', to zero.",
+          "Step 2: Create a loop that iterates from 1 to 100 (inclusive).",
+          "Step 3: Inside the loop, add the square of the current number to 'sumOfSquares' and add the current number to 'sum'.",
+          "Step 4: After the loop terminates, calculate 'squareOfSum' by squaring the variable 'sum'.",
+          "Step 5: Compute the difference by subtracting 'sumOfSquares' from 'squareOfSum' and print the result."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class Program\n{\n    public static void Main()\n    {\n        // Define the upper limit\n        int limit = 100;\n        \n        // Use long to prevent potential integer overflow for larger limits\n        long sumOfSquares = 0;\n        long sum = 0;\n\n        // Iterate from 1 to 100\n        for (int i = 1; i <= limit; i++)\n        {\n            sumOfSquares += (long)i * i;\n            sum += i;\n        }\n\n        // Calculate the square of the sum\n        long squareOfSum = sum * sum;\n\n        // Calculate the difference\n        long difference = squareOfSum - sumOfSquares;\n\n        Console.WriteLine($\"Sum of squares: {sumOfSquares}\");\n        Console.WriteLine($\"Square of sum: {squareOfSum}\");\n        Console.WriteLine($\"Difference: {difference}\");\n    }\n}",
+        "explanation": "The solution uses a simple `for` loop to traverse numbers from 1 to 100. During each iteration, it maintains two running totals: one for the squares ($1^2, 2^2, ...$) and one for the linear sum ($1, 2, ...$). By performing these additions in a single pass, we avoid the need for nested loops or arrays. Finally, we square the linear sum and perform the subtraction. The use of `long` ensures that the calculations do not overflow the bounds of a standard 32-bit integer, although for the number 100, standard `int` would technically suffice.",
+        "time_complexity": "O(n)",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_009",
+      "title": "Sieve of Eratosthenes (Prime Finding)",
+      "description": "Implement an efficient algorithm to find all prime numbers up to a specified integer limit n. The goal is to generate a list of primes using the Sieve of Eratosthenes method, which eliminates composite numbers iteratively.",
+      "difficulty": 5,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "18, 19, 20, 21, 22",
+        "page": 1
+      },
+      "hint": "Instead of testing if each number is prime by dividing it by all smaller numbers, assume all numbers are prime initially. Then, starting with 2, 'cross out' (mark as false) every multiple of that number. Move to the next uncrossed number and repeat.",
+      "algorithm": {
+        "description": "The Sieve of Eratosthenes works by iteratively marking the multiples of each prime number as composite (not prime).",
+        "steps": [
+          "Step 1: Create a boolean array of size n+1 and initialize all entries from index 2 to n as true (assuming they are prime). Mark 0 and 1 as false.",
+          "Step 2: Start a loop with integer p = 2. While p * p <= n, check if array[p] is true.",
+          "Step 3: If array[p] is true, it is a prime. Start a nested loop from i = p * p up to n, incrementing by p. Mark array[i] as false (these are multiples of p).",
+          "Step 4: After the loops complete, iterate through the array one last time. Any index i where array[i] is true is a prime number."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\nusing System.Collections.Generic;\n\npublic class SieveOfEratosthenes\n{\n    public static List<int> FindPrimes(int limit)\n    {\n        // Step 1: Initialize boolean array\n        // default value of bool is false, so we can treat 'true' as composite\n        // OR initialize all to true. Here we initialize all to true for clarity.\n        bool[] isPrime = new bool[limit + 1];\n        for (int i = 2; i <= limit; i++)\n        {\n            isPrime[i] = true;\n        }\n\n        // Step 2: Iterate from 2 up to sqrt(limit)\n        for (int p = 2; p * p <= limit; p++)\n        {\n            // If isPrime[p] is not changed, then it is a prime\n            if (isPrime[p])\n            {\n                // Step 3: Update all multiples of p\n                // Start from p*p because smaller multiples (like 2*p) \n                // have already been marked by smaller primes (like 2)\n                for (int i = p * p; i <= limit; i += p)\n                {\n                    isPrime[i] = false;\n                }\n            }\n        }\n\n        // Step 4: Collect results\n        List<int> primes = new List<int>();\n        for (int i = 2; i <= limit; i++)\n        {\n            if (isPrime[i])\n            {\n                primes.Add(i);\n            }\n        }\n\n        return primes;\n    }\n\n    public static void Main()\n    {\n        int n = 50;\n        List<int> result = FindPrimes(n);\n        Console.WriteLine($\"Primes up to {n}: \" + string.Join(\", \", result));\n    }\n}",
+        "explanation": "We use a boolean array to represent the primality of numbers. By iterating from 2, we find the first number marked 'true' (which is 2) and mark all its multiples as 'false' because a multiple of 2 cannot be prime. We then move to the next 'true' number (3) and mark its multiples. We skip 4 because it was marked by 2. This process is highly efficient because we perform additions (stepping by p) rather than expensive division or modulus operations for every number.",
+        "time_complexity": "O(n log(log n))",
+        "space_complexity": "O(n)"
+      }
+    },
+    {
+      "id": "PROB_010",
+      "title": "Finding the Nth Prime",
+      "description": "Write a program that accepts a positive integer N and determines the Nth prime number. For example, if N is 1, the answer is 2; if N is 6, the answer is 13 (the sequence being 2, 3, 5, 7, 11, 13).",
+      "difficulty": 4,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "23",
+        "page": 1
+      },
+      "hint": "You need a loop that checks integers sequentially starting from 2. Maintain a counter that increments every time you find a prime number. The loop should terminate when this counter reaches N. For the primality check, remember that you only need to test divisors up to the square root of the number.",
+      "algorithm": {
+        "description": "The algorithm iterates through integers starting from 2, checking each for primality, and counting how many primes are found until the count reaches N.",
+        "steps": [
+          "Step 1: Initialize a counter variable to 0 (to track primes found) and a candidate variable to 1 (current number being checked).",
+          "Step 2: Enter a while loop that runs as long as the counter is less than N.",
+          "Step 3: Inside the loop, increment the candidate variable by 1.",
+          "Step 4: Check if the candidate is prime. To do this efficiently, return false if divisible by any number from 2 up to the square root of the candidate.",
+          "Step 5: If the candidate is prime, increment the counter.",
+          "Step 6: Once the loop finishes (counter equals N), output the current candidate as the Nth prime."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\nnamespace PSUP_Solutions\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter N to find the Nth prime: \");\n            if (int.TryParse(Console.ReadLine(), out int n) && n > 0)\n            {\n                int result = FindNthPrime(n);\n                Console.WriteLine($\"The {n}th prime number is: {result}\");\n            }\n            else\n            {\n                Console.WriteLine(\"Please enter a valid positive integer.\");\n            }\n        }\n\n        static int FindNthPrime(int n)\n        {\n            int count = 0;\n            int candidate = 1;\n\n            while (count < n)\n            {\n                candidate++;\n                if (IsPrime(candidate))\n                {\n                    count++;\n                }\n            }\n            return candidate;\n        }\n\n        static bool IsPrime(int number)\n        {\n            if (number <= 1) return false;\n            if (number == 2) return true;\n            if (number % 2 == 0) return false;\n\n            int boundary = (int)Math.Floor(Math.Sqrt(number));\n\n            for (int i = 3; i <= boundary; i += 2)\n            {\n                if (number % i == 0)\n                    return false;\n            }\n            return true;\n        }\n    }\n}",
+        "explanation": "The solution employs a `while` loop to continuously check integers (`candidate`) starting from 2. A helper method `IsPrime` determines validity. To optimize performance, `IsPrime` immediately handles even numbers and only iterates through odd divisors up to the square root of the number. The main loop increments a `count` variable whenever a prime is found, stopping exactly when the Nth prime is identified.",
+        "time_complexity": "O(k * sqrt(k)), where k is the value of the Nth prime",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_011",
+      "title": "Largest Product in a String (Sliding Window)",
+      "description": "Given a large number represented as a string and a window size 'k', find the greatest product of 'k' consecutive digits. The program must iterate through the string, parsing digits and calculating products for every contiguous subsequence of the specified length.",
+      "difficulty": 4,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "24, 25",
+        "page": 1
+      },
+      "hint": "Remember that characters in a string are not integers. You must convert the char '0'-'9' to the integer 0-9 (e.g., by subtracting the char '0'). Also, consider that the product of several digits can easily exceed the range of a standard 32-bit integer, so choose your data types carefully.",
+      "algorithm": {
+        "description": "The algorithm uses a sliding window approach to scan through the string of digits. For every possible starting position, it calculates the product of the next 'k' digits.",
+        "steps": [
+          "Step 1: Initialize a variable 'maxProduct' to 0 to store the highest product found so far.",
+          "Step 2: Create a loop that iterates from index i = 0 up to 'stringLength - k'. This ensures the window stays within bounds.",
+          "Step 3: Inside the outer loop, initialize 'currentProduct' to 1.",
+          "Step 4: Create an inner loop that runs 'k' times. In each iteration, convert the character at 'index + offset' to an integer and multiply it into 'currentProduct'.",
+          "Step 5: After the inner loop finishes, compare 'currentProduct' with 'maxProduct'. If 'currentProduct' is greater, update 'maxProduct'.",
+          "Step 6: Once the outer loop finishes, return 'maxProduct'."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class LargestProduct\n{\n    public static long GetMaxProduct(string numString, int k)\n    {\n        // Input validation\n        if (string.IsNullOrEmpty(numString) || k > numString.Length)\n            return 0;\n\n        long maxProduct = 0;\n\n        // Iterate through the string, stopping when a full window of size k cannot be formed\n        for (int i = 0; i <= numString.Length - k; i++)\n        {\n            long currentProduct = 1;\n\n            // Calculate product of the current window of size k\n            for (int j = 0; j < k; j++)\n            {\n                // Convert char to int (ASCII math: '5' - '0' = 5)\n                int digit = numString[i + j] - '0';\n                currentProduct *= digit;\n            }\n\n            // Update maximum if current is larger\n            if (currentProduct > maxProduct)\n            {\n                maxProduct = currentProduct;\n            }\n        }\n\n        return maxProduct;\n    }\n\n    public static void Main()\n    {\n        // Example: Finding the largest product of 4 consecutive digits\n        string number = \"73167176531330624919225119674426574742355349194934\";\n        int k = 4;\n        \n        long result = GetMaxProduct(number, k);\n        Console.WriteLine($\"Largest product of {k} adjacent digits is: {result}\");\n    }\n}",
+        "explanation": "The solution iterates through the string using a window of size 'k'. We use a 'long' data type for the product because multiplying several digits (like 9^13) can exceed the maximum value of a standard 'int'. The conversion `numString[i + j] - '0'` efficiently transforms the ASCII character code of a digit into its actual integer value. The nested loop structure ensures every possible consecutive sequence is checked.",
+        "time_complexity": "O(N * K) where N is the length of the string and K is the window size.",
+        "space_complexity": "O(1) as we only use a few variables for storage regardless of input size."
+      }
+    },
+    {
+      "id": "PROB_012",
+      "title": "Pythagorean Triplet (a²+b²=c²)",
+      "description": "A Pythagorean triplet is a set of three natural numbers, a < b < c, for which a² + b² = c². Find the product abc for the only Pythagorean triplet for which a + b + c = 1000.",
+      "difficulty": 3,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "26, 27",
+        "page": 1
+      },
+      "hint": "Since you know that a + b + c = 1000, you can calculate c if you already know a and b (c = 1000 - a - b). This allows you to solve the problem with only two nested loops instead of three.",
+      "algorithm": {
+        "description": "Use a brute-force approach with optimization based on the sum constraint. Iterate through possible values of 'a' and 'b', calculate 'c', and verify the Pythagorean property.",
+        "steps": [
+          "Initialize a loop for 'a' from 1 to approximately 332 (since a < sum/3).",
+          "Initialize a nested loop for 'b' from a+1 to approximately 499 (since b < sum/2).",
+          "Calculate 'c' using the constraint: c = 1000 - a - b.",
+          "Check if the condition a² + b² = c² holds true.",
+          "If the condition is met, calculate the product a*b*c, print the result, and terminate the program."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        const int sum = 1000;\n\n        // Iterate through possible values of a\n        // a must be less than sum/3 because a < b < c\n        for (int a = 1; a < sum / 3; a++)\n        {\n            // Iterate through possible values of b\n            // b must be greater than a, and roughly less than sum/2\n            for (int b = a + 1; b < sum / 2; b++)\n            {\n                // We derive c directly from the sum constraint\n                int c = sum - a - b;\n\n                // Check the Pythagorean condition\n                if (a * a + b * b == c * c)\n                {\n                    Console.WriteLine($\"Triplet found: a={a}, b={b}, c={c}\");\n                    Console.WriteLine($\"Product: {(long)a * b * c}\");\n                    return; // Solution found, exit\n                }\n            }\n        }\n    }\n}",
+        "explanation": "This solution reduces the search space by using the mathematical constraint a + b + c = 1000. Instead of looping for c, we calculate it as (1000 - a - b). We then verify if these three numbers satisfy the Pythagorean theorem. The loops are bounded efficiently: 'a' cannot exceed 1000/3 and 'b' cannot exceed 1000/2 given the condition a < b < c.",
+        "time_complexity": "O(N²) where N is the target sum (1000)",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_013",
+      "title": "Sum of Primes (using Sieve)",
+      "description": "Calculate the sum of all prime numbers below a specified limit (e.g., 2,000,000). The problem requires implementing an efficient algorithm to identify prime numbers, as iterating and testing each number individually (trial division) is computationally expensive for large inputs.",
+      "difficulty": 5,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "28",
+        "page": 1
+      },
+      "hint": "Instead of checking if every number is prime individually, try to eliminate non-prime numbers using the Sieve of Eratosthenes. Also, ensure your variable for the running total is large enough to hold a value greater than 2 billion (use long instead of int).",
+      "algorithm": {
+        "description": "The algorithm uses the Sieve of Eratosthenes to generate a boolean array representing primality up to the limit N.",
+        "steps": [
+          "Step 1: Create a boolean array of size N and initialize all entries to true (assuming all are prime initially), setting indices 0 and 1 to false.",
+          "Step 2: Iterate through the numbers starting from 2 up to the square root of N.",
+          "Step 3: If the current number 'p' is marked as true, iterate through all multiples of 'p' (starting from p*p) and mark them as false in the array.",
+          "Step 4: Iterate through the final boolean array; for every index marked true, add that index value to a 64-bit integer sum."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class SumOfPrimes\n{\n    public static void Main(string[] args)\n    {\n        // Example limit based on Project Euler Problem 10\n        int limit = 2000000;\n        long totalSum = GetSumOfPrimes(limit);\n        \n        Console.WriteLine($\"The sum of primes below {limit} is: {totalSum}\");\n    }\n\n    public static long GetSumOfPrimes(int limit)\n    {\n        // Step 1: Initialize Sieve Array\n        // isPrime[i] will be true if i is prime\n        bool[] isPrime = new bool[limit];\n        for (int i = 0; i < limit; i++)\n        {\n            isPrime[i] = true;\n        }\n\n        // 0 and 1 are not prime numbers\n        isPrime[0] = false;\n        isPrime[1] = false;\n\n        // Step 2 & 3: Perform Sieve of Eratosthenes\n        // We only need to check up to sqrt(limit)\n        for (int p = 2; p * p < limit; p++)\n        {\n            // If isPrime[p] is not changed, then it is a prime\n            if (isPrime[p])\n            {\n                // Update all multiples of p to false\n                // We can start at p*p because smaller multiples have already been marked\n                for (int i = p * p; i < limit; i += p)\n                {\n                    isPrime[i] = false;\n                }\n            }\n        }\n\n        // Step 4: Calculate Sum\n        long sum = 0;\n        for (int i = 2; i < limit; i++)\n        {\n            if (isPrime[i])\n            {\n                sum += i;\n            }\n        }\n\n        return sum;\n    }\n}",
+        "explanation": "The solution employs the Sieve of Eratosthenes, a highly efficient algorithm for finding all primes up to a specified integer. By creating a boolean array and iteratively marking the multiples of each prime found as 'false' (composite), we avoid expensive division operations for every number. The outer loop runs up to the square root of the limit because any composite number must have a factor less than or equal to its square root. A 'long' (Int64) data type is strictly required for the sum variable because the sum of primes below 2 million is approximately 142 billion, which causes an integer overflow if a standard 32-bit 'int' is used.",
+        "time_complexity": "O(n log log n)",
+        "space_complexity": "O(n)"
+      }
+    },
+    {
+      "id": "PROB_014",
+      "title": "Largest Product in a Grid (2D Array Traversal)",
+      "description": "Given a 2D grid of integers, determine the greatest product of four adjacent numbers in the same direction. The sequence can be horizontal, vertical, or diagonal.",
+      "difficulty": 5,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "29, 30, 31",
+        "page": 1
+      },
+      "hint": "Treat every cell in the grid as a starting point. From that point, calculate the product of the next 4 numbers in all possible directions (Right, Down, Diagonal Right, Diagonal Left), but ensure you check array bounds so you don't go off the edge of the grid.",
+      "algorithm": {
+        "description": "The algorithm uses a brute-force approach to traverse the 2D array, checking every possible sequence of length 4.",
+        "steps": [
+          "Step 1: Initialize a variable 'maxProduct' to 0 to store the result.",
+          "Step 2: Create a nested loop to iterate through every row (r) and column (c) of the grid.",
+          "Step 3: Inside the loop, for the current cell grid[r,c], check four specific directions: Horizontal (Right), Vertical (Down), Diagonal (Down-Right), and Anti-Diagonal (Down-Left).",
+          "Step 4: Before calculating the product for a direction, perform a boundary check (e.g., for horizontal, ensure c + 3 is within the column limit).",
+          "Step 5: If the boundary check passes, calculate the product of the 4 adjacent numbers. If this product is greater than 'maxProduct', update 'maxProduct'.",
+          "Step 6: After checking all cells, return 'maxProduct'."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class GridProductSolver\n{\n    public static long GetLargestProduct(int[,] grid)\n    {\n        int rows = grid.GetLength(0);\n        int cols = grid.GetLength(1);\n        long maxProduct = 0;\n        int length = 4; // Length of sequence to check\n\n        for (int r = 0; r < rows; r++)\n        {\n            for (int c = 0; c < cols; c++)\n            {\n                // 1. Horizontal (Right)\n                if (c + length <= cols)\n                {\n                    long prod = 1;\n                    for (int k = 0; k < length; k++) prod *= grid[r, c + k];\n                    if (prod > maxProduct) maxProduct = prod;\n                }\n\n                // 2. Vertical (Down)\n                if (r + length <= rows)\n                {\n                    long prod = 1;\n                    for (int k = 0; k < length; k++) prod *= grid[r + k, c];\n                    if (prod > maxProduct) maxProduct = prod;\n                }\n\n                // 3. Diagonal (Down-Right)\n                if (r + length <= rows && c + length <= cols)\n                {\n                    long prod = 1;\n                    for (int k = 0; k < length; k++) prod *= grid[r + k, c + k];\n                    if (prod > maxProduct) maxProduct = prod;\n                }\n\n                // 4. Anti-Diagonal (Down-Left)\n                if (r + length <= rows && c - length + 1 >= 0)\n                {\n                    long prod = 1;\n                    for (int k = 0; k < length; k++) prod *= grid[r + k, c - k];\n                    if (prod > maxProduct) maxProduct = prod;\n                }\n            }\n        }\n        return maxProduct;\n    }\n}",
+        "explanation": "The solution iterates through every cell in the matrix using nested loops. At each cell, it attempts to form a sequence of 4 numbers in four directions: East (Horizontal), South (Vertical), South-East (Diagonal), and South-West (Anti-Diagonal). Boundary checks (e.g., `c + length <= cols`) are essential to prevent IndexOutOfReference exceptions. We use `long` for the product to prevent integer overflow if the product exceeds the capacity of a 32-bit integer.",
+        "time_complexity": "O(N*M), where N is rows and M is columns (iterating through the grid once)",
+        "space_complexity": "O(1) (only storing a few variables for tracking the maximum)"
+      }
+    },
+    {
+      "id": "PROB_015",
+      "title": "Triangular Numbers & Divisor Counting",
+      "description": "The sequence of triangle numbers is generated by adding the natural numbers (e.g., 1, 1+2=3, 1+2+3=6, ...). The problem requires finding the value of the first triangle number that has over 500 distinct divisors.",
+      "difficulty": 5,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "32, 33",
+        "page": 1
+      },
+      "hint": "Calculating divisors by iterating up to the number itself is too slow (O(n)). Remember that divisors come in pairs (e.g., for 12: 1&12, 2&6, 3&4). You only need to iterate up to the square root of the number to find all pairs.",
+      "algorithm": {
+        "description": "The algorithm generates triangular numbers sequentially and checks the divisor count for each using an optimized trial division method.",
+        "steps": [
+          "Step 1: Initialize a variable for the natural number counter (n=1) and the current triangular number (tri=0).",
+          "Step 2: Enter a loop that adds 'n' to 'tri' to generate the next triangular number, then increments 'n'.",
+          "Step 3: Inside the loop, call a helper function to count divisors. Iterate from 1 up to the integer square root of 'tri'.",
+          "Step 4: If 'i' divides 'tri' evenly, increment the count by 2 (for 'i' and 'tri/i'). Correct the count by -1 if 'tri' is a perfect square.",
+          "Step 5: If the divisor count exceeds 500, print 'tri' and terminate the program."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class TriangularNumberSolver\n{\n    public static void Main(string[] args)\n    {\n        int targetDivisors = 500;\n        long triangleNumber = 0;\n        int n = 1;\n\n        while (true)\n        {\n            // Generate the next triangle number\n            triangleNumber += n;\n            n++;\n\n            // Check divisor count\n            if (GetDivisorCount(triangleNumber) > targetDivisors)\n            {\n                Console.WriteLine($\"Result: {triangleNumber}\");\n                break;\n            }\n        }\n    }\n\n    // Optimized method to count divisors in O(sqrt(num))\n    private static int GetDivisorCount(long number)\n    {\n        int count = 0;\n        int sqrt = (int)Math.Sqrt(number);\n\n        for (int i = 1; i <= sqrt; i++)\n        {\n            if (number % i == 0)\n            {\n                // If i is a divisor, add 2 (for i and number/i)\n                count += 2;\n            }\n        }\n\n        // Correction: If number is a perfect square, we counted the root twice\n        if (sqrt * sqrt == number)\n        {\n            count--;\n        }\n\n        return count;\n    }\n}",
+        "explanation": "The solution relies on the mathematical property that factors occur in pairs. For a number N, if 'a' is a factor, then 'b = N/a' is also a factor. One of these factors must be less than or equal to the square root of N. This allows us to reduce the complexity of the divisor counting function from O(N) to O(sqrt(N)). Without this optimization, checking triangular numbers (which grow quadratically) would take an impractical amount of time.",
+        "time_complexity": "O(k * sqrt(T)), where k is the number of iterations to find the solution and T is the value of the triangular number.",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_016",
+      "title": "Large Sum (BigInteger Addition)",
+      "description": "Calculate the sum of fifty or one hundred 50-digit numbers and determine the first ten digits of the final result. This problem addresses the limitation of standard primitive types when dealing with arbitrarily large integers.",
+      "difficulty": 3,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "34, 35, 36, 37",
+        "page": 1
+      },
+      "hint": "Standard types like 'long' or 'ulong' cannot store a 50-digit number (max is approx 19 digits). You must use the `System.Numerics` namespace and the `BigInteger` struct, or implement string-based addition manually.",
+      "algorithm": {
+        "description": "The algorithm utilizes the BigInteger data structure to perform arithmetic on numbers larger than CPU registers allow, followed by string manipulation to format the output.",
+        "steps": [
+          "Step 1: Import the System.Numerics namespace to access the BigInteger structure.",
+          "Step 2: Store the large numbers as an array of strings, as they cannot be defined as integer literals.",
+          "Step 3: Initialize a BigInteger variable named 'sum' to 0.",
+          "Step 4: Iterate through the string array, parsing each string into a BigInteger and adding it to 'sum'.",
+          "Step 5: Convert the final 'sum' back to a string.",
+          "Step 6: Extract the substring containing the first 10 characters to get the required prefix."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\nusing System.Numerics; // Requires adding reference to System.Numerics assembly\n\npublic class LargeSum\n{\n    public static void Main()\n    {\n        // Example data: In a real scenario, this might be read from a file or a larger array\n        string[] largeNumbers = new string[] \n        {\n            \"37107287533902102798797998220837590246510135740250\",\n            \"46376937677490009712648124896970078050417018260538\",\n            \"74324986199524741059474233309513058123726617309629\",\n            \"91942213363574161572522430563301811072406154908250\",\n            \"23067588207539346171171980310421047513778063246676\"\n            // ... imagine 95 more numbers here\n        };\n\n        BigInteger sum = 0;\n\n        foreach (string numStr in largeNumbers)\n        {\n            // Parse string to BigInteger and add to total\n            // BigInteger handles arbitrary precision automatically\n            sum += BigInteger.Parse(numStr);\n        }\n\n        // Convert the result to string to inspect digits\n        string sumStr = sum.ToString();\n\n        // Output the full sum\n        Console.WriteLine($\"Full Sum: {sumStr}\");\n\n        // Extract the first 10 digits\n        // Ensure length check in case sum is unexpectedly small (unlikely here)\n        if (sumStr.Length >= 10)\n        {\n            string firstTen = sumStr.Substring(0, 10);\n            Console.WriteLine($\"First 10 digits: {firstTen}\");\n        }\n        else\n        {\n            Console.WriteLine($\"Sum is less than 10 digits: {sumStr}\");\n        }\n    }\n}",
+        "explanation": "This solution bypasses the 64-bit limit of the `long` type by using `System.Numerics.BigInteger`. This struct dynamically allocates memory to store integers of arbitrary size. We parse input strings directly into BigIntegers, perform standard addition, and then convert the result back to a string to easily perform the substring operation required to find the first 10 digits.",
+        "time_complexity": "O(N * D), where N is the count of numbers and D is the number of digits per number (addition is linear to the number of digits).",
+        "space_complexity": "O(D) to store the resulting sum."
+      }
+    },
+    {
+      "id": "PROB_017",
+      "title": "Collatz Sequence (3n + 1)",
+      "description": "Implement a program that generates a sequence of numbers starting from a given positive integer 'n' following the Collatz conjecture rules: if the number is even, divide it by 2; if it is odd, multiply it by 3 and add 1. The program should repeat this process until the number reaches 1.",
+      "difficulty": 3,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "38, 39",
+        "page": 1
+      },
+      "hint": "Use a 'while' loop that continues as long as the current number is greater than 1. Inside the loop, use the modulo operator (%) to check if the number is even or odd to decide which mathematical operation to perform.",
+      "algorithm": {
+        "description": "The algorithm iteratively applies the Collatz transformation rules to a variable until it becomes 1.",
+        "steps": [
+          "Step 1: Accept a positive integer 'n' as input.",
+          "Step 2: Start a loop that runs while 'n' is greater than 1.",
+          "Step 3: Inside the loop, check if 'n' is even (n % 2 == 0).",
+          "Step 4: If even, update 'n' to 'n / 2'.",
+          "Step 5: If odd, update 'n' to '(3 * n) + 1'.",
+          "Step 6: Print the current value of 'n' and repeat the loop."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class Program\n{\n    public static void Main()\n    {\n        // Example input\n        Console.Write(\"Enter a positive integer: \");\n        string input = Console.ReadLine();\n        \n        if (long.TryParse(input, out long n) && n > 0)\n        {\n            Console.Write($\"Sequence: {n}\");\n            int steps = 0;\n\n            // Loop until the sequence reaches 1\n            while (n > 1)\n            {\n                if (n % 2 == 0)\n                {\n                    n = n / 2;\n                }\n                else\n                {\n                    n = (3 * n) + 1;\n                }\n                \n                Console.Write($\" -> {n}\");\n                steps++;\n            }\n            \n            Console.WriteLine();\n            Console.WriteLine($\"Total steps to reach 1: {steps}\");\n        }\n        else\n        {\n            Console.WriteLine(\"Please enter a valid positive integer.\");\n        }\n    }\n}",
+        "explanation": "The solution uses the 'long' data type for 'n' because the intermediate values in a Collatz sequence can grow significantly larger than the starting number, potentially overflowing a standard 32-bit integer. A 'while' loop is used because the number of iterations is unknown beforehand. The condition (n % 2 == 0) correctly identifies even numbers to apply the division rule, while the 'else' block handles odd numbers.",
+        "time_complexity": "O(k), where k is the length of the sequence (stopping time). This is an unproven bound.",
+        "space_complexity": "O(1) as we only store a few variables regardless of sequence length."
+      }
+    },
+    {
+      "id": "PROB_018",
+      "title": "Lattice Paths (Grid Walking - Recursion vs DP)",
+      "description": "Starting in the top left corner of an N x N grid, and being only able to move to the right and down, determine the exact number of possible routes to reach the bottom right corner. For a standard 20x20 grid, the number of paths is significantly large, requiring an efficient counting strategy.",
+      "difficulty": 5,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "40, 41, 42",
+        "page": 1
+      },
+      "hint": "A naive recursive solution will recalculate the same sub-paths millions of times. Instead, realize that the number of ways to reach any intersection (x, y) is the sum of the ways to reach (x-1, y) and (x, y-1). Use a table to store these values.",
+      "algorithm": {
+        "description": "We use Dynamic Programming (Tabulation) to solve this. Instead of traversing the tree of all paths, we build a 2D grid where each cell represents a vertex in the lattice. We calculate the number of ways to reach that vertex based on its neighbors.",
+        "steps": [
+          "Step 1: Create a 2D array (matrix) of size (N+1) x (N+1) to represent the intersections of the grid lines. Use a 64-bit integer (long) to prevent overflow.",
+          "Step 2: Initialize the top row and left-most column with 1. This is because there is only one way to reach any point along the top edge (moving strictly right) and one way to reach any point along the left edge (moving strictly down).",
+          "Step 3: Iterate through the remaining cells starting from [1,1]. For every cell [i,j], set its value to grid[i-1][j] (paths from above) + grid[i][j-1] (paths from left).",
+          "Step 4: Once the loops complete, the value in the bottom-right cell [N,N] contains the total number of distinct paths."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class LatticePaths\n{\n    public static void Main()\n    {\n        int gridSize = 20;\n        long result = CountRoutes(gridSize);\n        Console.WriteLine($\"Routes in a {gridSize}x{gridSize} grid: {result}\");\n    }\n\n    public static long CountRoutes(int n)\n    {\n        // We need an (n+1) x (n+1) array because we are counting vertices (intersections),\n        // not the squares themselves. A 20x20 grid has 21x21 intersections.\n        long[,] grid = new long[n + 1, n + 1];\n\n        // Initialize boundary conditions\n        for (int i = 0; i <= n; i++)\n        {\n            grid[i, 0] = 1; // Top row (if viewing i as x) or Left col\n            grid[0, i] = 1; // Left col (if viewing i as y) or Top row\n        }\n\n        // Fill the grid using Dynamic Programming\n        for (int i = 1; i <= n; i++)\n        {\n            for (int j = 1; j <= n; j++)\n            {\n                // The number of paths to point (i,j) is the sum of paths\n                // from the point directly above (i-1, j) and directly left (i, j-1)\n                grid[i, j] = grid[i - 1, j] + grid[i, j - 1];\n            }\n        }\n\n        // The bottom-right corner contains the total count\n        return grid[n, n];\n    }\n}",
+        "explanation": "This solution avoids the exponential time complexity of recursion (O(2^N)) by using Dynamic Programming. Conceptually, this builds Pascal's Triangle rotated by 45 degrees. Since a walker can only arrive at a point from the top or the left, the number of paths to that point is simply the sum of the paths to its two predecessors. By calculating this iteratively, we only visit each intersection once. Note that 'long' is used because the result for 20x20 is approx 137 billion, which overflows a standard 32-bit integer.",
+        "time_complexity": "O(N²)",
+        "space_complexity": "O(N²)"
+      }
+    },
+    {
+      "id": "PROB_019",
+      "title": "Power Digit Sum (2^1000)",
+      "description": "Calculate the value of 2 raised to the power of 1000, and then compute the sum of its digits. For context, 2^15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.",
+      "difficulty": 3,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "43",
+        "page": 1
+      },
+      "hint": "The number 2^1000 is approximately 302 digits long, which is far too large to store in a standard 'long' or 'ulong' variable. You will need to use a data structure that supports arbitrary-precision arithmetic.",
+      "algorithm": {
+        "description": "The problem requires handling a number that exceeds standard integer limits. The approach utilizes a Big Integer structure to perform the exponentiation and then processes the result as a sequence of characters to sum the digits.",
+        "steps": [
+          "Step 1: Initialize a BigInteger variable with the base value of 2.",
+          "Step 2: Raise the base value to the power of 1000 using an arbitrary-precision power function.",
+          "Step 3: Convert the resulting massive number into a string representation.",
+          "Step 4: Iterate through each character in the string, convert it back to its numeric integer value, and add it to a running total sum."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\nusing System.Numerics;\n\npublic class Program\n{\n    public static void Main()\n    {\n        // Step 1 & 2: Calculate 2^1000 using BigInteger to handle the large size\n        // Note: You must add a reference to System.Numerics assembly if not present\n        BigInteger number = BigInteger.Pow(2, 1000);\n\n        // Step 3: Convert the number to a string to access individual digits\n        string numberString = number.ToString();\n        \n        long sum = 0;\n\n        // Step 4: Iterate and sum digits\n        foreach (char digit in numberString)\n        {\n            // char.GetNumericValue returns a double, so we cast to int\n            // Alternatively, digit - '0' works for ASCII manipulation\n            sum += (int)char.GetNumericValue(digit);\n        }\n\n        Console.WriteLine($\"The sum of the digits of 2^1000 is: {sum}\");\n    }\n}",
+        "explanation": "This solution uses the `System.Numerics.BigInteger` struct, which is designed to hold integers of theoretical arbitrary size (limited only by system memory). Standard types like `ulong` max out around 1.8 * 10^19, but 2^1000 is approximately 1.07 * 10^301. After computing the power, converting the number to a string allows us to treat it as a sequence of characters. We iterate over this sequence, converting each character back to its integer representation and accumulating the result.",
+        "time_complexity": "O(N), where N is the number of digits (approx 302). The exponentiation itself is efficient, and the summation is linear with respect to the number of digits.",
+        "space_complexity": "O(N) to store the BigInteger and its string representation."
+      }
+    },
+    {
+      "id": "PROB_020",
+      "title": "Number to Words (1 to 1000)",
+      "description": "Write a program that accepts an integer between 1 and 1000 and converts it into its English word representation (e.g., 342 becomes 'three hundred and forty two'). The solution must handle compound numbers, such as those requiring 'and' between hundreds and tens, as well as unique names for numbers 11 through 19.",
+      "difficulty": 4,
+      "reference": {
+        "part": "PSUP Last Lecture (The 'Project Euler' & Exam Prep Slides)",
+        "slide": "44, 45",
+        "page": 1
+      },
+      "hint": "Create string arrays to store the unique words for numbers 0-19 and the multiples of ten (20, 30, ... 90). Break the number down by extracting the hundreds, tens, and units digits using integer division (/) and the modulo operator (%).",
+      "algorithm": {
+        "description": "The approach uses lookup tables (arrays) for static word mappings and conditional logic to assemble the final string based on the magnitude of the number.",
+        "steps": [
+          "Step 1: Define two arrays: one for units/teens (0-19) and one for tens multiples (20, 30... 90).",
+          "Step 2: Check if the number is 1000; if so, return 'one thousand'.",
+          "Step 3: Determine the hundreds digit. If greater than 0, append the corresponding unit word followed by ' hundred'.",
+          "Step 4: Calculate the remainder. If the number had hundreds and still has a remainder, append ' and '.",
+          "Step 5: Process the remainder (0-99). If it is less than 20, look up the word directly. If it is 20 or more, append the 'tens' word, then append the 'units' word if the last digit is not zero."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class NumberToWords\n{\n    public static void Main(string[] args)\n    {\n        // Test cases\n        Console.WriteLine(Convert(5));     // five\n        Console.WriteLine(Convert(21));    // twenty one\n        Console.WriteLine(Convert(115));   // one hundred and fifteen\n        Console.WriteLine(Convert(342));   // three hundred and forty two\n        Console.WriteLine(Convert(1000));  // one thousand\n    }\n\n    public static string Convert(int n)\n    {\n        if (n < 1 || n > 1000)\n            return \"Number out of range\";\n\n        if (n == 1000)\n            return \"one thousand\";\n\n        // Arrays for lookup. Index matches the number value.\n        string[] unitsMap = { \"\", \"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\", \"ten\", \"eleven\", \"twelve\", \"thirteen\", \"fourteen\", \"fifteen\", \"sixteen\", \"seventeen\", \"eighteen\", \"nineteen\" };\n        string[] tensMap = { \"\", \"\", \"twenty\", \"thirty\", \"forty\", \"fifty\", \"sixty\", \"seventy\", \"eighty\", \"ninety\" };\n\n        string words = \"\";\n\n        // Handle Hundreds\n        if (n >= 100)\n        {\n            words += unitsMap[n / 100] + \" hundred\";\n            n %= 100;\n            \n            // Add 'and' if there are remaining numbers\n            if (n > 0)\n                words += \" and \";\n        }\n\n        // Handle Tens and Units\n        if (n > 0)\n        {\n            if (n < 20)\n            {\n                // Direct mapping for 1-19\n                words += unitsMap[n];\n            }\n            else\n            {\n                // 20-99\n                words += tensMap[n / 10];\n                if ((n % 10) > 0)\n                {\n                    words += \" \" + unitsMap[n % 10];\n                }\n            }\n        }\n\n        return words;\n    }\n}",
+        "explanation": "The solution utilizes two string arrays as lookup tables: one for numbers 0-19 (which have unique names or irregular patterns) and one for multiples of ten (20, 30, etc.). The logic decomposes the number from left to right (Hundreds -> Tens -> Units). By using the modulo operator (`%`) to find remainders and integer division (`/`) to isolate digits, we can construct the sentence grammatically. The code specifically handles the British English convention of adding 'and' after the hundreds place if a remainder exists.",
+        "time_complexity": "O(1) - The range is fixed (1-1000) and the number of operations does not grow significantly with input size.",
+        "space_complexity": "O(1) - Constant space is used for the lookup arrays and string variables."
+      }
+    },
+    {
+      "id": "PROB_021",
+      "title": "Triangle Validity Check (Geometry)",
+      "description": "Write a program that accepts three numerical values representing the lengths of three sides. The program must determine whether these sides can form a valid triangle based on geometric rules.",
+      "difficulty": 2,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "12, 13",
+        "page": 2
+      },
+      "hint": "Recall the Triangle Inequality Theorem: The sum of the lengths of any two sides of a triangle must be strictly greater than the length of the third side.",
+      "algorithm": {
+        "description": "The algorithm accepts three inputs and applies the Triangle Inequality Theorem using Boolean logic to verify validity.",
+        "steps": [
+          "Step 1: Read three numerical inputs (a, b, c) representing the side lengths.",
+          "Step 2: Check for invalid inputs (ensure all sides are greater than zero).",
+          "Step 3: Apply the Triangle Inequality Theorem: Check if (a + b > c) AND (a + c > b) AND (b + c > a).",
+          "Step 4: If all conditions are true, print 'Valid Triangle'; otherwise, print 'Invalid Triangle'."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\nnamespace GeometryUtils\n{\n    public class TriangleValidator\n    {\n        public static void Main(string[] args)\n        {\n            try\n            {\n                // Input\n                Console.Write(\"Enter side A: \");\n                double a = Convert.ToDouble(Console.ReadLine());\n\n                Console.Write(\"Enter side B: \");\n                double b = Convert.ToDouble(Console.ReadLine());\n\n                Console.Write(\"Enter side C: \");\n                double c = Convert.ToDouble(Console.ReadLine());\n\n                // Validation Logic\n                if (IsValidTriangle(a, b, c))\n                {\n                    Console.WriteLine(\"The sides form a valid triangle.\");\n                }\n                else\n                {\n                    Console.WriteLine(\"The sides DO NOT form a valid triangle.\");\n                }\n            }\n            catch (FormatException)\n            {\n                Console.WriteLine(\"Invalid input. Please enter numeric values.\");\n            }\n        }\n\n        public static bool IsValidTriangle(double a, double b, double c)\n        {\n            // Check for non-positive lengths first\n            if (a <= 0 || b <= 0 || c <= 0)\n            {\n                return false;\n            }\n\n            // Triangle Inequality Theorem\n            // Sum of any two sides must be greater than the third\n            return (a + b > c) && (a + c > b) && (b + c > a);\n        }\n    }\n}",
+        "explanation": "The solution defines a method `IsValidTriangle` that takes three double values. First, it ensures that the physical lengths are positive (a side cannot be zero or negative). Then, it returns the result of the boolean expression checking the Triangle Inequality Theorem: `(a + b > c) && (a + c > b) && (b + c > a)`. If all three sub-conditions are true, the triangle is valid.",
+        "time_complexity": "O(1)",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_022",
+      "title": "Point inside Circle (Distance Formula)",
+      "description": "Determine whether a specific 2D point lies inside (or on the boundary of) a circle. The program accepts the circle's center coordinates and radius, along with the coordinates of the point to check, and returns a boolean result indicating if the point is contained within the circle.",
+      "difficulty": 2,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "23, 24, 25",
+        "page": 2
+      },
+      "hint": "Recall the Pythagorean theorem. To check if a point is inside a circle, the distance between that point and the circle's center must be less than or equal to the radius. Consider comparing squared values to avoid using square roots.",
+      "algorithm": {
+        "description": "The algorithm utilizes the Euclidean distance formula to calculate the distance between two points in a Cartesian plane: the circle's center and the target point.",
+        "steps": [
+          "Step 1: Accept inputs for the circle's center (cx, cy), radius (r), and the target point (px, py).",
+          "Step 2: Calculate the difference in x coordinates (dx = px - cx) and y coordinates (dy = py - cy).",
+          "Step 3: Calculate the squared Euclidean distance: distanceSquared = (dx * dx) + (dy * dy).",
+          "Step 4: Compare distanceSquared with the squared radius (r * r). Comparing squared values is computationally more efficient than using a square root function.",
+          "Step 5: If distanceSquared is less than or equal to radiusSquared, return true (inside); otherwise, return false."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\nnamespace GeometryUtils\n{\n    public class CircleCheck\n    {\n        /// <summary>\n        /// Checks if a point is inside or on the boundary of a circle.\n        /// </summary>\n        /// <param name=\"cx\">Circle center X coordinate</param>\n        /// <param name=\"cy\">Circle center Y coordinate</param>\n        /// <param name=\"radius\">Radius of the circle</param>\n        /// <param name=\"px\">Point X coordinate</param>\n        /// <param name=\"py\">Point Y coordinate</param>\n        /// <returns>True if inside, False otherwise</returns>\n        public static bool IsPointInside(double cx, double cy, double radius, double px, double py)\n        {\n            // Calculate the differences in coordinates\n            double dx = px - cx;\n            double dy = py - cy;\n\n            // Calculate distance squared: (x - h)^2 + (y - k)^2\n            // We use squared distance to avoid the computationally expensive Math.Sqrt()\n            double distanceSquared = (dx * dx) + (dy * dy);\n            \n            // Calculate radius squared\n            double radiusSquared = radius * radius;\n\n            // Check condition: distance^2 <= radius^2\n            return distanceSquared <= radiusSquared;\n        }\n\n        public static void Main(string[] args)\n        {\n            // Example Case: Center(0,0), Radius 5, Point(3,4)\n            // Distance is sqrt(3^2 + 4^2) = 5. Point is exactly on the edge.\n            double cx = 0, cy = 0, r = 5;\n            double px = 3, py = 4;\n\n            if (IsPointInside(cx, cy, r, px, py))\n            {\n                Console.WriteLine($\"Point ({px}, {py}) is inside the circle.\");\n            }\n            else\n            {\n                Console.WriteLine($\"Point ({px}, {py}) is outside the circle.\");\n            }\n        }\n    }\n}",
+        "explanation": "The solution implements the mathematical definition of a circle: the set of all points at a distance 'r' from a center point. Instead of computing the actual distance using `Math.Sqrt`, which is a slow operation, we compare the 'squared distance' against the 'squared radius'. If $(x-cx)^2 + (y-cy)^2 \\le r^2$, the point is inside. This optimization is standard in computer graphics and physics engines.",
+        "time_complexity": "O(1) - The calculation involves a fixed number of arithmetic operations regardless of input values.",
+        "space_complexity": "O(1) - Requires a constant amount of memory to store the coordinate variables."
+      }
+    },
+    {
+      "id": "PROB_023",
+      "title": "Array to String (Join with separators)",
+      "description": "Create a function that takes an array of strings and a separator string as inputs. The function must concatenate all elements of the array into a single string, placing the specified separator between each element, without adding a separator at the very end.",
+      "difficulty": 2,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "27",
+        "page": 2
+      },
+      "hint": "Iterate through the array to append elements to your result. Be careful with the loop logic to ensure you do not add an extra separator after the final element.",
+      "algorithm": {
+        "description": "Iterate through the array using a loop to build the string, handling the separator placement conditionally.",
+        "steps": [
+          "Step 1: Check if the input array is null or empty. If so, return an empty string.",
+          "Step 2: Initialize a StringBuilder (or an empty string variable) to accumulate the result.",
+          "Step 3: Loop through the array from the first index (0) to the last index.",
+          "Step 4: Inside the loop, append the current element to the StringBuilder.",
+          "Step 5: Check if the current index is less than the last index (length - 1). If true, append the separator.",
+          "Step 6: After the loop finishes, convert the StringBuilder to a string and return it."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\nusing System.Text;\n\npublic class ArrayJoiner\n{\n    public static string JoinStrings(string[] items, string separator)\n    {\n        // Handle edge cases\n        if (items == null || items.Length == 0)\n        {\n            return string.Empty;\n        }\n\n        // Use StringBuilder for efficient string manipulation\n        StringBuilder sb = new StringBuilder();\n\n        for (int i = 0; i < items.Length; i++)\n        {\n            // Append the current item\n            sb.Append(items[i]);\n\n            // Append separator only if it is NOT the last item\n            if (i < items.Length - 1)\n            {\n                sb.Append(separator);\n            }\n        }\n\n        return sb.ToString();\n    }\n\n    public static void Main(string[] args)\n    {\n        string[] words = { \"Apple\", \"Banana\", \"Cherry\" };\n        string result = JoinStrings(words, \", \");\n        Console.WriteLine(result); // Output: Apple, Banana, Cherry\n    }\n}",
+        "explanation": "This solution uses the `StringBuilder` class, which is more memory-efficient than standard string concatenation (`+` operator) when performing operations inside a loop. The logic iterates through every element of the array. It appends the current element first, then checks if the current index is the last one. If it is not the last index, it appends the separator. This ensures the result does not end with a dangling separator (e.g., 'A, B, C' instead of 'A, B, C, ').",
+        "time_complexity": "O(n)",
+        "space_complexity": "O(n)"
+      }
+    },
+    {
+      "id": "PROB_024",
+      "title": "Find Maximum in Array (Iterative)",
+      "description": "Write a program that accepts an array of integers and determines the largest value contained within it. The solution should assume the array is unsorted and must inspect elements to find the maximum.",
+      "difficulty": 2,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "28",
+        "page": 2
+      },
+      "hint": "Start by assuming the first element of the array is the maximum, then loop through the rest of the array comparing each number to your current maximum.",
+      "algorithm": {
+        "description": "A Linear Scan approach that iterates through the collection once to find the highest value.",
+        "steps": [
+          "Step 1: Validate the input array to ensure it is not null or empty.",
+          "Step 2: Initialize a variable named 'max' and assign it the value of the first element (index 0).",
+          "Step 3: Loop through the array starting from the second element (index 1) up to the last element.",
+          "Step 4: In each iteration, compare the current element with 'max'. If the current element is greater, update 'max' to this new value.",
+          "Step 5: Once the loop completes, return the 'max' variable."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class Program\n{\n    public static int FindMax(int[] numbers)\n    {\n        // Check for edge cases: null or empty array\n        if (numbers == null || numbers.Length == 0)\n        {\n            throw new ArgumentException(\"Array cannot be empty or null.\");\n        }\n\n        // Assume the first element is the maximum\n        int max = numbers[0];\n\n        // Iterate through the rest of the array\n        for (int i = 1; i < numbers.Length; i++)\n        {\n            // If we find a number larger than our current max, update max\n            if (numbers[i] > max)\n            {\n                max = numbers[i];\n            }\n        }\n\n        return max;\n    }\n\n    public static void Main()\n    {\n        int[] data = { 10, 5, 20, 8, 15 };\n        try \n        {\n            int result = FindMax(data);\n            Console.WriteLine(\"The maximum value is: \" + result);\n        }\n        catch (Exception ex)\n        {\n            Console.WriteLine(ex.Message);\n        }\n    }\n}",
+        "explanation": "This solution uses a linear search algorithm. It initializes a tracking variable (`max`) with the first element of the array. It then traverses the remaining elements one by one. Whenever it encounters a value greater than the current `max`, it updates `max`. This ensures that after checking every element, the variable holds the largest value.",
+        "time_complexity": "O(n) - The algorithm iterates through the array exactly once.",
+        "space_complexity": "O(1) - The algorithm uses a constant amount of extra space (one variable) regardless of the input size."
+      }
+    },
+    {
+      "id": "PROB_025",
+      "title": "Frequency Count (Occurrences in Array)",
+      "description": "Write a program that determines how many times a specific target value appears within an array of integers. The solution must iterate through the entire array to ensure every instance of the target is counted.",
+      "difficulty": 2,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "29, 30",
+        "page": 2
+      },
+      "hint": "Initialize a counter variable to zero before the loop. Unlike a search that stops at the first match, you must traverse the entire array to find all duplicates.",
+      "algorithm": {
+        "description": "A linear traversal approach that scans every element in the collection.",
+        "steps": [
+          "Step 1: Initialize an integer variable 'count' to 0.",
+          "Step 2: Iterate through each element of the array using a loop (for or foreach).",
+          "Step 3: Inside the loop, compare the current element with the target value.",
+          "Step 4: If the current element matches the target, increment the 'count' variable by 1.",
+          "Step 5: After the loop finishes, return the final value of 'count'."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class FrequencyCounter\n{\n    public static int CountOccurrences(int[] numbers, int target)\n    {\n        // Step 1: Initialize counter\n        int count = 0;\n\n        // Step 2: Iterate through the array\n        foreach (int number in numbers)\n        {\n            // Step 3 & 4: Check match and increment\n            if (number == target)\n            {\n                count++;\n            }\n        }\n\n        // Step 5: Return result\n        return count;\n    }\n\n    public static void Main(string[] args)\n    {\n        int[] data = { 10, 5, 20, 5, 30, 5, 40 };\n        int searchFor = 5;\n\n        int frequency = CountOccurrences(data, searchFor);\n        \n        Console.WriteLine($\"Array: [{string.Join(\", \", data)}]\");\n        Console.WriteLine($\"The number {searchFor} appears {frequency} times.\");\n    }\n}",
+        "explanation": "The solution implements a linear scan of the array. It maintains a running total of matches found so far. By using a 'foreach' loop, it visits every integer in the collection exactly once. Each time the condition (number == target) is true, the counter increases. This approach ensures accuracy even if the array is unsorted.",
+        "time_complexity": "O(n) - The algorithm must check every element in the array exactly once.",
+        "space_complexity": "O(1) - The algorithm uses a constant amount of extra space (one integer for the count) regardless of input size."
+      }
+    },
+    {
+      "id": "PROB_026",
+      "title": "Matrix Statistics (2D Arrays)",
+      "description": "Write a program that processes a 2D integer array (matrix) to calculate statistical data. The program should iterate through the entire matrix to find the total sum, the average value, the minimum element, and the maximum element.",
+      "difficulty": 4,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "31",
+        "page": 2
+      },
+      "hint": "Use nested loops to traverse the rows and columns. When initializing your 'min' and 'max' variables, set them to the value of the first element in the matrix (matrix[0,0]) rather than 0, to ensure the logic works correctly even if the matrix contains only negative numbers.",
+      "algorithm": {
+        "description": "The algorithm uses a nested loop structure to visit every cell in the 2D grid, updating running statistical variables at each step.",
+        "steps": [
+          "Step 1: Define the 2D array and determine the number of rows and columns.",
+          "Step 2: Initialize variables for 'sum', 'min', and 'max'. Set 'min' and 'max' to the value of the first element (index [0,0]).",
+          "Step 3: Create an outer loop to iterate through the rows (0 to rowCount - 1).",
+          "Step 4: Create an inner loop to iterate through the columns (0 to colCount - 1).",
+          "Step 5: Inside the inner loop, add the current element to 'sum', and compare the current element against 'min' and 'max', updating them if necessary.",
+          "Step 6: After the loops complete, calculate the average by dividing the sum by the total number of elements (cast to double for precision).",
+          "Step 7: Print the calculated statistics."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class MatrixStats\n{\n    public static void Main(string[] args)\n    {\n        // Initialize a sample 3x3 matrix\n        int[,] matrix = {\n            { 12, 5, -2 },\n            { 8, 25, 4 },\n            { 6, 9, 0 }\n        };\n\n        // Get dimensions\n        int rows = matrix.GetLength(0);\n        int cols = matrix.GetLength(1);\n        int totalElements = rows * cols;\n\n        // Initialize stats variables\n        // Important: Init min/max to the first element, not 0\n        int sum = 0;\n        int min = matrix[0, 0];\n        int max = matrix[0, 0];\n\n        // Nested loops to traverse the 2D array\n        for (int i = 0; i < rows; i++)\n        {\n            for (int j = 0; j < cols; j++)\n            {\n                int currentVal = matrix[i, j];\n\n                // Accumulate sum\n                sum += currentVal;\n\n                // Check for new minimum\n                if (currentVal < min)\n                {\n                    min = currentVal;\n                }\n\n                // Check for new maximum\n                if (currentVal > max)\n                {\n                    max = currentVal;\n                }\n            }\n        }\n\n        // Calculate average (cast to double to preserve decimal points)\n        double average = (double)sum / totalElements;\n\n        // Output results\n        Console.WriteLine(\"Matrix Statistics:\");\n        Console.WriteLine($\"Sum: {sum}\");\n        Console.WriteLine($\"Average: {average:F2}\");\n        Console.WriteLine($\"Minimum: {min}\");\n        Console.WriteLine($\"Maximum: {max}\");\n    }\n}",
+        "explanation": "The solution utilizes C#'s rectangular array syntax (`int[,]`). We use `GetLength(0)` to find the number of rows and `GetLength(1)` for columns. By initializing `min` and `max` to `matrix[0,0]`, we avoid logic errors that occur if we initialized them to 0 (e.g., if the matrix contained only negative numbers, a `max` initialized to 0 would be incorrect). The nested `for` loops ensure every element is visited exactly once (Row-Major Order). Finally, we cast `sum` to `double` before division to ensure the average includes decimal places.",
+        "time_complexity": "O(N*M) where N is the number of rows and M is the number of columns (linear relative to total elements).",
+        "space_complexity": "O(1) auxiliary space (variables for sum, min, max do not grow with input size)."
+      }
+    },
+    {
+      "id": "PROB_027",
+      "title": "Array Sum (Recursive)",
+      "description": "Write a C# program to calculate the sum of all elements in an integer array using recursion. Instead of using iterative loops (for/while), the function should call itself to accumulate the total value.",
+      "difficulty": 3,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "38",
+        "page": 2
+      },
+      "hint": "Think about the base case: what is the sum of an array with zero elements? For the recursive step, try adding the last element of the array to the sum of the 'rest' of the array (n-1).",
+      "algorithm": {
+        "description": "The algorithm utilizes the divide-and-conquer principle by breaking down the sum of an array of size 'n' into the sum of the nth element plus the sum of the array of size 'n-1'.",
+        "steps": [
+          "Step 1: Define a function that accepts the array and an integer 'n' representing the number of elements to sum.",
+          "Step 2: Define the base case: If 'n' is less than or equal to 0, return 0.",
+          "Step 3: Define the recursive step: Return the element at index 'n-1' added to the result of the function called recursively with 'n-1'."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class ArraySumRecursive\n{\n    public static void Main(string[] args)\n    {\n        int[] numbers = { 1, 2, 3, 4, 5 };\n        int n = numbers.Length;\n        \n        int sum = FindSum(numbers, n);\n        \n        Console.WriteLine($\"The sum of the array is: {sum}\");\n    }\n\n    // Recursive function to find sum of array\n    // arr: the array of integers\n    // n: the number of elements to consider (index + 1)\n    public static int FindSum(int[] arr, int n)\n    {\n        // Base case: if no elements are left, return 0\n        if (n <= 0)\n            return 0;\n            \n        // Recursive step: Add the current element (at index n-1)\n        // to the sum of the remaining elements (n-1)\n        return (FindSum(arr, n - 1) + arr[n - 1]);\n    }\n}",
+        "explanation": "The `FindSum` method works by reducing the problem size by 1 in each call. It takes the last element of the current scope (`arr[n-1]`) and adds it to the result of the sum of the remaining array. This continues until `n` reaches 0 (the base case), at which point the recursion unwinds, adding up all the values collected on the stack.",
+        "time_complexity": "O(n) - The function is called once for each element in the array.",
+        "space_complexity": "O(n) - The recursion stack grows linearly with the size of the array."
+      }
+    },
+    {
+      "id": "PROB_028",
+      "title": "Find Maximum (Recursive)",
+      "description": "Implement a recursive function to determine the largest integer within a given array. The solution must utilize recursion to traverse the data structure instead of using standard iterative loops.",
+      "difficulty": 4,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "39",
+        "page": 2
+      },
+      "hint": "Think about the base case: if the array only had one element, what would the maximum be? For the recursive step, compare the current element with the maximum value found in the 'rest' of the array.",
+      "algorithm": {
+        "description": "The algorithm uses linear recursion to traverse the array. It breaks the problem down by comparing the element at the current index with the maximum of the remaining array elements.",
+        "steps": [
+          "Step 1: Define a function that accepts the integer array and a current index parameter.",
+          "Step 2: Establish the Base Case: If the current index corresponds to the last element of the array, return that element.",
+          "Step 3: Perform the Recursive Step: Call the function itself with the index incremented by 1 to find the maximum of the remaining elements.",
+          "Step 4: Compare the element at the current index with the result returned from the recursive call.",
+          "Step 5: Return the larger of the two values."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class RecursiveMax\n{\n    public static void Main(string[] args)\n    {\n        int[] numbers = { 10, 32, 4, 98, 23, 5 };\n        \n        // Start the recursion from the first index (0)\n        int maxVal = FindMax(numbers, 0);\n        \n        Console.WriteLine(\"The maximum value is: \" + maxVal);\n    }\n\n    public static int FindMax(int[] arr, int index)\n    {\n        // Base Case: If we are at the last element, return it\n        if (index == arr.Length - 1)\n        {\n            return arr[index];\n        }\n\n        // Recursive Step: Get the max of the rest of the array\n        int maxOfRest = FindMax(arr, index + 1);\n\n        // Comparison logic\n        if (arr[index] > maxOfRest)\n        {\n            return arr[index];\n        }\n        else\n        {\n            return maxOfRest;\n        }\n    }\n}",
+        "explanation": "The function works by holding the current value in the stack frame and waiting for the recursive call to return the maximum of the remaining elements. Once the base case is reached (the last element), the values propagate back up the stack. At each step, the function compares its current `arr[index]` with the maximum found in the sub-problem (`maxOfRest`), effectively bubbling the largest value to the top.",
+        "time_complexity": "O(n) - Every element in the array is visited exactly once.",
+        "space_complexity": "O(n) - The recursion stack grows linearly with the size of the array."
+      }
+    },
+    {
+      "id": "PROB_029",
+      "title": "Binary Search (Iterative & Recursive)",
+      "description": "Implement the Binary Search algorithm to efficiently locate a target integer within a sorted array. You are required to provide two implementations: an iterative approach using a while loop and a recursive approach using method calls. Return the index of the target if found, or -1 if the target does not exist.",
+      "difficulty": 4,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "40, 46",
+        "page": 2
+      },
+      "hint": "The input array must be sorted. Compare the target value with the middle element of the current range. If the target is smaller, searching continues in the left half; if larger, it continues in the right half.",
+      "algorithm": {
+        "description": "A Divide and Conquer algorithm that repeatedly halves the search interval.",
+        "steps": [
+          "Step 1: Initialize two pointers, 'min' (start of array) and 'max' (end of array).",
+          "Step 2: While 'min' is less than or equal to 'max', calculate the middle index 'mid'.",
+          "Step 3: Compare array[mid] with the target value.",
+          "Step 4: If array[mid] == target, return 'mid' (target found).",
+          "Step 5: If array[mid] < target, the target must be in the right half. Update min = mid + 1.",
+          "Step 6: If array[mid] > target, the target must be in the left half. Update max = mid - 1.",
+          "Step 7: If the loop finishes (min > max) without finding the target, return -1."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class BinarySearchSolver\n{\n    // Iterative Implementation\n    public static int BinarySearchIterative(int[] arr, int target)\n    {\n        int min = 0;\n        int max = arr.Length - 1;\n\n        while (min <= max)\n        {\n            // Calculate mid to avoid potential integer overflow with (min+max)\n            int mid = min + (max - min) / 2;\n\n            if (arr[mid] == target)\n            {\n                return mid;\n            }\n            else if (arr[mid] < target)\n            {\n                // Target is in the right half\n                min = mid + 1;\n            }\n            else\n            {\n                // Target is in the left half\n                max = mid - 1;\n            }\n        }\n\n        return -1; // Not found\n    }\n\n    // Recursive Implementation\n    public static int BinarySearchRecursive(int[] arr, int target, int min, int max)\n    {\n        // Base case: search space is empty\n        if (min > max)\n        {\n            return -1;\n        }\n\n        int mid = min + (max - min) / 2;\n\n        if (arr[mid] == target)\n        {\n            return mid;\n        }\n        else if (arr[mid] < target)\n        {\n            // Recurse on the right half\n            return BinarySearchRecursive(arr, target, mid + 1, max);\n        }\n        else\n        {\n            // Recurse on the left half\n            return BinarySearchRecursive(arr, target, min, mid - 1);\n        }\n    }\n\n    public static void Main(string[] args)\n    {\n        int[] sortedArray = { 2, 5, 8, 12, 16, 23, 38, 56, 72, 91 };\n        int target = 23;\n\n        Console.WriteLine(\"Searching for \" + target + \" in array...\");\n\n        // Test Iterative\n        int resultIter = BinarySearchIterative(sortedArray, target);\n        Console.WriteLine($\"Iterative Result Index: {resultIter}\");\n\n        // Test Recursive\n        int resultRec = BinarySearchRecursive(sortedArray, target, 0, sortedArray.Length - 1);\n        Console.WriteLine($\"Recursive Result Index: {resultRec}\");\n    }\n}",
+        "explanation": "Binary Search is efficient because it eliminates half of the remaining elements in the search space with every comparison. Unlike Linear Search, which checks every element (O(n)), Binary Search zooms in on the target logarithmically. The iterative approach uses a constant amount of memory for pointers, while the recursive approach uses stack memory proportional to the number of recursive calls.",
+        "time_complexity": "O(log n)",
+        "space_complexity": "O(1) for Iterative, O(log n) for Recursive (due to call stack)"
+      }
+    },
+    {
+      "id": "PROB_030",
+      "title": "Bubble Sort",
+      "description": "Implement the Bubble Sort algorithm to sort an array of integers in ascending order. This fundamental algorithm works by repeatedly stepping through the list, comparing adjacent elements, and swapping them if they are in the wrong order.",
+      "difficulty": 3,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "41, 42",
+        "page": 2
+      },
+      "hint": "Think of the algorithm as 'bubbling' the largest elements to the end of the array one by one. You will need nested loops: the outer loop tracks the number of passes, and the inner loop performs the adjacent comparisons and swaps.",
+      "algorithm": {
+        "description": "A comparison-based sorting algorithm that places the largest unsorted element at its correct position in each iteration.",
+        "steps": [
+          "Step 1: Initialize an outer loop that iterates from the first element to the second-to-last element.",
+          "Step 2: Initialize an inner loop that iterates from the beginning of the array up to the unsorted portion (length - i - 1).",
+          "Step 3: Compare the current element (j) with the next element (j+1).",
+          "Step 4: If the current element is greater than the next element, swap their positions.",
+          "Step 5: (Optimization) If no swaps occur during a complete pass of the inner loop, the array is already sorted and the process can terminate."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class Program\n{\n    public static void BubbleSort(int[] arr)\n    {\n        int n = arr.Length;\n        bool swapped;\n\n        // Outer loop for the number of passes\n        for (int i = 0; i < n - 1; i++)\n        {\n            swapped = false;\n\n            // Inner loop for comparison and swapping\n            // Last i elements are already in place\n            for (int j = 0; j < n - i - 1; j++)\n            {\n                if (arr[j] > arr[j + 1])\n                {\n                    // Swap arr[j] and arr[j+1]\n                    int temp = arr[j];\n                    arr[j] = arr[j + 1];\n                    arr[j + 1] = temp;\n                    \n                    swapped = true;\n                }\n            }\n\n            // If no two elements were swapped by inner loop, then break\n            if (!swapped)\n                break;\n        }\n    }\n\n    public static void Main()\n    {\n        int[] data = { 64, 34, 25, 12, 22, 11, 90 };\n        Console.WriteLine(\"Original: \" + string.Join(\", \", data));\n        \n        BubbleSort(data);\n        \n        Console.WriteLine(\"Sorted:   \" + string.Join(\", \", data));\n    }\n}",
+        "explanation": "The code uses nested loops to sort the array. The inner loop compares adjacent elements and swaps them if the left element is larger than the right, effectively moving the largest element to the end of the unsorted section. The outer loop ensures this process repeats enough times to sort the entire array. The `swapped` boolean acts as an optimization: if a pass completes without any swaps, the array is already sorted, and the loop terminates early.",
+        "time_complexity": "O(n²)",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_031",
+      "title": "String Comparison",
+      "description": "Implement a custom algorithm to compare two strings lexicographically (dictionary order) without relying on built-in comparison methods like 'CompareTo'. The program should determine if the first string is equal to, less than, or greater than the second string based on character ASCII values.",
+      "difficulty": 3,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "44",
+        "page": 2
+      },
+      "hint": "Think about how you look up words in a dictionary: compare the first characters, then the second, and so on. The comparison stops as soon as two characters differ or one word ends.",
+      "algorithm": {
+        "description": "The algorithm performs a character-by-character comparison up to the length of the shorter string.",
+        "steps": [
+          "Step 1: Determine the length of both strings and identify the minimum length to avoid index out of bounds errors.",
+          "Step 2: Iterate through the strings from index 0 up to the minimum length.",
+          "Step 3: At each index, compare the character from the first string with the character from the second string.",
+          "Step 4: If the characters differ, return the difference (char1 - char2). A negative result means string1 is smaller; positive means string1 is larger.",
+          "Step 5: If the loop finishes without finding a difference, compare the lengths of the strings. The shorter string is considered 'less than' the longer one. If lengths are equal, the strings are equal."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class StringComparison\n{\n    public static void Main()\n    {\n        string s1 = \"Apple\";\n        string s2 = \"Apricot\";\n\n        int result = CustomCompare(s1, s2);\n\n        if (result < 0)\n            Console.WriteLine($\"{s1} comes before {s2}\");\n        else if (result > 0)\n            Console.WriteLine($\"{s1} comes after {s2}\");\n        else\n            Console.WriteLine(\"The strings are equal\");\n    }\n\n    /// <summary>\n    /// Compares two strings lexicographically.\n    /// Returns < 0 if s1 < s2\n    /// Returns > 0 if s1 > s2\n    /// Returns 0 if s1 == s2\n    /// </summary>\n    public static int CustomCompare(string s1, string s2)\n    {\n        // Handle null edge cases\n        if (s1 == s2) return 0;\n        if (s1 == null) return -1;\n        if (s2 == null) return 1;\n\n        int len1 = s1.Length;\n        int len2 = s2.Length;\n        int minLength = Math.Min(len1, len2);\n\n        // Iterate char by char\n        for (int i = 0; i < minLength; i++)\n        {\n            if (s1[i] != s2[i])\n            {\n                // Return the difference in ASCII values\n                return s1[i] - s2[i];\n            }\n        }\n\n        // If one string is a prefix of the other, the length determines the order\n        return len1 - len2;\n    }\n}",
+        "explanation": "The solution implements a lexicographical comparison. It iterates through the character arrays of both strings simultaneously. If a mismatch is found, the difference in ASCII values determines the order immediately. If the loop completes (meaning one string is a prefix of the other, e.g., 'App' vs 'Apple'), the difference in string lengths determines the result.",
+        "time_complexity": "O(n), where n is the length of the shorter string.",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_032",
+      "title": "Selection Sort (Standard)",
+      "description": "Implement the Selection Sort algorithm to sort an array of integers in ascending order. The algorithm should repeatedly find the minimum element from the unsorted part of the array and put it at the beginning.",
+      "difficulty": 3,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "50, 51",
+        "page": 2
+      },
+      "hint": "Think of the array as two parts: sorted and unsorted. In each iteration of the outer loop, scan the unsorted portion to find the index of the smallest number, then swap that number with the first element of the unsorted portion.",
+      "algorithm": {
+        "description": "Selection sort works by dividing the input list into two parts: the sublist of items already sorted, which is built up from left to right, and the sublist of items remaining to be sorted.",
+        "steps": [
+          "Step 1: Loop through the array from index i = 0 to n-1.",
+          "Step 2: Within this loop, assume the element at index i is the minimum. Create an inner loop starting from j = i+1 to scan the rest of the array.",
+          "Step 3: If an element at index j is smaller than the current minimum, update the minimum index tracker.",
+          "Step 4: After scanning the unsorted portion, swap the found minimum element with the element at index i.",
+          "Step 5: Repeat until the entire array is sorted."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class SelectionSort\n{\n    public static void Sort(int[] arr)\n    {\n        int n = arr.Length;\n\n        // One by one move boundary of unsorted subarray\n        for (int i = 0; i < n - 1; i++)\n        {\n            // Find the minimum element in unsorted array\n            int min_idx = i;\n            for (int j = i + 1; j < n; j++)\n            {\n                if (arr[j] < arr[min_idx])\n                {\n                    min_idx = j;\n                }\n            }\n\n            // Swap the found minimum element with the first element\n            int temp = arr[min_idx];\n            arr[min_idx] = arr[i];\n            arr[i] = temp;\n        }\n    }\n\n    public static void Main(string[] args)\n    {\n        int[] arr = { 64, 25, 12, 22, 11 };\n        Console.WriteLine(\"Original array: \" + string.Join(\", \", arr));\n        \n        Sort(arr);\n        \n        Console.WriteLine(\"Sorted array: \" + string.Join(\", \", arr));\n    }\n}",
+        "explanation": "The algorithm iterates through the list, maintaining a 'sorted' boundary. In every pass, it scans the 'unsorted' right side to find the absolute smallest value and swaps it into the correct position at the end of the 'sorted' left side. This guarantees that after N passes, the array is sorted.",
+        "time_complexity": "O(n²)",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_033",
+      "title": "Insertion Sort",
+      "description": "Implement the Insertion Sort algorithm to sort an array of integers in ascending order. This algorithm builds the final sorted array one item at a time, functioning similarly to how one sorts playing cards in their hand.",
+      "difficulty": 3,
+      "reference": {
+        "part": "Part 2: OOP & Algorithms",
+        "slide": "52, 53",
+        "page": 2
+      },
+      "hint": "Treat the beginning of the array as a 'sorted' sub-list. Take the next element from the 'unsorted' portion and shift elements in the sorted part to the right until you find the correct insertion spot.",
+      "algorithm": {
+        "description": "The algorithm divides the array into a sorted and an unsorted partition. It iterates through the unsorted partition, picking one element at a time and inserting it into its correct position within the sorted partition.",
+        "steps": [
+          "Step 1: Iterate from the second element (index 1) of the array to the end.",
+          "Step 2: Store the current element in a temporary variable (key) and initialize a pointer to the index immediately preceding it.",
+          "Step 3: While the pointer is valid (>= 0) and the element at the pointer is greater than the key, shift that element one position to the right.",
+          "Step 4: Decrement the pointer and repeat Step 3. Once the correct position is found, insert the key into the slot to the right of the pointer."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class Program\n{\n    public static void InsertionSort(int[] arr)\n    {\n        int n = arr.Length;\n        \n        // Start from the second element (index 1)\n        for (int i = 1; i < n; ++i)\n        {\n            int key = arr[i];\n            int j = i - 1;\n\n            // Move elements of arr[0..i-1], that are greater than key,\n            // to one position ahead of their current position\n            while (j >= 0 && arr[j] > key)\n            {\n                arr[j + 1] = arr[j];\n                j = j - 1;\n            }\n            \n            // Place the key in its correct position\n            arr[j + 1] = key;\n        }\n    }\n\n    public static void Main()\n    {\n        int[] data = { 12, 11, 13, 5, 6 };\n        InsertionSort(data);\n        Console.WriteLine(\"Sorted Array: \" + string.Join(\", \", data));\n    }\n}",
+        "explanation": "The solution iterates through the array starting at index 1. It treats the element at index `i` as the `key` to be inserted. The inner `while` loop compares the `key` with elements to its left (the sorted portion). If a left-side element is larger than the `key`, it is shifted to the right to make space. This continues until a smaller element is found or the start of the array is reached, at which point the `key` is placed.",
+        "time_complexity": "O(n²)",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_034",
+      "title": "Basic Math Operators (Overflow/Underflow)",
+      "description": "Write a program that demonstrates the behavior of integer arithmetic when calculations exceed the storage capacity of the data type. Specifically, initialize an integer to its maximum value and add 1, then initialize an integer to its minimum value and subtract 1, printing the results to observe the wrap-around effect.",
+      "difficulty": 3,
+      "reference": {
+        "part": "Part 1: Introduction",
+        "slide": "20-22",
+        "page": 3
+      },
+      "hint": "In C#, a standard 'int' is 32-bit signed. Consider what happens to the binary representation (specifically the sign bit) when you add 1 to the largest possible positive number (2,147,483,647).",
+      "algorithm": {
+        "description": "The algorithm directly manipulates the boundary values of the integer type to trigger overflow and underflow events in a default unchecked context.",
+        "steps": [
+          "Step 1: Initialize a variable with the value of int.MaxValue.",
+          "Step 2: Perform an addition operation adding 1 to this maximum value and store the result.",
+          "Step 3: Initialize a variable with the value of int.MinValue.",
+          "Step 4: Perform a subtraction operation subtracting 1 from this minimum value and store the result.",
+          "Step 5: Output all original and calculated values to the console to visualize the wrap-around behavior."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class Program\n{\n    public static void Main()\n    {\n        // Step 1: Initialize max integer\n        int maxVal = int.MaxValue;\n        Console.WriteLine(\"Max Int: \" + maxVal);\n\n        // Step 2: Cause Overflow (wraps to negative)\n        int overflow = maxVal + 1;\n        Console.WriteLine(\"Max + 1 (Overflow): \" + overflow);\n\n        Console.WriteLine(\"-------------------\");\n\n        // Step 3: Initialize min integer\n        int minVal = int.MinValue;\n        Console.WriteLine(\"Min Int: \" + minVal);\n\n        // Step 4: Cause Underflow (wraps to positive)\n        int underflow = minVal - 1;\n        Console.WriteLine(\"Min - 1 (Underflow): \" + underflow);\n    }\n}",
+        "explanation": "This solution demonstrates 'Silent Overflow'. In C#, standard arithmetic operations on integers are not checked for overflow by default. When you add 1 to 'int.MaxValue' (binary 0111...111), the result becomes 1000...000. In a signed 32-bit integer (Two's Complement), the leading 1 signifies a negative number, causing the value to wrap around to 'int.MinValue'. The same logic applies to underflow in reverse.",
+        "time_complexity": "O(1)",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_035",
+      "title": "Swap Logic (Short-circuiting)",
+      "description": "Write a C# program that accepts two integer inputs, 'a' and 'b'. The program should swap the values of 'a' and 'b' if and only if 'a' is not zero and 'b' is divisible by 'a'. You must utilize the short-circuiting behavior of logical operators to ensure that a division-by-zero exception does not occur.",
+      "difficulty": 3,
+      "reference": {
+        "part": "Part 1: Introduction",
+        "slide": "40",
+        "page": 3
+      },
+      "hint": "Use the logical AND operator (&&). Remember that in C#, if the first condition in an AND statement is false, the second condition is not evaluated, effectively 'short-circuiting' the execution.",
+      "algorithm": {
+        "description": "The algorithm uses a conditional guard to determine if a swap is necessary and safe.",
+        "steps": [
+          "Step 1: Initialize two integer variables, a and b, with test values.",
+          "Step 2: Construct an 'if' statement with two conditions joined by the '&&' operator.",
+          "Step 3: The first condition must check if 'a' is not equal to zero (safety check).",
+          "Step 4: The second condition checks if 'b' modulo 'a' equals zero (logic check).",
+          "Step 5: Inside the 'if' block, perform the swap using a temporary variable.",
+          "Step 6: Print the final values of 'a' and 'b'."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\npublic class Program\n{\n    public static void Main()\n    {\n        // Example inputs\n        int a = 0;\n        int b = 10;\n\n        Console.WriteLine($\"Before: a = {a}, b = {b}\");\n\n        // Short-circuit logic:\n        // 1. Check if a != 0\n        // 2. ONLY if step 1 is true, check if b % a == 0\n        if (a != 0 && b % a == 0)\n        {\n            // Perform Swap\n            int temp = a;\n            a = b;\n            b = temp;\n            Console.WriteLine(\"Swap performed.\");\n        }\n        else\n        {\n            Console.WriteLine(\"Swap conditions not met (or safety check triggered).\");\n        }\n\n        Console.WriteLine($\"After:  a = {a}, b = {b}\");\n    }\n}",
+        "explanation": "This solution demonstrates short-circuit evaluation. The expression `(a != 0 && b % a == 0)` is evaluated from left to right. If `a` is 0, the first part (`a != 0`) evaluates to `false`. Because the `&&` operator requires both sides to be true, C# 'short-circuits' and stops evaluating immediately. Consequently, `b % a` is never executed, preventing a `DivideByZeroException`. If `a` is not 0, the second part is evaluated safely.",
+        "time_complexity": "O(1) - Constant time operations regardless of input size.",
+        "space_complexity": "O(1) - Uses a fixed amount of memory for variables."
+      }
+    },
+    {
+      "id": "PROB_036",
+      "title": "String Reverse / Split",
+      "description": "Write a program that takes a sentence as input, splits it into individual words, and reconstructs the sentence with the words in reverse order. For example, the input 'Hello World' should result in the output 'World Hello'.",
+      "difficulty": 3,
+      "reference": {
+        "part": "Part 1: Introduction",
+        "slide": "60",
+        "page": 3
+      },
+      "hint": "Consider using the built-in String.Split() method to create an array of substrings, and look for a method to reverse that array before joining it back together.",
+      "algorithm": {
+        "description": "The algorithm tokenizes a string into words based on whitespace, reverses the collection of tokens, and concatenates them back into a single string.",
+        "steps": [
+          "Step 1: Read the input string from the user.",
+          "Step 2: Split the string into an array of words using the space character as a delimiter.",
+          "Step 3: Reverse the order of the elements within the array.",
+          "Step 4: Join the array elements back into a single string, inserting a space between each word.",
+          "Step 5: Print the resulting reversed sentence to the console."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\nnamespace StringReverseSplit\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            // Prompt user for input\n            Console.Write(\"Enter a sentence to reverse: \");\n            string input = Console.ReadLine();\n\n            // Check for valid input\n            if (string.IsNullOrWhiteSpace(input))\n            {\n                Console.WriteLine(\"Input cannot be empty.\");\n                return;\n            }\n\n            // Split the string by space characters\n            // StringSplitOptions.RemoveEmptyEntries handles multiple spaces between words\n            string[] words = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);\n\n            // Reverse the array of words\n            Array.Reverse(words);\n\n            // Join the words back into a single string\n            string result = string.Join(\" \", words);\n\n            // Output the result\n            Console.WriteLine(\"Reversed Sentence: \" + result);\n        }\n    }\n}",
+        "explanation": "The solution uses the `Split` method to break the input string into an array of substrings (words) whenever a space is encountered. We use `StringSplitOptions.RemoveEmptyEntries` to ensure that extra spaces between words don't create empty strings in our array. `Array.Reverse` is then called to invert the order of the elements in the array in-place. Finally, `string.Join` combines the reversed array elements back into a single string, placing a space separator between each word.",
+        "time_complexity": "O(n)",
+        "space_complexity": "O(n)"
+      }
+    },
+    {
+      "id": "PROB_037",
+      "title": "String Correction (Case sensitivity)",
+      "description": "Develop a program that accepts a string containing a mix of uppercase and lowercase letters. The program must convert the entire string to a standardized format (all lowercase) to ensure consistency for future data comparison or storage.",
+      "difficulty": 2,
+      "reference": {
+        "part": "Part 1: Introduction",
+        "slide": "62-65",
+        "page": 3
+      },
+      "hint": "C# strings are immutable, meaning you cannot change them in place. Look for a built-in method within the String class that returns a copy of the string in lowercase.",
+      "algorithm": {
+        "description": "The algorithm takes a raw string input and generates a new string where every uppercase character is replaced by its lowercase equivalent.",
+        "steps": [
+          "Step 1: Receive the input string from the user.",
+          "Step 2: Check if the string is null or empty to prevent runtime errors.",
+          "Step 3: Invoke the language-specific string transformation method to convert all characters to lowercase.",
+          "Step 4: Return or display the newly formatted string."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\n\nnamespace StringCorrection\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            // Test input with mixed case\n            string input = \"HeLLo WoRLd\";\n            \n            // Call the correction method\n            string result = CorrectStringCase(input);\n            \n            Console.WriteLine($\"Original: {input}\");\n            Console.WriteLine($\"Corrected: {result}\");\n        }\n\n        /// <summary>\n        /// Converts a string to lowercase to standardize input.\n        /// </summary>\n        /// <param name=\"text\">The mixed-case input string</param>\n        /// <returns>Lowercase string</returns>\n        static string CorrectStringCase(string text)\n        {\n            // Safety check for null input\n            if (string.IsNullOrEmpty(text))\n            {\n                return string.Empty;\n            }\n\n            // Use the built-in ToLower() method\n            // This returns a new string instance\n            return text.ToLower();\n        }\n    }\n}",
+        "explanation": "The solution utilizes the built-in `ToLower()` method of the C# String class. Since strings in C# are immutable, this method does not modify the original variable but creates a new string where all uppercase characters (ASCII 65-90) are converted to their lowercase counterparts (ASCII 97-122). The `string.IsNullOrEmpty` check is a best practice to ensure the program does not crash if no input is provided.",
+        "time_complexity": "O(n) - where n is the length of the string, as the method must iterate through every character to convert it.",
+        "space_complexity": "O(n) - a new string of length n is allocated in memory to store the result."
+      }
+    },
+    {
+      "id": "PROB_038",
+      "title": "File Handling (Read/Write Text)",
+      "description": "Write a program that accepts a string of text from the user, writes it to a text file named 'output.txt', and then reads the file content back to display it on the console. This problem demonstrates the persistence of data using basic file Input/Output (I/O) operations.",
+      "difficulty": 4,
+      "reference": {
+        "part": "Part 1: Introduction",
+        "slide": "69, 70, 71",
+        "page": 3
+      },
+      "hint": "You need to import the `System.IO` namespace. Use the `StreamWriter` class to write data and the `StreamReader` class to read it. Using a `using` statement is recommended to automatically close the file and release system resources.",
+      "algorithm": {
+        "description": "The algorithm involves capturing user input, establishing a write stream to a specific file path, saving the data, and then establishing a read stream to verify the data was stored correctly.",
+        "steps": [
+          "Step 1: Import the System.IO namespace to access file handling classes.",
+          "Step 2: Define the file path (e.g., 'output.txt') and prompt the user for input.",
+          "Step 3: Instantiate a StreamWriter within a 'using' block to open the file for writing.",
+          "Step 4: Write the user input to the file using the WriteLine method.",
+          "Step 5: Instantiate a StreamReader within a 'using' block to open the file for reading.",
+          "Step 6: Read the entire content of the file using ReadToEnd and display it on the console."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\nusing System.IO;\n\nnamespace FileIOExample\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            string filePath = \"output.txt\";\n\n            // Part 1: Writing to the file\n            Console.Write(\"Enter text to save to file: \");\n            string textInput = Console.ReadLine();\n\n            // The 'using' statement ensures the StreamWriter is closed and disposed automatically\n            using (StreamWriter writer = new StreamWriter(filePath))\n            {\n                writer.WriteLine(textInput);\n            }\n            Console.WriteLine(\"Data written to file successfully.\");\n\n            // Part 2: Reading from the file\n            Console.WriteLine(\"\\nReading content from file:\");\n            if (File.Exists(filePath))\n            {\n                using (StreamReader reader = new StreamReader(filePath))\n                {\n                    string content = reader.ReadToEnd();\n                    Console.WriteLine(content);\n                }\n            }\n            else\n            {\n                Console.WriteLine(\"File not found.\");\n            }\n        }\n    }\n}",
+        "explanation": "The solution utilizes the `System.IO` namespace. It uses `StreamWriter` to create (or overwrite) 'output.txt' and write the user's input into it. The `using` block is crucial here; it acts as a try-finally block that ensures the `Dispose()` method is called, closing the file stream even if an error occurs. Subsequently, `StreamReader` is used to open the file, and `ReadToEnd()` reads all characters from the current position to the end of the stream. A check using `File.Exists` is added as a best practice to prevent errors if the file creation failed.",
+        "time_complexity": "O(n)",
+        "space_complexity": "O(n)"
+      }
+    },
+    {
+      "id": "PROB_039",
+      "title": "Binary File Handling",
+      "description": "Create a C# program that demonstrates how to persist primitive data types to a binary file and retrieve them. The program should write an integer, a double, and a string to a file named 'data.bin' using a BinaryWriter, and subsequently read these values back in the correct order using a BinaryReader to verify data integrity.",
+      "difficulty": 5,
+      "reference": {
+        "part": "Part 1: Introduction",
+        "slide": "72",
+        "page": 3
+      },
+      "hint": "Remember that binary files store data as raw bytes, not human-readable text. You must use the `System.IO` namespace and ensure that you read the data types back in the exact same order that you wrote them (e.g., if you wrote int then string, you must read int then string).",
+      "algorithm": {
+        "description": "The algorithm utilizes the `BinaryWriter` and `BinaryReader` classes wrapped around a `FileStream` to perform I/O operations. It emphasizes the sequential nature of binary data streams.",
+        "steps": [
+          "Step 1: Import the `System.IO` namespace to access file handling classes.",
+          "Step 2: Define a file path (e.g., 'data.bin').",
+          "Step 3: Create a `FileStream` with `FileMode.Create` and wrap it in a `using` block with a `BinaryWriter`.",
+          "Step 4: Write sample data (an integer, a double, and a string) to the file using the `Write()` method.",
+          "Step 5: Create a new `FileStream` with `FileMode.Open` and wrap it in a `using` block with a `BinaryReader`.",
+          "Step 6: Read the data back using specific methods (`ReadInt32()`, `ReadDouble()`, `ReadString()`) in the exact order they were written.",
+          "Step 7: Output the read values to the console to confirm the operation was successful."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\nusing System.IO;\n\nnamespace BinaryFileHandler\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            string fileName = \"data.bin\";\n\n            // --- Writing Data ---\n            Console.WriteLine(\"Writing binary data...\");\n            try\n            {\n                // 'using' ensures the file is closed and disposed correctly\n                using (BinaryWriter writer = new BinaryWriter(File.Open(fileName, FileMode.Create)))\n                {\n                    int id = 101;\n                    double price = 19.99;\n                    string name = \"Widget\";\n\n                    writer.Write(id);\n                    writer.Write(price);\n                    writer.Write(name);\n                    Console.WriteLine(\"Data written successfully.\");\n                }\n            }\n            catch (IOException ex)\n            {\n                Console.WriteLine(\"Error writing file: \" + ex.Message);\n            }\n\n            // --- Reading Data ---\n            Console.WriteLine(\"\\nReading binary data...\");\n            try\n            {\n                if (File.Exists(fileName))\n                {\n                    using (BinaryReader reader = new BinaryReader(File.Open(fileName, FileMode.Open)))\n                    {\n                        // MUST read in the same order: int, double, string\n                        int readId = reader.ReadInt32();\n                        double readPrice = reader.ReadDouble();\n                        string readName = reader.ReadString();\n\n                        Console.WriteLine($\"ID: {readId}\");\n                        Console.WriteLine($\"Price: {readPrice}\");\n                        Console.WriteLine($\"Name: {readName}\");\n                    }\n                }\n                else\n                {\n                    Console.WriteLine(\"File not found.\");\n                }\n            }\n            catch (IOException ex)\n            {\n                Console.WriteLine(\"Error reading file: \" + ex.Message);\n            }\n        }\n    }\n}",
+        "explanation": "The solution uses `BinaryWriter` and `BinaryReader` to handle primitive types directly without converting them to text format (unlike StreamWriter). The `using` statement is critical for resource management; it ensures the file handle is released immediately after operations complete. The key conceptual point is strict ordering: binary streams are continuous sequences of bytes, so the reader must know exactly how many bytes to read for each data type (4 bytes for Int32, 8 bytes for Double, and a length-prefixed sequence for String).",
+        "time_complexity": "O(n)",
+        "space_complexity": "O(1)"
+      }
+    },
+    {
+      "id": "PROB_040",
+      "title": "LINQ (Word Count - Bonus)",
+      "description": "Write a C# program that analyzes a block of text to determine the frequency of each word using LINQ. The program should ignore case and punctuation, then display the words and their counts sorted from most frequent to least frequent.",
+      "difficulty": 4,
+      "reference": {
+        "part": "Part 1: Introduction",
+        "slide": "79",
+        "page": 3
+      },
+      "hint": "Use String.Split to break the text into an array, then use the LINQ GroupBy method to organize identical words together. Don't forget to normalize the text to lowercase before grouping.",
+      "algorithm": {
+        "description": "The algorithm processes a raw string into a countable collection of words, groups them by identity, counts the group sizes, and sorts the results.",
+        "steps": [
+          "Step 1: Define the input text string.",
+          "Step 2: Normalize the text by converting it to lowercase to ensure case-insensitivity (e.g., 'The' equals 'the').",
+          "Step 3: Split the string into an array of words, removing punctuation and empty entries.",
+          "Step 4: Use LINQ GroupBy to group the word array by the word itself.",
+          "Step 5: Select a new object from each group containing the Key (the word) and the Count (frequency).",
+          "Step 6: Sort the resulting collection by Count in descending order.",
+          "Step 7: Iterate through the collection and print the word and its count."
+        ]
+      },
+      "solution": {
+        "language": "csharp",
+        "code": "using System;\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class Program\n{\n    public static void Main()\n    {\n        // Input text\n        string text = \"This is a test. That is not a test. This is only a test.\";\n\n        // separators to split by (punctuation and whitespace)\n        char[] delimiters = new char[] { ' ', '.', ',', ';', '!', '?' };\n\n        // LINQ Query\n        var wordStats = text\n            .ToLower() // Normalize to lowercase\n            .Split(delimiters, StringSplitOptions.RemoveEmptyEntries) // Split into words\n            .GroupBy(word => word) // Group by the word itself\n            .Select(group => new \n            { \n                Word = group.Key, \n                Count = group.Count() \n            })\n            .OrderByDescending(x => x.Count); // Sort by frequency\n\n        // Output results\n        Console.WriteLine(\"Word Frequencies:\");\n        foreach (var item in wordStats)\n        {\n            Console.WriteLine($\"{item.Word}: {item.Count}\");\n        }\n    }\n}",
+        "explanation": "The solution first normalizes the input using `.ToLower()` to handle case sensitivity. It uses `.Split()` with specific delimiters to ensure punctuation isn't attached to words. The core logic relies on `.GroupBy(w => w)`, which buckets identical strings together. The `.Select()` projection creates an anonymous type holding the word (the Key) and the size of the bucket (Count). Finally, `.OrderByDescending` sorts the list so the most frequent words appear at the top.",
+        "time_complexity": "O(N log N)",
+        "space_complexity": "O(N)"
+      }
+    }
+  ]
+}
