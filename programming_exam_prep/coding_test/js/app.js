@@ -9,9 +9,8 @@ class CodingTestApp {
     }
 
     async init() {
-        // Load problems
+        // Load problems - loadProblems() sets this.engine.allProblems
         const allProblems = await this.engine.loadProblems();
-        // Note: loadProblems already sets this.engine.allProblems, but we can also set problems for compatibility
         this.populateProblemList();
 
         // Check for saved session
