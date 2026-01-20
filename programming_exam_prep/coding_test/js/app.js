@@ -11,7 +11,7 @@ class CodingTestApp {
     async init() {
         // Load problems
         const allProblems = await this.engine.loadProblems();
-        this.engine.problems = allProblems;
+        // Note: loadProblems already sets this.engine.allProblems, but we can also set problems for compatibility
         this.populateProblemList();
 
         // Check for saved session
@@ -47,7 +47,7 @@ class CodingTestApp {
         if (!list) return;
 
         list.innerHTML = '';
-        this.engine.problems.forEach(problem => {
+        this.engine.allProblems.forEach(problem => {
             const diffClass = problem.difficulty <= 3 ? 'text-green-400' : 
                              problem.difficulty <= 6 ? 'text-yellow-400' : 'text-red-400';
             
@@ -211,16 +211,16 @@ class CodingTestApp {
                 alert('Please select a problem first.');
                 return;
             }
-            problem = this.engine.problems.find(p => p.id === selectedId);
+            problem = this.engine.allProblems.find(p => p.id === selectedId);
         } else if (mode === 'random') {
-            const randomIndex = Math.floor(Math.random() * this.engine.problems.length);
-            problem = this.engine.problems[randomIndex];
+            const randomIndex = Math.floor(Math.random() * this.engine.allProblems.length);
+            problem = this.engine.allProblems[randomIndex];
         } else if (mode === 'sequential') {
             // Get first unattempted or least attempted
-            problem = this.engine.problems[0];
+            problem = this.engine.allProblems[0];
         } else if (mode === 'weak') {
             // Get weak area problem (placeholder - use first for now)
-            problem = this.engine.problems[0];
+            problem = this.engine.allProblems[0];
         }
 
         if (!problem) {
