@@ -9,9 +9,8 @@ class CodingTestApp {
     }
 
     async init() {
-        // Load problems
+        // Load problems - loadProblems() sets this.engine.allProblems
         const allProblems = await this.engine.loadProblems();
-        this.engine.problems = allProblems;
         this.populateProblemList();
 
         // Check for saved session
@@ -47,7 +46,7 @@ class CodingTestApp {
         if (!list) return;
 
         list.innerHTML = '';
-        this.engine.problems.forEach(problem => {
+        this.engine.allProblems.forEach(problem => {
             const diffClass = problem.difficulty <= 3 ? 'text-green-400' : 
                              problem.difficulty <= 6 ? 'text-yellow-400' : 'text-red-400';
             
@@ -106,6 +105,11 @@ class CodingTestApp {
         document.getElementById('back-to-selection')?.addEventListener('click', () => {
             this.engine.saveSession();
             this.showView('selection');
+            // Re-check for saved session and show resume option
+            const savedSession = this.engine.getSavedSession();
+            if (savedSession) {
+                this.showResumeOption(savedSession);
+            }
         });
 
         // Submit code
@@ -178,7 +182,19 @@ class CodingTestApp {
             const elapsed = Date.now() - savedSession.startTime;
             const minutes = Math.floor(elapsed / 60000);
             
-            resumeInfo.textContent = `${savedSession.problemTitle || 'Problem'} • ${minutes} minutes ago`;
+            // Try to find the problem from saved session
+            let problemTitle = 'Problem';
+            if (savedSession.problems && savedSession.problems.length > 0) {
+                const problemId = savedSession.problems[savedSession.currentIndex || 0];
+                const problem = this.engine.allProblems.find(p => p.id === problemId);
+                if (problem) {
+                    problemTitle = problem.title;
+                }
+            } else if (savedSession.problemTitle) {
+                problemTitle = savedSession.problemTitle;
+            }
+            
+            resumeInfo.textContent = `${problemTitle} • ${minutes} minutes ago`;
             resumeSection.classList.remove('hidden');
         }
     }
@@ -194,16 +210,16 @@ class CodingTestApp {
                 alert('Please select a problem first.');
                 return;
             }
-            problem = this.engine.problems.find(p => p.id === selectedId);
+            problem = this.engine.allProblems.find(p => p.id === selectedId);
         } else if (mode === 'random') {
-            const randomIndex = Math.floor(Math.random() * this.engine.problems.length);
-            problem = this.engine.problems[randomIndex];
+            const randomIndex = Math.floor(Math.random() * this.engine.allProblems.length);
+            problem = this.engine.allProblems[randomIndex];
         } else if (mode === 'sequential') {
             // Get first unattempted or least attempted
-            problem = this.engine.problems[0];
+            problem = this.engine.allProblems[0];
         } else if (mode === 'weak') {
             // Get weak area problem (placeholder - use first for now)
-            problem = this.engine.problems[0];
+            problem = this.engine.allProblems[0];
         }
 
         if (!problem) {
@@ -211,6 +227,11 @@ class CodingTestApp {
             return;
         }
 
+        // Clear any existing session before starting new one
+        this.engine.clearSession();
+        // Hide resume section
+        document.getElementById('resume-section')?.classList.add('hidden');
+        
         this.engine.startSession([problem]);
         this.showView('coding');
         this.updateProblemDisplay();
@@ -401,6 +422,8 @@ class CodingTestApp {
         // If only 1 problem, allow repeating it
         if (allProblems.length === 1) {
             const nextProblem = allProblems[0];
+            // Clear session before starting new one
+            this.engine.clearSession();
             this.engine.startSession([nextProblem]);
             this.updateProblemDisplay();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -412,8 +435,8 @@ class CodingTestApp {
         const randomIndex = Math.floor(Math.random() * otherProblems.length);
         const nextProblem = otherProblems[randomIndex];
 
-        // Clear the current code for new session
-        this.engine.sessionData = null;
+        // Clear session before starting new one
+        this.engine.clearSession();
         this.engine.startSession([nextProblem]);
         this.updateProblemDisplay();
         window.scrollTo({ top: 0, behavior: 'smooth' });
