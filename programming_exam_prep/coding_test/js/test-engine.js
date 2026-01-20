@@ -84,6 +84,7 @@ class TestEngine {
         
         this.sessionData = {
             problems: selectedProblems.map(p => p.id),
+            problemTitle: selectedProblems[0]?.title || 'Problem',
             startTime: this.startTime,
             currentIndex: 0,
             results: [],
@@ -100,9 +101,9 @@ class TestEngine {
         this.currentIndex = savedSession.currentIndex;
         this.results = savedSession.results || [];
         
-        // Load problems by IDs
+        // Load problems by IDs - use allProblems instead of problems
         this.problems = savedSession.problems.map(id => 
-            this.problems.find(p => p.id === id)
+            this.allProblems.find(p => p.id === id)
         ).filter(p => p);
         
         this.loadProblem(this.currentIndex);
