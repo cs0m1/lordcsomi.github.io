@@ -2,7 +2,7 @@
 
 Programming practice tool with AI grading.
 
-**Live site:** https://cs0m1.github.io/lordcsomi.github.io/programming_exam_prep/countdown/index.html
+**Live site:** https://cs0m1.github.io/lordcsomi.github.io/basic_programing/countdown/index.html
 
 ## Features
 
@@ -38,4 +38,4 @@ Mostly coded using Claude Opus 4.5.
 
 ## Exam
 
-NSXPP1EBNF - January 20, 2026, 10:00-12:00, BA.1.32.Audmax
+NSXPP1EBNF - January 27, 2026, 10:00-12:00, BA.1.32.Audmax
