@@ -19,21 +19,139 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const canvas = document.getElementById('blobCanvas');
   const ctx = canvas.getContext('2d');
-  
-  // Performance optimization
+
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  
-  // Initialize blobs array
-  let blobs = [];
-  
-  // Define colors with adjusted opacity for mobile
-  const blobColors = [
-    ['rgba(0, 183, 255, 0.5)', 'rgba(0, 140, 255, 0.25)', 'rgba(0, 102, 204, 0.02)'],
-    ['rgba(0, 191, 255, 0.5)', 'rgba(0, 150, 255, 0.25)', 'rgba(0, 112, 224, 0.02)'],
-    ['rgba(0, 170, 255, 0.5)', 'rgba(0, 130, 255, 0.25)', 'rgba(0, 92, 184, 0.02)'],
-    ['rgba(0, 160, 255, 0.5)', 'rgba(0, 120, 255, 0.25)', 'rgba(0, 82, 164, 0.02)'],
-    ['rgba(0, 150, 255, 0.5)', 'rgba(0, 110, 255, 0.25)', 'rgba(0, 72, 144, 0.02)']
-  ];
+
+  let sketches = [];
+  const SHAPE_TYPES = ['cube', 'hexagon', 'rect', 'circle', 'triangle'];
+
+  class Sketch {
+    constructor(width, height) {
+      this.reset(width, height, true);
+    }
+
+    reset(width, height, init) {
+      if (!init && Math.random() > 0.45) {
+        this.x = width * (0.45 + Math.random() * 0.6);
+        this.y = height * (Math.random() * 0.55);
+      } else {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+      }
+      this.vx = (Math.random() - 0.5) * 0.65;
+      this.vy = (Math.random() - 0.5) * 0.65;
+      this.size = 8 + Math.random() * 26;
+      this.type = SHAPE_TYPES[Math.floor(Math.random() * SHAPE_TYPES.length)];
+      this.rotation = Math.random() * Math.PI * 2;
+      this.rotSpeed = (Math.random() - 0.5) * 0.002;
+      this.opacity = 0.18 + Math.random() * 0.22;
+      this.originalVx = this.vx;
+      this.originalVy = this.vy;
+    }
+
+    draw() {
+      const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const base = dark ? `232, 228, 216` : `37, 38, 39`;
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation);
+      ctx.strokeStyle = `rgba(${base}, ${this.opacity})`;
+      ctx.lineWidth = 0.65;
+      ctx.beginPath();
+      const s = this.size;
+
+      switch (this.type) {
+        case 'hexagon': {
+          for (let i = 0; i < 6; i++) {
+            const a = (i / 6) * Math.PI * 2;
+            const px = Math.cos(a) * s, py = Math.sin(a) * s;
+            i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          for (let i = 0; i <= 6; i++) {
+            const a = (i / 6) * Math.PI * 2;
+            i === 0 ? ctx.moveTo(Math.cos(a) * s * 0.48, Math.sin(a) * s * 0.48)
+                    : ctx.lineTo(Math.cos(a) * s * 0.48, Math.sin(a) * s * 0.48);
+          }
+          for (let i = 0; i < 6; i++) {
+            const a = (i / 6) * Math.PI * 2;
+            ctx.moveTo(Math.cos(a) * s * 0.48, Math.sin(a) * s * 0.48);
+            ctx.lineTo(Math.cos(a) * s, Math.sin(a) * s);
+          }
+          break;
+        }
+        case 'cube': {
+          const f = s * 0.62, d = f * 0.42;
+          ctx.moveTo(-f/2, -f/2); ctx.lineTo(f/2, -f/2);
+          ctx.lineTo(f/2, f/2);   ctx.lineTo(-f/2, f/2);
+          ctx.closePath();
+          ctx.moveTo(-f/2, -f/2); ctx.lineTo(-f/2+d, -f/2-d);
+          ctx.lineTo(f/2+d, -f/2-d); ctx.lineTo(f/2, -f/2);
+          ctx.moveTo(f/2, -f/2);  ctx.lineTo(f/2+d, -f/2-d);
+          ctx.lineTo(f/2+d, f/2-d); ctx.lineTo(f/2, f/2);
+          break;
+        }
+        case 'circle': {
+          ctx.arc(0, 0, s, 0, Math.PI * 2);
+          ctx.moveTo(-s, 0); ctx.lineTo(s, 0);
+          ctx.moveTo(0, -s); ctx.lineTo(0, s);
+          ctx.moveTo(s * 0.42, 0);
+          ctx.arc(0, 0, s * 0.42, 0, Math.PI * 2);
+          break;
+        }
+        case 'triangle': {
+          ctx.moveTo(0, -s);
+          ctx.lineTo(s * 0.866, s * 0.5);
+          ctx.lineTo(-s * 0.866, s * 0.5);
+          ctx.closePath();
+          ctx.moveTo(0, -s * 0.3);
+          ctx.lineTo(s * 0.28, s * 0.15);
+          ctx.lineTo(-s * 0.28, s * 0.15);
+          ctx.closePath();
+          break;
+        }
+        default: {
+          const rw = s * 1.35, rh = s * 0.78;
+          ctx.rect(-rw/2, -rh/2, rw, rh);
+          ctx.moveTo(-rw/5, -rh/2); ctx.lineTo(-rw/5, rh/2);
+          ctx.moveTo(rw/4,  -rh/2); ctx.lineTo(rw/4,  rh/2);
+          ctx.moveTo(-rw/2, 0);     ctx.lineTo(rw/2,  0);
+          break;
+        }
+      }
+
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    update(width, height) {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.rotation += this.rotSpeed;
+
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = this.x - mouse.x;
+        const dy = this.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const repel = 180;
+        if (dist < repel) {
+          const force = (1 - dist / repel) * 0.35;
+          const angle = Math.atan2(dy, dx);
+          this.vx += Math.cos(angle) * force;
+          this.vy += Math.sin(angle) * force;
+        }
+      }
+
+      this.vx += (this.originalVx - this.vx) * 0.008;
+      this.vy += (this.originalVy - this.vy) * 0.008;
+
+      const pad = this.size + 60;
+      if (this.x < -pad) this.x = width + pad;
+      if (this.x > width + pad) this.x = -pad;
+      if (this.y < -pad) this.y = height + pad;
+      if (this.y > height + pad) this.y = -pad;
+    }
+  }
 
   // Throttle helper
   function throttle(func, limit) {
@@ -57,122 +175,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Blob class
-  class Blob {
-    constructor(colors, width, height) {
-      this.radius = 300;
-      this.colors = colors;
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.vx = (Math.random() - 0.5) * 1.2;
-      this.vy = (Math.random() - 0.5) * 1.2;
-      this.originalSpeed = {
-        x: this.vx,
-        y: this.vy
-      };
-    }
-
-    draw() {
-      const gradient = ctx.createRadialGradient(
-        this.x, this.y, 0,
-        this.x, this.y, this.radius
-      );
-      gradient.addColorStop(0, this.colors[0]);
-      gradient.addColorStop(0.4, this.colors[1]);
-      gradient.addColorStop(1, this.colors[2]);
-
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = gradient;
-      ctx.fill();
-    }
-
-    update(canvasWidth, canvasHeight) {
-      this.x += this.vx * 0.8;
-      this.y += this.vy * 0.8;
-
-      const margin = -this.radius * 0.5;
-      if (this.x - this.radius <= margin) {
-        this.x = this.radius + margin;
-        this.vx = Math.abs(this.vx) * 0.8;
-        this.originalSpeed.x = Math.abs(this.originalSpeed.x) * 0.8;
-      } else if (this.x + this.radius >= canvasWidth - margin) {
-        this.x = canvasWidth - this.radius - margin;
-        this.vx = -Math.abs(this.vx) * 0.8;
-        this.originalSpeed.x = -Math.abs(this.originalSpeed.x) * 0.8;
-      }
-
-      if (this.y - this.radius <= margin) {
-        this.y = this.radius + margin;
-        this.vy = Math.abs(this.vy) * 0.8;
-        this.originalSpeed.y = Math.abs(this.originalSpeed.y) * 0.8;
-      } else if (this.y + this.radius >= canvasHeight - margin) {
-        this.y = canvasHeight - this.radius - margin;
-        this.vy = -Math.abs(this.vy) * 0.8;
-        this.originalSpeed.y = -Math.abs(this.originalSpeed.y) * 0.8;
-      }
-
-      if (mouse.x !== null && mouse.y !== null) {
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const repulsionRadius = 250;
-        
-        if (distance < repulsionRadius) {
-          const force = (1 - distance / repulsionRadius) * 0.6;
-          const angle = Math.atan2(dy, dx);
-          
-          this.vx += Math.cos(angle) * force;
-          this.vy += Math.sin(angle) * force;
-          
-          this.vx += (Math.random() - 0.5) * 0.05;
-          this.vy += (Math.random() - 0.5) * 0.05;
-        }
-      }
-
-      this.vx += (this.originalSpeed.x - this.vx) * 0.003;
-      this.vy += (this.originalSpeed.y - this.vy) * 0.003;
-    }
+  function initializeShapes() {
+    const count = isMobile ? 14 : 28;
+    sketches = Array.from({ length: count }, () => new Sketch(canvas.width, canvas.height));
   }
 
-  function initializeBlobs() {
-    const count = isMobile ? 3 : 5;
-    const baseSize = isMobile ? 200 : 300;
-    const sizeIncrement = isMobile ? 30 : 40;
-    const baseSpeedFactor = isMobile ? 0.3 : 0.4;
-    const speedDecrement = isMobile ? 0.05 : 0.04;
-
-    blobs = Array(count).fill().map((_, i) => {
-      const blob = new Blob(blobColors[i], canvas.width, canvas.height);
-      blob.radius = baseSize + (i * sizeIncrement);
-      const speedFactor = baseSpeedFactor - (i * speedDecrement);
-      blob.vx *= speedFactor;
-      blob.vy *= speedFactor;
-      blob.originalSpeed.x = blob.vx;
-      blob.originalSpeed.y = blob.vy;
-      return blob;
-    }).reverse();
-  }
-
-  // Animation loop
   let lastTime = 0;
   function animate(currentTime) {
     if (!lastTime) lastTime = currentTime;
     const deltaTime = currentTime - lastTime;
-    
+
     if (!isMobile || deltaTime > 16.67) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      ctx.filter = `blur(${isMobile ? '100px' : '140px'})`;
-      blobs.forEach(blob => {
-        blob.update(canvas.width, canvas.height);
-        blob.draw();
+      sketches.forEach(s => {
+        s.update(canvas.width, canvas.height);
+        s.draw();
       });
-      ctx.filter = 'none';
-      
       lastTime = currentTime;
     }
-    
+
     requestAnimationFrame(animate);
   }
 
@@ -336,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const resizeCanvas = throttle(function() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    initializeBlobs();
+    initializeShapes();
   }, isMobile ? 500 : 200);
 
   resizeCanvas();
@@ -349,6 +370,64 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   window.addEventListener('resize', resizeCanvas);
+
+  // Trigger sketch draw-in when scrolled into view
+  const sketchWraps = document.querySelectorAll('.section-sketch-wrap');
+  if (sketchWraps.length && 'IntersectionObserver' in window) {
+    const sketchObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('sketch-visible');
+          sketchObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    sketchWraps.forEach(w => sketchObs.observe(w));
+  }
+
+  // Dark mode
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    if (themeIcon) themeIcon.className = theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line';
+  }
+
+  applyTheme(localStorage.getItem('theme') || 'light');
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      applyTheme(next);
+    });
+  }
+
+  // Game demo countdown
+  function updateCountdown() {
+    const target = new Date('2026-08-01T00:00:00');
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      const el = document.getElementById('countdown-display');
+      if (el) el.textContent = 'Demo is live!';
+      return;
+    }
+    const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    const dEl = document.getElementById('cd-days');
+    const hEl = document.getElementById('cd-hours');
+    const mEl = document.getElementById('cd-mins');
+    if (dEl) dEl.textContent = String(days).padStart(2, '0');
+    if (hEl) hEl.textContent = String(hours).padStart(2, '0');
+    if (mEl) mEl.textContent = String(mins).padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
 
   // Smooth scroll for navigation
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {

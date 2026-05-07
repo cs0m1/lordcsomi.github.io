@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Csomi's Portfolio</title>
+  <title>Csomós Ádám — Portfolio</title>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Josefin+Sans:wght@100;200;300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link href="fonts/remixicon.css" rel="stylesheet">
   <script type="text/javascript">
@@ -15,35 +18,39 @@
 </head>
 <body>
   <main>
+
+    <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
     <section id="landing">
       <canvas id="blobCanvas"></canvas>
       <div class="landing-content">
         <nav class="top-nav">
           <div class="nav-left">
             <a href="#landing" class="logo-link">csomi.online</a>
-            <div class="construction-notice">
-              <i class="ri-tools-line"></i>
-              <span>Site Under Construction</span>
-            </div>
           </div>
           <div class="nav-right">
-            <a href="https://github.com/cs0m1" target="_blank" class="nav-icon">
+            <button class="nav-icon theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+              <i class="ri-moon-line" id="themeIcon"></i>
+            </button>
+            <a href="https://github.com/cs0m1" target="_blank" class="nav-icon" title="GitHub">
               <i class="ri-github-fill"></i>
             </a>
-            <a href="https://www.linkedin.com/in/csomos-adam" target="_blank" class="nav-icon">
+            <a href="https://www.linkedin.com/in/csomos-adam" target="_blank" class="nav-icon" title="LinkedIn">
               <i class="ri-linkedin-fill"></i>
             </a>
-            <a href="#technologies" class="nav-icon">
-              <i class="ri-code-s-slash-line"></i>
+            <a href="#gamedev" class="nav-icon" title="Game Dev">
+              <i class="ri-gamepad-line"></i>
             </a>
-            <a href="#contact" class="nav-icon">
+            <a href="#contact" class="nav-icon" title="Contact">
               <i class="ri-mail-line"></i>
             </a>
+            <a href="cv.pdf" download class="nav-cv-btn">CV</a>
           </div>
         </nav>
+
         <a href="#contact" class="job-bubble">
           Currently looking for a job. <span class="link-underline">Get in touch</span>
         </a>
+
         <div class="profile-container">
           <img src="images/me.jpg" alt="Csomós Ádám's profile picture" class="profile-picture">
           <div class="info">
@@ -53,121 +60,213 @@
               <span class="highlight"><i class="ri-map-pin-line"></i></span>
               <span>Budapest, Hungary</span>
             </div>
-            <p><span class="highlight" id="age">20</span> years old Computer Science Engineering student at <span class="highlight">ÓE NIK</span>, focusing on <span class="highlight">C#</span>, <span class="highlight">Python</span>, and <span class="highlight">full stack</span> web development. Open to learning new technologies.</p>
+            <p>
+              <span class="highlight" id="age">20</span> year old Computer Science Engineering student at <span class="highlight">ÓE NIK</span>,
+              currently focused on <span class="highlight">game development</span> with Godot .NET and exploring <span class="highlight">machine learning</span>.
+              I use AI tools to accelerate research, prototyping, and iteration across all my projects.
+              Open to new challenges and opportunities.
+            </p>
+            <div class="hero-tags">
+              <span class="hero-tag"><i class="ri-sparkling-line"></i> AI-augmented workflow</span>
+              <span class="hero-tag"><i class="ri-gamepad-line"></i> Godot .NET</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="technologies">
-      <h2>Current Technologies</h2>
-      <p class="section-desc">As a student, I've gained practical experience with these modern technologies through various projects. While still learning, I'm confident in using these tools to create effective solutions.</p>
-      
-      <div class="tech-grid">
-        <div class="tech-card">
-          <div class="tech-icon">
-            <i class="ri-terminal-box-line"></i>
+    <!-- ═══════════════════════════ GAME DEV ═══════════════════════ -->
+    <section id="gamedev">
+      <!-- Sketch: grid game map + IDE window -->
+      <div class="section-sketch-wrap" aria-hidden="true">
+        <svg class="hero-sketch" viewBox="0 0 380 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Game grid (5×4) -->
+          <rect class="sk sk1" x="15" y="15" width="32" height="32"/>
+          <rect class="sk sk1" x="47" y="15" width="32" height="32"/>
+          <rect class="sk sk1" x="79" y="15" width="32" height="32"/>
+          <rect class="sk sk1" x="111" y="15" width="32" height="32"/>
+          <rect class="sk sk1" x="143" y="15" width="32" height="32"/>
+          <rect class="sk sk2" x="15" y="47" width="32" height="32"/>
+          <rect class="sk sk2" x="47" y="47" width="32" height="32"/>
+          <rect class="sk sk2" x="79" y="47" width="32" height="32"/>
+          <rect class="sk sk2" x="111" y="47" width="32" height="32"/>
+          <rect class="sk sk2" x="143" y="47" width="32" height="32"/>
+          <rect class="sk sk3" x="15" y="79" width="32" height="32"/>
+          <rect class="sk sk3" x="47" y="79" width="32" height="32"/>
+          <rect class="sk sk3" x="79" y="79" width="32" height="32"/>
+          <rect class="sk sk3" x="111" y="79" width="32" height="32"/>
+          <rect class="sk sk3" x="143" y="79" width="32" height="32"/>
+          <rect class="sk sk4" x="15" y="111" width="32" height="32"/>
+          <rect class="sk sk4" x="47" y="111" width="32" height="32"/>
+          <rect class="sk sk4" x="79" y="111" width="32" height="32"/>
+          <rect class="sk sk4" x="111" y="111" width="32" height="32"/>
+          <rect class="sk sk4" x="143" y="111" width="32" height="32"/>
+          <!-- Tower on grid cell (circle in square) -->
+          <circle class="sk sk5" cx="63" cy="31" r="10"/>
+          <line   class="sk sk5" x1="63" y1="15" x2="63" y2="47"/>
+          <line   class="sk sk5" x1="47" y1="31" x2="79" y2="31"/>
+          <!-- Second tower -->
+          <circle class="sk sk5" cx="127" cy="95" r="10"/>
+          <line   class="sk sk5" x1="127" y1="79" x2="127" y2="111"/>
+          <line   class="sk sk5" x1="111" y1="95" x2="143" y2="95"/>
+          <!-- Enemy path arrow -->
+          <polyline class="sk sk6" points="15,63 47,63 79,63 79,95 111,95" stroke-dasharray="4 2"/>
+          <line     class="sk sk6" x1="108" y1="92" x2="111" y2="95"/>
+          <line     class="sk sk6" x1="108" y1="98" x2="111" y2="95"/>
+          <!-- Drone triangle -->
+          <polygon class="sk sk7" points="95,63 102,78 88,78"/>
+          <!-- Drone path -->
+          <line class="sk sk7" x1="95" y1="78" x2="95" y2="111" stroke-dasharray="3 2"/>
+          <!-- IDE window -->
+          <rect class="sk sk8" x="190" y="10" width="170" height="130"/>
+          <line class="sk sk8" x1="190" y1="28" x2="360" y2="28"/>
+          <!-- IDE title dots -->
+          <circle class="sk sk9" cx="202" cy="19" r="3"/>
+          <circle class="sk sk9" cx="213" cy="19" r="3"/>
+          <circle class="sk sk9" cx="224" cy="19" r="3"/>
+          <!-- Code lines -->
+          <line class="sk sk10" x1="202" y1="42" x2="285" y2="42"/>
+          <line class="sk sk10" x1="202" y1="54" x2="330" y2="54"/>
+          <line class="sk sk10" x1="210" y1="66" x2="310" y2="66"/>
+          <line class="sk sk10" x1="210" y1="78" x2="340" y2="78"/>
+          <line class="sk sk10" x1="210" y1="90" x2="295" y2="90"/>
+          <line class="sk sk10" x1="202" y1="102" x2="270" y2="102"/>
+          <line class="sk sk10" x1="202" y1="114" x2="350" y2="114"/>
+          <line class="sk sk10" x1="210" y1="126" x2="318" y2="126"/>
+          <!-- Arrow: IDE → Grid (code controls the game) -->
+          <line class="sk sk11" x1="190" y1="70" x2="165" y2="70" stroke-dasharray="4 2"/>
+          <line class="sk sk11" x1="165" y1="67" x2="175" y2="70"/>
+          <line class="sk sk11" x1="165" y1="73" x2="175" y2="70"/>
+          <!-- Crafter machine (bottom) -->
+          <rect class="sk sk12" x="15"  y="175" width="50" height="50"/>
+          <rect class="sk sk12" x="22"  y="182" width="36" height="36"/>
+          <line class="sk sk13" x1="40"  y1="175" x2="40"  y2="225"/>
+          <line class="sk sk13" x1="15"  y1="200" x2="65"  y2="200"/>
+          <!-- Conveyor line -->
+          <line class="sk sk14" x1="65"  y1="200" x2="120" y2="200" stroke-dasharray="5 3"/>
+          <circle class="sk dot" cx="40"  cy="200" r="2.5" fill="currentColor"/>
+          <!-- Second crafter -->
+          <rect class="sk sk15" x="120" y="175" width="50" height="50"/>
+          <rect class="sk sk15" x="127" y="182" width="36" height="36"/>
+          <line class="sk sk16" x1="145" y1="175" x2="145" y2="225"/>
+          <line class="sk sk16" x1="120" y1="200" x2="170" y2="200"/>
+          <!-- Measurement ticks -->
+          <line class="sk sk17" x1="15"  y1="155" x2="175" y2="155"/>
+          <line class="sk sk17" x1="15"  y1="150" x2="15"  y2="160"/>
+          <line class="sk sk17" x1="175" y1="150" x2="175" y2="160"/>
+          <circle class="sk dot" cx="145" cy="200" r="2"   fill="currentColor"/>
+          <circle class="sk dot" cx="95"  cy="70"  r="2"   fill="currentColor"/>
+        </svg>
+      </div>
+
+      <span class="section-eyebrow">In Development · Godot .NET</span>
+      <h2>Game Development</h2>
+      <p class="section-desc">Building games where programming is the gameplay — not just the tooling.</p>
+
+      <div class="gamedev-layout">
+        <div class="gamedev-main">
+          <div class="gamedev-title-row">
+            <h3 class="gamedev-name">[ Untitled ]</h3>
+            <span class="wip-tag">In Dev</span>
           </div>
-          <div class="tech-content">
-            <h3>C#</h3>
-            <p>Programming Language</p>
+          <p class="gamedev-desc">
+            A grid-based tower defense where you <em>program</em> your turrets and machines using <strong>TypeScript</strong>
+            — via a fully built-in in-game IDE. Set up drone logistics networks, build automated crafting chains,
+            and write code that actually executes your defenses in real-time.
+          </p>
+
+          <div class="gamedev-features">
+            <div class="gamedev-feat">
+              <span class="feat-label">Core mechanic</span>
+              <span class="feat-val">TypeScript scripting for turrets via built-in IDE</span>
+            </div>
+            <div class="gamedev-feat">
+              <span class="feat-label">Systems</span>
+              <span class="feat-val">Grid tiles · Drone logistics · Crafting chains</span>
+            </div>
+            <div class="gamedev-feat">
+              <span class="feat-label">Engine</span>
+              <span class="feat-val">Godot 4 · C# (.NET)</span>
+            </div>
           </div>
-        </div>
-        
-        <div class="tech-card">
-          <div class="tech-icon">
-            <img src="images/python.svg" alt="Python" class="svg-icon">
+
+          <div class="gamedev-countdown">
+            <span class="section-eyebrow" style="margin-bottom:0.5rem;">Demo dropping in</span>
+            <div class="countdown-units">
+              <div class="cd-unit"><span id="cd-days">--</span><small>days</small></div>
+              <div class="cd-sep">:</div>
+              <div class="cd-unit"><span id="cd-hours">--</span><small>hrs</small></div>
+              <div class="cd-sep">:</div>
+              <div class="cd-unit"><span id="cd-mins">--</span><small>min</small></div>
+            </div>
           </div>
-          <div class="tech-content">
-            <h3>Python</h3>
-            <p>Programming Language</p>
-          </div>
-        </div>
-        
-        <div class="tech-card">
-          <div class="tech-icon">
-            <i class="ri-figma-line"></i>
-          </div>
-          <div class="tech-content">
-            <h3>Figma</h3>
-            <p>Design Tool</p>
-          </div>
-        </div>
-        
-        <div class="tech-card">
-          <div class="tech-icon">
-            <i class="ri-javascript-line"></i>
-          </div>
-          <div class="tech-content">
-            <h3>JavaScript</h3>
-            <p>Programming Language</p>
-          </div>
-        </div>
-        
-        <div class="tech-card">
-          <div class="tech-icon">
-            <i class="ri-reactjs-line"></i>
-          </div>
-          <div class="tech-content">
-            <h3>React</h3>
-            <p>JavaScript Library</p>
-          </div>
-        </div>
-        
-        <div class="tech-card">
-          <div class="tech-icon">
-            <i class="ri-nextjs-line"></i>
-          </div>
-          <div class="tech-content">
-            <h3>NextJS</h3>
-            <p>React framework</p>
-          </div>
-        </div>
-        
-        <div class="tech-card">
-          <div class="tech-icon">
-            <i class="ri-git-branch-line"></i>
-          </div>
-          <div class="tech-content">
-            <h3>Git</h3>
-            <p>Version control</p>
-          </div>
-        </div>
-        
-        <div class="tech-card">
-          <div class="tech-icon">
-            <i class="ri-supabase-line"></i>
-          </div>
-          <div class="tech-content">
-            <h3>Supabase</h3>
-            <p>Backend tool</p>
-          </div>
-        </div>
-        
-        <div class="tech-card">
-          <div class="tech-icon">
-            <i class="ri-nodejs-line"></i>
-          </div>
-          <div class="tech-content">
-            <h3>Node.js</h3>
-            <p>JavaScript Runtime</p>
+
+          <div class="tech-tags">
+            <span class="tech-tag">Godot 4</span>
+            <span class="tech-tag">C# .NET</span>
+            <span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">Grid Systems</span>
+            <span class="tech-tag">Game AI</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- ═══════════════════════════ WORK ════════════════════════════ -->
     <section id="work">
+      <div class="section-sketch-wrap" aria-hidden="true">
+        <svg class="hero-sketch" viewBox="0 0 380 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="sk sk1" points="175,23 220,49 220,101 175,127 130,101 130,49"/>
+          <polygon class="sk sk2" points="175,49 201,63 201,91 175,105 149,91 149,63"/>
+          <line class="sk sk3" x1="175" y1="23" x2="175" y2="49"/>
+          <line class="sk sk3" x1="220" y1="49" x2="201" y2="63"/>
+          <line class="sk sk3" x1="220" y1="101" x2="201" y2="91"/>
+          <line class="sk sk3" x1="175" y1="127" x2="175" y2="105"/>
+          <line class="sk sk3" x1="130" y1="101" x2="149" y2="91"/>
+          <line class="sk sk3" x1="130" y1="49" x2="149" y2="63"/>
+          <polygon class="sk sk4" points="285,25 311,40 311,70 285,85 259,70 259,40"/>
+          <polygon class="sk sk5" points="285,40 298,47 298,61 285,68 272,61 272,47"/>
+          <rect class="sk sk6" x="28" y="140" width="54" height="54"/>
+          <polygon class="sk sk7" points="28,140 52,118 106,118 82,140"/>
+          <polygon class="sk sk8" points="82,140 106,118 106,172 82,194"/>
+          <rect class="sk sk9"  x="230" y="155" width="58" height="36"/>
+          <line class="sk sk10" x1="249" y1="155" x2="249" y2="191"/>
+          <line class="sk sk10" x1="268" y1="155" x2="268" y2="191"/>
+          <line class="sk sk10" x1="230" y1="173" x2="288" y2="173"/>
+          <rect class="sk sk11" x="48" y="218" width="44" height="26"/>
+          <line class="sk sk12" x1="70"  y1="218" x2="70"  y2="244"/>
+          <line class="sk sk12" x1="48"  y1="231" x2="92"  y2="231"/>
+          <circle class="sk sk13" cx="340" cy="88" r="22"/>
+          <line   class="sk sk14" x1="318" y1="88" x2="362" y2="88"/>
+          <line   class="sk sk14" x1="340" y1="66" x2="340" y2="110"/>
+          <circle class="sk sk15" cx="340" cy="88" r="7"/>
+          <line class="sk sk16" x1="220" y1="75"  x2="259" y2="55"  stroke-dasharray="4 3"/>
+          <line class="sk sk16" x1="175" y1="127" x2="175" y2="210" stroke-dasharray="4 3"/>
+          <line class="sk sk16" x1="82"  y1="194" x2="70"  y2="218" stroke-dasharray="4 3"/>
+          <line class="sk sk16" x1="311" y1="55"  x2="318" y2="77"  stroke-dasharray="4 3"/>
+          <line class="sk sk17" x1="28"  y1="202" x2="82"  y2="202"/>
+          <line class="sk sk17" x1="28"  y1="198" x2="28"  y2="206"/>
+          <line class="sk sk17" x1="82"  y1="198" x2="82"  y2="206"/>
+          <circle class="sk dot" cx="175" cy="75"  r="3" fill="currentColor"/>
+          <circle class="sk dot" cx="285" cy="55"  r="2" fill="currentColor"/>
+          <circle class="sk dot" cx="340" cy="88"  r="2.5" fill="currentColor"/>
+          <circle class="sk dot" cx="120" cy="240" r="2" fill="currentColor"/>
+          <circle class="sk dot" cx="320" cy="200" r="1.8" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <span class="section-eyebrow">Experience</span>
       <h2>Work Experience</h2>
       <p class="section-desc">My professional journey in software development, from early projects to current roles.</p>
-      
+
       <div class="work-timeline">
         <div class="work-item">
           <div class="work-date">
-            <div class="date">July 2023 - Aug 2024</div>
+            <div class="date">July 2023 – Aug 2024</div>
             <div class="duration">1 year, 1 month</div>
           </div>
           <div class="work-content">
-            <h3>Developer & Architect</h3>
+            <h3>Developer &amp; Architect</h3>
             <div class="company">Clawer</div>
             <ul>
               <li>Developed initial prototype using Pygame</li>
@@ -179,7 +278,7 @@
 
         <div class="work-item">
           <div class="work-date">
-            <div class="date">Sept 2024 - Nov 2024</div>
+            <div class="date">Sept 2024 – Nov 2024</div>
             <div class="duration">2 months</div>
           </div>
           <div class="work-content">
@@ -195,22 +294,160 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════ COMPETITIONS ═════════════════════ -->
+    <section id="competitions">
+      <div class="section-sketch-wrap section-sketch-wrap--left" aria-hidden="true">
+        <svg class="hero-sketch" viewBox="0 0 340 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Grid/map (fog of war) -->
+          <rect class="sk sk1" x="40"  y="40"  width="90" height="90"/>
+          <line class="sk sk2" x1="70"  y1="40"  x2="70"  y2="130"/>
+          <line class="sk sk2" x1="100" y1="40"  x2="100" y2="130"/>
+          <line class="sk sk2" x1="40"  y1="70"  x2="130" y2="70"/>
+          <line class="sk sk2" x1="40"  y1="100" x2="130" y2="100"/>
+          <!-- Fog cells (hatched) -->
+          <line class="sk sk3" x1="100" y1="40"  x2="130" y2="70"  stroke-dasharray="3 2"/>
+          <line class="sk sk3" x1="100" y1="55"  x2="115" y2="40"  stroke-dasharray="3 2"/>
+          <line class="sk sk3" x1="115" y1="70"  x2="130" y2="55"  stroke-dasharray="3 2"/>
+          <!-- Unit circles -->
+          <circle class="sk sk4" cx="55"  cy="55"  r="8"/>
+          <circle class="sk sk4" cx="85"  cy="85"  r="8"/>
+          <circle class="sk sk4" cx="115" cy="55"  r="6"/>
+          <!-- A* path -->
+          <polyline class="sk sk5" points="55,55 55,85 85,85" stroke-dasharray="4 2"/>
+          <!-- Vision radius -->
+          <circle class="sk sk6" cx="85" cy="85" r="24" stroke-dasharray="3 2"/>
+          <!-- Fire marker -->
+          <line class="sk sk7" x1="108" y1="58" x2="122" y2="44"/>
+          <line class="sk sk7" x1="115" y1="44" x2="115" y2="62"/>
+          <!-- Trophy -->
+          <rect class="sk sk8"  x="195" y="50"  width="80" height="60"/>
+          <line class="sk sk9"  x1="210" y1="110" x2="210" y2="130"/>
+          <line class="sk sk9"  x1="260" y1="110" x2="260" y2="130"/>
+          <line class="sk sk9"  x1="200" y1="130" x2="270" y2="130"/>
+          <!-- 2nd label inside trophy -->
+          <line class="sk sk10" x1="215" y1="65"  x2="230" y2="65"/>
+          <line class="sk sk10" x1="215" y1="75"  x2="255" y2="75"/>
+          <line class="sk sk10" x1="215" y1="85"  x2="245" y2="85"/>
+          <line class="sk sk10" x1="215" y1="95"  x2="260" y2="95"/>
+          <!-- Star above trophy -->
+          <polygon class="sk sk11" points="235,20 239,32 252,32 242,40 246,52 235,44 224,52 228,40 218,32 231,32"/>
+          <!-- Measurement line -->
+          <line class="sk sk12" x1="40"  y1="150" x2="130" y2="150"/>
+          <line class="sk sk12" x1="40"  y1="145" x2="40"  y2="155"/>
+          <line class="sk sk12" x1="130" y1="145" x2="130" y2="155"/>
+          <!-- CTF lock icon (bottom) -->
+          <rect class="sk sk13" x="60"  y="185" width="40" height="35"/>
+          <path class="sk sk14" d="M 68 185 Q 68 170 80 170 Q 92 170 92 185"/>
+          <circle class="sk sk15" cx="80" cy="203" r="5"/>
+          <line   class="sk sk15" x1="80" y1="208" x2="80" y2="215"/>
+          <circle class="sk dot" cx="55"  cy="55"  r="2.5" fill="currentColor"/>
+          <circle class="sk dot" cx="235" cy="80"  r="2"   fill="currentColor"/>
+          <circle class="sk dot" cx="80"  cy="203" r="1.5" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <span class="section-eyebrow">Competitive</span>
+      <h2>Competitions</h2>
+
+      <!-- Featured competition: Kockanap -->
+      <div class="comp-featured">
+        <div class="comp-place-badge">
+          <span class="comp-place-num">2</span>
+          <span class="comp-place-ord">nd</span>
+        </div>
+        <div class="comp-featured-body">
+          <div class="comp-meta-row">
+            <span class="comp-event">Kockanap · Geek Day 2024</span>
+            <span class="comp-type-tag">24-hour coding competition</span>
+          </div>
+          <h3 class="comp-title">Firefighting Unit AI</h3>
+          <p class="comp-desc">
+            Wrote the entire AI brain for autonomous firefighting units competing on a fog-of-war map against other teams.
+            Units could only see a limited area around themselves, so I built a dynamic mapping system that aggregated their
+            collective vision. Combined <strong>A* pathfinding</strong> for navigation, <strong>BFS</strong> for exploration,
+            and a strategic <em>sniping mechanism</em> — fast units would detect fires with declining health (meaning rival
+            teams were extinguishing them) and swoop in to claim the kill.
+          </p>
+          <div class="tech-tags">
+            <span class="tech-tag">A* Pathfinding</span>
+            <span class="tech-tag">BFS Exploration</span>
+            <span class="tech-tag">Fog of War</span>
+            <span class="tech-tag">Dynamic Mapping</span>
+            <span class="tech-tag">Python</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other participation -->
+      <div class="comp-also">
+        <span class="section-eyebrow">Also participated in</span>
+        <div class="comp-minor-list">
+          <div class="comp-minor-item">
+            <i class="ri-shield-keyhole-line"></i>
+            <span>CTF (Capture the Flag) cybersecurity competitions</span>
+          </div>
+          <div class="comp-minor-item">
+            <i class="ri-trophy-line"></i>
+            <span>University hackathons &amp; coding challenges</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════ PROJECTS ════════════════════════ -->
     <section id="projects">
+      <div class="section-sketch-wrap" aria-hidden="true">
+        <svg class="hero-sketch" viewBox="0 0 360 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect class="sk sk1" x="20"  y="20"  width="140" height="100"/>
+          <rect class="sk sk2" x="80"  y="70"  width="120" height="90"/>
+          <rect class="sk sk3" x="30"  y="140" width="90"  height="70"/>
+          <line class="sk sk4" x1="20"  y1="60"  x2="160" y2="60"/>
+          <line class="sk sk4" x1="80"  y1="20"  x2="80"  y2="70"/>
+          <line class="sk sk5" x1="80"  y1="110" x2="200" y2="110"/>
+          <line class="sk sk5" x1="140" y1="70"  x2="140" y2="160"/>
+          <path class="sk sk6" d="M 30 140 Q 30 110 60 110"/>
+          <line class="sk sk7" x1="50"  y1="20"  x2="50"  y2="40"/>
+          <line class="sk sk7" x1="40"  y1="30"  x2="60"  y2="30"/>
+          <line class="sk sk7" x1="110" y1="20"  x2="110" y2="40"/>
+          <line class="sk sk7" x1="100" y1="30"  x2="120" y2="30"/>
+          <line class="sk sk8" x1="155" y1="140" x2="200" y2="140"/>
+          <line class="sk sk8" x1="155" y1="148" x2="195" y2="148"/>
+          <line class="sk sk8" x1="155" y1="156" x2="190" y2="156"/>
+          <line class="sk sk9" x1="155" y1="140" x2="155" y2="160"/>
+          <circle class="sk sk10" cx="280" cy="70" r="35"/>
+          <circle class="sk sk11" cx="280" cy="70" r="18"/>
+          <line  class="sk sk12" x1="280" y1="35"  x2="280" y2="105"/>
+          <line  class="sk sk12" x1="245" y1="70"  x2="315" y2="70"/>
+          <line  class="sk sk13" x1="255" y1="45"  x2="305" y2="95"/>
+          <line  class="sk sk13" x1="305" y1="45"  x2="255" y2="95"/>
+          <line class="sk sk14" x1="276" y1="43" x2="276" y2="54"/>
+          <line class="sk sk14" x1="276" y1="43" x2="284" y2="54"/>
+          <line class="sk sk14" x1="284" y1="43" x2="284" y2="54"/>
+          <line class="sk sk15" x1="220" y1="270" x2="340" y2="270"/>
+          <line class="sk sk15" x1="220" y1="265" x2="220" y2="275"/>
+          <line class="sk sk15" x1="280" y1="265" x2="280" y2="275"/>
+          <line class="sk sk15" x1="340" y1="265" x2="340" y2="275"/>
+          <line class="sk sk16" x1="20"  y1="200" x2="160" y2="200"/>
+          <line class="sk sk16" x1="20"  y1="195" x2="20"  y2="205"/>
+          <line class="sk sk16" x1="160" y1="195" x2="160" y2="205"/>
+          <circle class="sk dot" cx="90"  cy="45"  r="2.5" fill="currentColor"/>
+          <circle class="sk dot" cx="280" cy="70"  r="3"   fill="currentColor"/>
+          <circle class="sk dot" cx="155" cy="150" r="2"   fill="currentColor"/>
+        </svg>
+      </div>
+
+      <span class="section-eyebrow">Portfolio</span>
       <h2>Projects</h2>
-      <p class="section-desc">Here are some of the projects I've worked on, showcasing my experience with different technologies.</p>
-      
+      <p class="section-desc">A selection of things I've built — web, AI, and multiplayer experiments.</p>
+
       <div class="projects-grid">
         <div class="project-card">
-          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link">
-            <i class="ri-github-fill"></i>
-          </a>
+          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
           <a href="projects/face-grouping.html" class="project-link">
-            <div class="project-image">
-              <img src="images/face.jpg" alt="Face Grouping Project">
-            </div>
+            <div class="project-image"><img src="images/face.jpg" alt="Face Grouping Project"></div>
             <div class="project-content">
-              <h3>Face Grouping Project</h3>
-              <p>Automated facial recognition and photo organization tool</p>
+              <h3>Face Grouping</h3>
+              <p>Automated facial recognition and photo organisation — groups hundreds of photos by detected faces.</p>
               <div class="tech-tags">
                 <span class="tech-tag">Python</span>
                 <span class="tech-tag">OpenCV</span>
@@ -221,16 +458,12 @@
         </div>
 
         <div class="project-card">
-          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link">
-            <i class="ri-github-fill"></i>
-          </a>
+          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
           <a href="projects/kahoot-ai.html" class="project-link">
-            <div class="project-image">
-              <img src="images/kahoot.jpg" alt="KahootAI Assistant">
-            </div>
+            <div class="project-image"><img src="images/kahoot.jpg" alt="KahootAI Assistant"></div>
             <div class="project-content">
               <h3>KahootAI Assistant</h3>
-              <p>Chrome extension providing AI-powered Kahoot answers</p>
+              <p>Chrome extension that uses Gemini AI to answer Kahoot questions in real-time.</p>
               <div class="tech-tags">
                 <span class="tech-tag">JavaScript</span>
                 <span class="tech-tag">Chrome Extension</span>
@@ -241,16 +474,12 @@
         </div>
 
         <div class="project-card">
-          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link">
-            <i class="ri-github-fill"></i>
-          </a>
+          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
           <a href="projects/take-6.html" class="project-link">
-            <div class="project-image">
-              <img src="images/take6.jpg" alt="Take 6! Online Card Game">
-            </div>
+            <div class="project-image"><img src="images/take6.jpg" alt="Take 6! Online Card Game"></div>
             <div class="project-content">
-              <h3>Take 6! Online Card Game</h3>
-              <p>Multiplayer card game with real-time gameplay</p>
+              <h3>Take 6! Online</h3>
+              <p>Real-time multiplayer card game with WebSocket-based synchronisation.</p>
               <div class="tech-tags">
                 <span class="tech-tag">Node.js</span>
                 <span class="tech-tag">Socket.IO</span>
@@ -261,16 +490,12 @@
         </div>
 
         <div class="project-card">
-          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link">
-            <i class="ri-github-fill"></i>
-          </a>
+          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
           <a href="projects/moscow-metro-quiz.html" class="project-link">
-            <div class="project-image">
-              <img src="images/metro.jpg" alt="Moscow Metro Quiz Game">
-            </div>
+            <div class="project-image"><img src="images/metro.jpg" alt="Moscow Metro Quiz Game"></div>
             <div class="project-content">
-              <h3>Moscow Metro Quiz Game</h3>
-              <p>Interactive multiplayer quiz about Moscow Metro</p>
+              <h3>Moscow Metro Quiz</h3>
+              <p>Containerised multiplayer quiz game about the Moscow Metro system.</p>
               <div class="tech-tags">
                 <span class="tech-tag">Node.js</span>
                 <span class="tech-tag">Socket.IO</span>
@@ -279,22 +504,106 @@
             </div>
           </a>
         </div>
+      </div>
+    </section>
 
-        <div class="project-card ghost-card">
-          <div class="ghost-content">
-            <i class="ri-hammer-line"></i>
-            <p>Working on more cool stuff...</p>
-          </div>
+    <!-- ═══════════════════════════ TECH STACK ═══════════════════════ -->
+    <section id="technologies">
+      <div class="section-sketch-wrap section-sketch-wrap--left" aria-hidden="true">
+        <svg class="hero-sketch" viewBox="0 0 340 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line class="sk sk1" x1="40"  y1="40"  x2="160" y2="40"/>
+          <line class="sk sk1" x1="40"  y1="100" x2="160" y2="100"/>
+          <line class="sk sk1" x1="40"  y1="160" x2="160" y2="160"/>
+          <line class="sk sk2" x1="40"  y1="40"  x2="40"  y2="160"/>
+          <line class="sk sk2" x1="100" y1="40"  x2="100" y2="160"/>
+          <line class="sk sk2" x1="160" y1="40"  x2="160" y2="160"/>
+          <circle class="sk sk3" cx="40"  cy="40"  r="5"/>
+          <circle class="sk sk3" cx="100" cy="40"  r="5"/>
+          <circle class="sk sk3" cx="160" cy="40"  r="5"/>
+          <circle class="sk sk3" cx="40"  cy="100" r="5"/>
+          <circle class="sk sk3" cx="100" cy="100" r="8"/>
+          <circle class="sk sk3" cx="160" cy="100" r="5"/>
+          <circle class="sk sk3" cx="40"  cy="160" r="5"/>
+          <circle class="sk sk3" cx="100" cy="160" r="5"/>
+          <circle class="sk sk3" cx="160" cy="160" r="5"/>
+          <line class="sk sk4" x1="160" y1="100" x2="240" y2="100"/>
+          <line class="sk sk4" x1="100" y1="160" x2="100" y2="230"/>
+          <line class="sk sk5" x1="240" y1="100" x2="240" y2="160"/>
+          <line class="sk sk5" x1="240" y1="160" x2="300" y2="160"/>
+          <rect class="sk sk6" x="200" y="55" width="80" height="90"/>
+          <line class="sk sk7" x1="200" y1="75"  x2="185" y2="75"/>
+          <line class="sk sk7" x1="200" y1="90"  x2="185" y2="90"/>
+          <line class="sk sk7" x1="200" y1="105" x2="185" y2="105"/>
+          <line class="sk sk7" x1="200" y1="120" x2="185" y2="120"/>
+          <line class="sk sk8" x1="280" y1="75"  x2="295" y2="75"/>
+          <line class="sk sk8" x1="280" y1="90"  x2="295" y2="90"/>
+          <line class="sk sk8" x1="280" y1="105" x2="295" y2="105"/>
+          <line class="sk sk8" x1="280" y1="120" x2="295" y2="120"/>
+          <rect class="sk sk9" x="215" y="70" width="50" height="60"/>
+          <line class="sk sk10" x1="40"  y1="40"  x2="40"  y2="20"/>
+          <line class="sk sk10" x1="100" y1="40"  x2="100" y2="20"/>
+          <line class="sk sk11" x1="100" y1="230" x2="160" y2="230"/>
+          <line class="sk sk11" x1="160" y1="230" x2="160" y2="160"/>
+          <line class="sk sk12" x1="30" y1="40"  x2="30" y2="160"/>
+          <line class="sk sk12" x1="26" y1="40"  x2="34" y2="40"/>
+          <line class="sk sk12" x1="26" y1="160" x2="34" y2="160"/>
+          <circle class="sk dot" cx="240" cy="100" r="2.5" fill="currentColor"/>
+          <circle class="sk dot" cx="100" cy="230" r="2"   fill="currentColor"/>
+          <circle class="sk dot" cx="240" cy="160" r="2"   fill="currentColor"/>
+        </svg>
+      </div>
+
+      <span class="section-eyebrow">Stack</span>
+      <h2>Technologies</h2>
+      <p class="section-desc">Tools and languages I work with regularly.</p>
+
+      <div class="tech-grid">
+        <div class="tech-card">
+          <div class="tech-icon"><i class="ri-terminal-box-line"></i></div>
+          <div class="tech-content"><h3>C#</h3><p>Programming Language</p></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><img src="images/python.svg" alt="Python" class="svg-icon"></div>
+          <div class="tech-content"><h3>Python</h3><p>Programming Language</p></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i class="ri-figma-line"></i></div>
+          <div class="tech-content"><h3>Figma</h3><p>Design Tool</p></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i class="ri-javascript-line"></i></div>
+          <div class="tech-content"><h3>JavaScript</h3><p>Programming Language</p></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i class="ri-reactjs-line"></i></div>
+          <div class="tech-content"><h3>React</h3><p>JavaScript Library</p></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i class="ri-nextjs-line"></i></div>
+          <div class="tech-content"><h3>Next.js</h3><p>React Framework</p></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i class="ri-git-branch-line"></i></div>
+          <div class="tech-content"><h3>Git</h3><p>Version Control</p></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i class="ri-supabase-line"></i></div>
+          <div class="tech-content"><h3>Supabase</h3><p>Backend Tool</p></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i class="ri-nodejs-line"></i></div>
+          <div class="tech-content"><h3>Node.js</h3><p>JavaScript Runtime</p></div>
         </div>
       </div>
     </section>
 
+    <!-- ═══════════════════════════ CONTACT ═════════════════════════ -->
     <section id="contact">
       <div class="contact-container">
         <div class="contact-info">
           <h2>Get in Touch</h2>
-          <p class="contact-description">Feel free to reach out! I'm always open to discussing new opportunities, projects, or just having a chat about technology.</p>
-          
+          <p class="contact-description">Always open to discussing new opportunities, game dev collaborations, or just talking tech.</p>
+
           <div class="contact-details">
             <div class="contact-item">
               <i class="ri-mail-line"></i>
@@ -305,12 +614,9 @@
               <span>Budapest, Hungary</span>
             </div>
             <div class="contact-socials">
-              <a href="https://github.com/cs0m1" target="_blank" class="social-link">
-                <i class="ri-github-fill"></i>
-              </a>
-              <a href="https://www.linkedin.com/in/csomos-adam" target="_blank" class="social-link">
-                <i class="ri-linkedin-fill"></i>
-              </a>
+              <a href="https://github.com/cs0m1" target="_blank" class="social-link"><i class="ri-github-fill"></i></a>
+              <a href="https://www.linkedin.com/in/csomos-adam" target="_blank" class="social-link"><i class="ri-linkedin-fill"></i></a>
+              <a href="cv.pdf" download class="social-link" title="Download CV"><i class="ri-file-user-line"></i></a>
             </div>
           </div>
         </div>
@@ -318,7 +624,6 @@
         <div class="contact-form">
           <form id="contactForm" novalidate>
             <input type="hidden" name="to_name" value="Csomi">
-            
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" id="name" name="name" required placeholder=" " minlength="2">
@@ -333,13 +638,9 @@
               <span class="char-counter"><span id="charCount">0</span>/<span id="charLimit">10</span> <span id="charLimitText">characters minimum</span></span>
             </div>
             <button type="submit" class="submit-btn">
-                <div class="button-content">
-                Send Message <i class="ri-send-plane-line"></i>
-                </div>
+              <div class="button-content">Send Message <i class="ri-send-plane-line"></i></div>
               <div class="success-content">
-                <svg class="checkmark" viewBox="0 0 24 24">
-                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-                </svg>
+                <svg class="checkmark" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                 <span>Sent!</span>
               </div>
             </button>
@@ -347,8 +648,8 @@
         </div>
       </div>
     </section>
-  </main>
 
+  </main>
   <script src="script.js"></script>
 </body>
 </html>
