@@ -432,71 +432,288 @@
 
       <span class="section-eyebrow">Portfolio</span>
       <h2>Projects</h2>
-      <p class="section-desc">A selection of things I've built — web, AI, and multiplayer experiments.</p>
+      <p class="section-desc">Grouped by who I built them for. Bigger tiles are the ones I'm proudest of.</p>
 
-      <div class="projects-grid">
-        <div class="project-card">
-          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
-          <a href="projects/face-grouping.html" class="project-link">
-            <div class="project-image"><img src="images/face.jpg" alt="Face Grouping Project"></div>
-            <div class="project-content">
-              <h3>Face Grouping</h3>
-              <p>Automated facial recognition and photo organisation — groups hundreds of photos by detected faces.</p>
-              <div class="tech-tags">
-                <span class="tech-tag">Python</span>
-                <span class="tech-tag">OpenCV</span>
-                <span class="tech-tag">face_recognition</span>
-              </div>
-            </div>
-          </a>
+      <!-- ════════ GROUP 1 · Products (for anyone) ════════ -->
+      <div class="project-group">
+        <div class="project-group-head">
+          <span class="grp-eyebrow">For anyone</span>
+          <h3>Products</h3>
+          <span class="grp-count">things others can use</span>
         </div>
+        <div class="projects-grid">
 
-        <div class="project-card">
-          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
-          <a href="projects/kahoot-ai.html" class="project-link">
-            <div class="project-image"><img src="images/kahoot.jpg" alt="KahootAI Assistant"></div>
-            <div class="project-content">
-              <h3>KahootAI Assistant</h3>
-              <p>Chrome extension that uses Gemini AI to answer Kahoot questions in real-time.</p>
-              <div class="tech-tags">
-                <span class="tech-tag">JavaScript</span>
-                <span class="tech-tag">Chrome Extension</span>
-                <span class="tech-tag">Gemini AI</span>
+          <!-- 01 · Shush (flagship 2×2) -->
+          <div class="project-card tile-lg">
+            <span class="card-index">01</span>
+            <a href="https://github.com/cs0m1/shush" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
+            <a href="projects/shush.html" class="project-link">
+              <div class="project-image"><img src="images/projects/shush.jpg" alt="Shush"></div>
+              <div class="project-content">
+                <span class="card-badge">Local AI</span>
+                <h3>Shush</h3>
+                <p>A fully-local "conversation mood ring." Your phone streams mic audio to your own machine; a local LLM judges the emotional temperature and warns you — calm → tense → stop — before you say something you'll regret. Nothing leaves the device.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Kotlin</span>
+                  <span class="tech-tag">Compose</span>
+                  <span class="tech-tag">Python</span>
+                  <span class="tech-tag">Whisper</span>
+                  <span class="tech-tag">Ollama</span>
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
+
+          <!-- 02 · KahootAI (wide 2×1) -->
+          <div class="project-card tile-wide">
+            <span class="card-index">02</span>
+            <a href="https://github.com/cs0m1/KahootAI-Assistant" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
+            <a href="projects/kahoot-ai.html" class="project-link">
+              <div class="project-image"><img src="images/projects/kahoot-ai.jpg" alt="KahootAI Assistant"></div>
+              <div class="project-content">
+                <span class="card-badge">AI</span>
+                <h3>KahootAI Assistant</h3>
+                <p>Chrome extension that uses Gemini AI to answer Kahoot questions in real-time. My most-starred repo.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">JavaScript</span>
+                  <span class="tech-tag">Chrome Ext.</span>
+                  <span class="tech-tag">Gemini AI</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 03 · Face Grouping (wide 2×1) -->
+          <div class="project-card tile-wide">
+            <span class="card-index">03</span>
+            <a href="https://github.com/cs0m1/find_image" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
+            <a href="projects/face-grouping.html" class="project-link">
+              <div class="project-image"><img src="images/projects/face-grouping.jpg" alt="Face Grouping & Search"></div>
+              <div class="project-content">
+                <span class="card-badge">Vision</span>
+                <h3>Face Grouping &amp; Search</h3>
+                <p>Facial recognition that groups hundreds of photos by who's in them — plus a face-search engine across a local library.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Python</span>
+                  <span class="tech-tag">facenet</span>
+                  <span class="tech-tag">OpenCV</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 04 · Húsvét Vers (wide 2×1) -->
+          <div class="project-card tile-wide">
+            <span class="card-index">04</span>
+            <a href="https://github.com/cs0m1/husveti_vers_ai" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
+            <a href="projects/husvet-vers.html" class="project-link">
+              <div class="project-image"><img src="images/projects/husvet-vers.jpg" alt="Húsvét Vers"></div>
+              <div class="project-content">
+                <span class="card-badge">AI</span>
+                <h3>Húsvét Vers</h3>
+                <p>An AI-assisted poem writer — tuned for Easter poems by default, but it'll help you craft any verse.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Gemini AI</span>
+                  <span class="tech-tag">Web</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 05 · Kitchen Moodboard (wide 2×1) -->
+          <div class="project-card tile-wide">
+            <span class="card-index">05</span>
+            <span class="card-github-link card-lock" title="Personal · not on GitHub"><i class="ri-lock-line"></i></span>
+            <a href="projects/kitchen.html" class="project-link">
+              <div class="project-image"><img src="images/projects/kitchen.jpg" alt="Kitchen Moodboard"></div>
+              <div class="project-content">
+                <span class="card-badge">AI · WIP</span>
+                <h3>Kitchen Moodboard</h3>
+                <p>A collaborative AI moodboard for my family's kitchen reno — import store tiles and generate previews of the result.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Flask</span>
+                  <span class="tech-tag">Socket.IO</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
         </div>
+      </div>
 
-        <div class="project-card">
-          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
-          <a href="projects/take-6.html" class="project-link">
-            <div class="project-image"><img src="images/take6.jpg" alt="Take 6! Online Card Game"></div>
-            <div class="project-content">
-              <h3>Take 6! Online</h3>
-              <p>Real-time multiplayer card game with WebSocket-based synchronisation.</p>
-              <div class="tech-tags">
-                <span class="tech-tag">Node.js</span>
-                <span class="tech-tag">Socket.IO</span>
-                <span class="tech-tag">JavaScript</span>
-              </div>
-            </div>
-          </a>
+      <!-- ════════ GROUP 2 · Personal Tools (for me) ════════ -->
+      <div class="project-group">
+        <div class="project-group-head">
+          <span class="grp-eyebrow">For me</span>
+          <h3>Personal Tools</h3>
+          <span class="grp-count">scratch-my-own-itch automation</span>
         </div>
+        <div class="projects-grid">
 
-        <div class="project-card">
-          <a href="https://github.com/cs0m1" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
-          <a href="projects/moscow-metro-quiz.html" class="project-link">
-            <div class="project-image"><img src="images/metro.jpg" alt="Moscow Metro Quiz Game"></div>
-            <div class="project-content">
-              <h3>Moscow Metro Quiz</h3>
-              <p>Containerised multiplayer quiz game about the Moscow Metro system.</p>
-              <div class="tech-tags">
-                <span class="tech-tag">Node.js</span>
-                <span class="tech-tag">Socket.IO</span>
-                <span class="tech-tag">Docker</span>
+          <!-- 06 · Climbing Auto-Register (small 1×1) -->
+          <div class="project-card">
+            <span class="card-index">06</span>
+            <span class="card-github-link card-lock" title="Personal · not on GitHub"><i class="ri-lock-line"></i></span>
+            <a href="projects/climbing-automation.html" class="project-link">
+              <div class="project-content">
+                <span class="card-badge">Automation</span>
+                <h3>Climbing Auto-Register</h3>
+                <p>Watches Gmail for training emails, asks me YES/NO, then auto-fills the form with Playwright. Live on Fly.io.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Playwright</span>
+                  <span class="tech-tag">Fly.io</span>
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
+
+          <!-- 07 · Uni Chat Monitor (small 1×1) -->
+          <div class="project-card">
+            <span class="card-index">07</span>
+            <span class="card-github-link card-lock" title="Personal · not on GitHub"><i class="ri-lock-line"></i></span>
+            <a href="projects/messenger-bot.html" class="project-link">
+              <div class="project-content">
+                <span class="card-badge">Automation</span>
+                <h3>Uni Chat Monitor</h3>
+                <p>Fully-local AI watcher for a uni Messenger group — bridges chat into Matrix, extracts deadlines &amp; links.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Matrix</span>
+                  <span class="tech-tag">Local AI</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 08 · Neptun (small 1×1) -->
+          <div class="project-card">
+            <span class="card-index">08</span>
+            <span class="card-github-link card-lock" title="Personal · not on GitHub"><i class="ri-lock-line"></i></span>
+            <a href="projects/neptun.html" class="project-link">
+              <div class="project-content">
+                <span class="card-badge">Tool</span>
+                <h3>Neptun API &amp; App</h3>
+                <p>Reverse-engineered REST wrapper + Flutter app for my uni's Neptun system. Cool while the old endpoints lasted.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">FastAPI</span>
+                  <span class="tech-tag">Flutter</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 09 · Moodle API (small 1×1) -->
+          <div class="project-card">
+            <span class="card-index">09</span>
+            <span class="card-github-link card-lock" title="Personal · not on GitHub"><i class="ri-lock-line"></i></span>
+            <a href="projects/moodle-api.html" class="project-link">
+              <div class="project-content">
+                <span class="card-badge">Tool</span>
+                <h3>Moodle API</h3>
+                <p>Reverse-engineered Moodle client — session auth, page parsing, file downloads. An engine waiting for a product.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Python</span>
+                  <span class="tech-tag">Reverse Eng.</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ════════ GROUP 3 · Experiments & Competitions ════════ -->
+      <div class="project-group">
+        <div class="project-group-head">
+          <span class="grp-eyebrow">For the craft</span>
+          <h3>Experiments &amp; Competitions</h3>
+          <span class="grp-count">pushing on one idea</span>
+        </div>
+        <div class="projects-grid">
+
+          <!-- 10 · Labeler (flagship 2×2) -->
+          <div class="project-card tile-lg">
+            <span class="card-index">10</span>
+            <span class="card-github-link card-lock" title="Personal · not on GitHub"><i class="ri-lock-line"></i></span>
+            <a href="projects/labeler2.html" class="project-link">
+              <div class="project-image"><img src="images/projects/labeler2.jpg" alt="Labeler"></div>
+              <div class="project-content">
+                <span class="card-badge">Vision</span>
+                <h3>Labeler</h3>
+                <p>An image &amp; video labeling studio that auto-labels by example — capture an object once and GPU template matching finds it across every frame, with camera-displacement tracking and smart frame sampling.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Python</span>
+                  <span class="tech-tag">Flask</span>
+                  <span class="tech-tag">OpenCV</span>
+                  <span class="tech-tag">CUDA</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 11 · Firefighting AI (wide 2×1) -->
+          <div class="project-card tile-wide">
+            <span class="card-index">11</span>
+            <span class="card-github-link card-lock" title="Team competition"><i class="ri-team-line"></i></span>
+            <a href="projects/fire-game.html" class="project-link">
+              <div class="project-image"><img src="images/projects/fire-game.jpg" alt="Firefighting AI"></div>
+              <div class="project-content">
+                <span class="card-badge">Multi-agent</span>
+                <h3>Firefighting AI — 2nd Place</h3>
+                <p>My part of a GeekDay 2026 2nd-place team bot — a shared world model from each unit's vision, a gRPC client with ACK flow control, and a live belief-state visualizer.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Python</span>
+                  <span class="tech-tag">gRPC</span>
+                  <span class="tech-tag">Multi-agent</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 12 · Hex AlphaZero (wide 2×1) -->
+          <div class="project-card tile-wide">
+            <span class="card-index">12</span>
+            <a href="https://github.com/cs0m1/hex-tic-tac-toe" target="_blank" class="card-github-link"><i class="ri-github-fill"></i></a>
+            <a href="projects/hex.html" class="project-link">
+              <div class="project-image"><img src="images/projects/hex.jpg" alt="Hex Tic-Tac-Toe AI"></div>
+              <div class="project-content">
+                <span class="card-badge">AlphaZero</span>
+                <h3>Hex Tic-Tac-Toe AI</h3>
+                <p>An AlphaZero-style engine for an existing hex game — 2M scraped positions bootstrap a ResNet, then self-play MCTS reinforcement learning with arena-gated generations.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">PyTorch</span>
+                  <span class="tech-tag">MCTS</span>
+                  <span class="tech-tag">RL</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 13 · Future of Humanity & AI (wide 2×1) -->
+          <div class="project-card tile-wide">
+            <span class="card-index">13</span>
+            <span class="card-github-link card-lock" title="In progress"><i class="ri-edit-line"></i></span>
+            <a href="projects/ai-essay.html" class="project-link">
+              <div class="project-image"><img src="images/projects/ai-essay.jpg" alt="Future of Humanity & AI"></div>
+              <div class="project-content">
+                <span class="card-badge">Web · WIP</span>
+                <h3>Future of Humanity &amp; AI</h3>
+                <p>An essay site on where AI takes us, wrapped in a "Term_OS" interface theme.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">HTML</span>
+                  <span class="tech-tag">JavaScript</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Ghost tile — more on GitHub -->
+          <div class="project-card tile-ghost tile-wide">
+            <a href="https://github.com/cs0m1" target="_blank" class="project-link">
+              <i class="ri-github-fill"></i>
+              <span>More on GitHub</span>
+            </a>
+          </div>
+
         </div>
       </div>
     </section>

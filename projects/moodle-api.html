@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodle API — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#6E7B3F; --accent-soft:rgba(110,123,63,0.14)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Personal Tools</span>
+            <span class="sep">/</span>
+            <span class="current">Moodle API</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#idea">The idea</a>
+                    <a href="#speed">Speed</a>
+                    <a href="#multi">Multi-user &amp; dedup</a>
+                    <a href="#security">Security</a>
+                    <a href="#status">Status</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">Python</span>
+                    <span class="tag">Requests</span>
+                    <span class="tag">Scraping</span>
+                    <span class="tag">Multi-user</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a class="disabled"><i class="ri-lock-line"></i> Personal · not public</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Moodle API</h1>
+            <span class="project-eyebrow">Reverse Engineering · API</span>
+            <p class="project-tagline">A fast, multi-user API bolted onto Moodle — because the real thing is slow and offers none.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/moodle-api.jpg" alt="moodle-api illustration">
+            </div>
+
+            <p class="project-lead">Moodle holds every course's materials, but getting at them programmatically means logging in and scraping HTML. I built a service that does it properly — fast, for many users at once, without re-downloading the same file twice.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">7.58<span class="unit">×</span></span><span class="label">faster than Selenium</span></div>
+                <div class="project-stat"><span class="num">50</span><span class="label">concurrent users</span></div>
+                <div class="project-stat"><span class="num">50–95<span class="unit">%</span></span><span class="label">storage saved · dedup</span></div>
+                <div class="project-stat"><span class="num">2–4<span class="unit">s</span></span><span class="label">per scrape</span></div>
+            </div>
+
+            <section class="project-section" id="idea">
+                <h2>The idea</h2>
+                <p>Moodle is where the actual coursework lives, but there's no clean way to pull it. I wanted course lists and downloadable materials behind a simple authenticated API — the foundation something useful (a better client, an automation, a notifier) could sit on top of.</p>
+            </section>
+
+            <section class="project-section" id="speed">
+                <h2>Speed</h2>
+                <p>The obvious way to scrape a login-walled site is to drive a real browser, but that's slow. Instead this replays the login and page requests directly with <code>requests</code>, parsing the HTML itself — which made it <strong>7.58× faster</strong> than a Selenium-based scraper: 2–4 seconds where the browser approach took 18–22.</p>
+            </section>
+
+            <section class="project-section" id="multi">
+                <h2>Multi-user &amp; dedup</h2>
+                <p>It's built as a real service, not a one-off script: up to <strong>50 concurrent users</strong>, each authenticating with their own Moodle credentials in a thread-safe way. Crucially, identical files (the same lecture PDF shared across a course) are stored <strong>once</strong> via content deduplication, saving 50–95% of storage, with smart caching and automatic cleanup on top.</p>
+            </section>
+
+            <section class="project-section" id="security">
+                <h2>Security</h2>
+                <p>Sessions are protected with token authentication, requests are rate-limited (100/min per IP), idle sessions are cleaned up after ten minutes and cached files expire on a 24-hour TTL, with optional API-key auth in front of the whole thing.</p>
+            </section>
+
+            <section class="project-section" id="status">
+                <h2>Status</h2>
+                <p>Honestly, a solid <strong>engine in search of a product</strong>. The service works and is genuinely fast, but I never built the thing that was meant to sit on top of it. It's here because the engineering — fast scraping, dedup, multi-user sessions — is worth showing even without the app.</p>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>Python with a <code>requests</code>-based scraper (no browser), HTML parsing, session-token authentication, content-hash file deduplication, in-memory session management with TTL cleanup, and rate limiting — packaged as a multi-user API service.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

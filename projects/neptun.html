@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neptun API &amp; App — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#44617F; --accent-soft:rgba(68,97,127,0.14)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Personal Tools</span>
+            <span class="sep">/</span>
+            <span class="current">Neptun API &amp; App</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#idea">The idea</a>
+                    <a href="#reverse">Reverse-engineering</a>
+                    <a href="#layers">API + app</a>
+                    <a href="#status">Status</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">FastAPI</span>
+                    <span class="tag">Pydantic</span>
+                    <span class="tag">Flutter</span>
+                    <span class="tag">Dart</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a class="disabled"><i class="ri-lock-line"></i> Personal · not public</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Neptun API &amp; App</h1>
+            <span class="project-eyebrow">Reverse Engineering · API</span>
+            <p class="project-tagline">My university has no public API — so I built one, then put a phone app on top of it.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/neptun.jpg" alt="neptun illustration">
+            </div>
+
+            <p class="project-lead">Neptun is the system every Hungarian university runs on — grades, schedule, tuition, messages — and it's notoriously clunky, with no API for students. So I reverse-engineered one out of its mobile endpoints and built the client I actually wanted.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">4</span><span class="label">data domains covered</span></div>
+                <div class="project-stat"><span class="num">REST</span><span class="label">FastAPI + Swagger</span></div>
+                <div class="project-stat"><span class="num">Flutter</span><span class="label">Android client</span></div>
+                <div class="project-stat"><span class="num">RIP</span><span class="label">old endpoints retired</span></div>
+            </div>
+
+            <section class="project-section" id="idea">
+                <h2>The idea</h2>
+                <p>I wanted my own data — schedule, grades, payments, messages — in a form I could actually build on, instead of fighting the official web UI. There was no public API, so the only way through was to figure out how the official mobile app talks to the server and speak the same language.</p>
+            </section>
+
+            <section class="project-section" id="reverse">
+                <h2>Reverse-engineering</h2>
+                <p>The Neptun mobile app talks to a set of <code>MobileCloudService</code> endpoints. I traced those calls, worked out the session-based authentication, and reimplemented the whole conversation — login, then typed requests for each kind of data — as clean async Python.</p>
+            </section>
+
+            <section class="project-section" id="layers">
+                <h2>API + app</h2>
+                <div class="flow">
+                    <div class="flow-step"><i class="ri-server-line"></i><span class="flow-label">Neptun</span><span class="flow-sub">MobileCloudService</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-code-s-slash-line"></i><span class="flow-label">REST wrapper</span><span class="flow-sub">FastAPI + Swagger</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-smartphone-line"></i><span class="flow-label">Flutter app</span><span class="flow-sub">Android client</span></div>
+                </div>
+                <p>The result is two pieces: a <strong>FastAPI</strong> REST wrapper — fully documented with Swagger/ReDoc, type-safe Pydantic models, async throughout — covering schedule/calendar, academic info (terms, grades), finances (payments, tuition) and messages; and a <strong>Flutter</strong> Android app on top of it. (The API was ported from an earlier Dart implementation that grew out of the app itself.)</p>
+            </section>
+
+            <section class="project-section" id="status">
+                <h2>Status</h2>
+                <p>Sunset, honestly. It worked great while it lasted — but the university moved off the old Neptun endpoints, so the reverse-engineered API no longer has a server to talk to. It stays here as a clean example of the work: trace a private protocol, model it, and rebuild it as something usable.</p>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>Python, FastAPI + uvicorn, Pydantic models, async <code>httpx</code> against the reverse-engineered <code>MobileCloudService</code> endpoints, with Swagger/ReDoc docs — plus a Flutter / Dart Android client on top.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

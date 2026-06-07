@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Moodboard — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#B0833B; --accent-soft:rgba(176,131,59,0.13)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Products</span>
+            <span class="sep">/</span>
+            <span class="current">Kitchen Moodboard</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#what">What it is</a>
+                    <a href="#generate">Multi-reference AI</a>
+                    <a href="#realtime">Real-time &amp; saved</a>
+                    <a href="#cost">Watching the bill</a>
+                    <a href="#status">Status</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">Flask</span>
+                    <span class="tag">Socket.IO</span>
+                    <span class="tag">Gemini</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a class="disabled"><i class="ri-lock-line"></i> Personal · not public</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Kitchen Moodboard</h1>
+            <span class="project-eyebrow">Collaborative AI · Family</span>
+            <p class="project-tagline">An infinite canvas where my family drags in kitchen tiles and Gemini paints what the finished room could look like.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/kitchen.jpg" alt="kitchen illustration">
+            </div>
+
+            <span class="wip-banner"><i class="ri-tools-line"></i> Work in progress</span>
+
+            <p class="project-lead">My family wanted to redo the kitchen — new tiles, new look — and kept trying to picture it. So I built a shared moodboard where you drop in real product photos from the store and ask AI to render the room they'd make.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">∞</span><span class="label">infinite canvas</span></div>
+                <div class="project-stat"><span class="num">multi-ref</span><span class="label">AI generation</span></div>
+                <div class="project-stat"><span class="num">live</span><span class="label">real-time sync</span></div>
+                <div class="project-stat"><span class="num">$</span><span class="label">cost tracked</span></div>
+            </div>
+
+            <section class="project-section" id="what">
+                <h2>What it is</h2>
+                <p>An infinite, zoomable board you fill with images and text notes. The real use case was concrete: import tile and cabinet photos from a store like OBI, arrange them, and generate previews of how that combination would actually look as a kitchen — so the family could argue about it on the same canvas instead of in their heads.</p>
+            </section>
+
+            <section class="project-section" id="generate">
+                <h2>Multi-reference AI generation</h2>
+                <p>The interesting bit isn't single-prompt image generation — it's that you can <strong>select several existing board items as references</strong> and generate a new image from all of them at once. Pick the tile swatch, the cabinet shot, and a text prompt, hit <em>Generate</em>, and Gemini composes a result that draws on every reference. The new image lands back on the board where you placed it.</p>
+            </section>
+
+            <section class="project-section" id="realtime">
+                <h2>Real-time &amp; saved</h2>
+                <p>It's built for more than one person looking at once. A Flask + Socket.IO backend broadcasts every new item the moment it's added, so the board updates live for everyone, and the whole board state is persisted to disk so it's still there next time you open it.</p>
+            </section>
+
+            <section class="project-section" id="cost">
+                <h2>Watching the bill</h2>
+                <p>AI image generation isn't free, so the server tallies it: input/output tokens and per-image output cost are estimated on every generation and accumulated into a running total. Handy for a family tool you don't want quietly racking up a Gemini bill.</p>
+            </section>
+
+            <section class="project-section" id="status">
+                <h2>Status</h2>
+                <p>This one is <strong>half-finished</strong> — the core works (infinite board, live sync, multi-reference generation, cost tracking), but it's not polished or deployed. It's the kind of project that gets picked back up the next time the renovation conversation flares up.</p>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>Python, Flask + Flask-SocketIO (threading model) for the real-time board, a JSON-backed store for board state and the running cost total, and Google Gemini via <code>google-genai</code> for multi-reference image generation. Vanilla-JS infinite-canvas front end.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

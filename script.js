@@ -385,6 +385,25 @@ document.addEventListener('DOMContentLoaded', function() {
     sketchWraps.forEach(w => sketchObs.observe(w));
   }
 
+  // Staggered reveal of the project bento tiles
+  const projectTiles = document.querySelectorAll('.projects-grid .project-card');
+  if (projectTiles.length && 'IntersectionObserver' in window) {
+    const tileObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('tile-in');
+          tileObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    projectTiles.forEach((t, i) => {
+      t.style.setProperty('--tile-delay', (i * 55) + 'ms');
+      tileObs.observe(t);
+    });
+  } else {
+    projectTiles.forEach(t => t.classList.add('tile-in'));
+  }
+
   // Dark mode
   const themeToggle = document.getElementById('themeToggle');
   const themeIcon = document.getElementById('themeIcon');

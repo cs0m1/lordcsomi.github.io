@@ -3,109 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Face Grouping Project - Portfolio</title>
+    <title>Face Grouping &amp; Search — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
     <link href="../styles.css" rel="stylesheet">
     <link href="../fonts/remixicon.css" rel="stylesheet">
     <link href="project-styles.css" rel="stylesheet">
 </head>
-<body>
-    <a href="../index.html" class="minimalist-back">
-        <i class="ri-arrow-left-line"></i>
-    </a>
-    <div class="project-nav">
-        <a href="../index.html#projects">Personal Projects</a>
-        <span class="separator">/</span>
-        <span class="current">Face Grouping Project</span>
+<body style="--accent:#C06A3D; --accent-soft:rgba(192,106,61,0.12)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Products</span>
+            <span class="sep">/</span>
+            <span class="current">Face Grouping &amp; Search</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#problem">The problem</a>
+                    <a href="#grouping">Grouping</a>
+                    <a href="#search">Search</a>
+                    <a href="#engineering">Engineering</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">Python</span>
+                    <span class="tag">facenet</span>
+                    <span class="tag">OpenCV</span>
+                    <span class="tag">Flask</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a href="https://github.com/cs0m1/find_image" target="_blank" class="primary"><i class="ri-github-fill"></i> Source · find_image</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Face Grouping &amp; Search</h1>
+            <span class="project-eyebrow">Computer Vision · Python</span>
+            <p class="project-tagline">Point it at a pile of event photos, get them sorted by who's in each one — then search the whole library for any face.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/face-grouping.jpg" alt="face-grouping illustration">
+            </div>
+
+            <p class="project-lead">Two tools that grew out of the same itch: too many photos, no idea who's in them. One <strong>groups</strong> a folder by face; the other <strong>searches</strong> a library for a specific person. Both run entirely on your own machine.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">100s</span><span class="label">photos sorted by face</span></div>
+                <div class="project-stat"><span class="num">2</span><span class="label">detection models · HOG / CNN</span></div>
+                <div class="project-stat"><span class="num">512<span class="unit">-d</span></span><span class="label">face embeddings</span></div>
+                <div class="project-stat"><span class="num">Local</span><span class="label">runs fully offline</span></div>
+            </div>
+
+            <section class="project-section" id="problem">
+                <h2>The problem</h2>
+                <p>After a big event — the original use case was a <em>szalagavató</em>, a Hungarian graduation ceremony — you end up with hundreds of photos and the tedious job of figuring out which ones each person is in. Doing it by hand is miserable. So I taught a computer to do the looking.</p>
+            </section>
+
+            <section class="project-section" id="grouping">
+                <h2>Grouping</h2>
+                <p>The grouping tool walks a folder, detects and encodes every face, and clusters the photos by face-distance so each person ends up with their own pile. You can choose the detector — fast <strong>HOG</strong> or accurate <strong>CNN</strong> — and tune the matching threshold, and it handles group photos where many faces share a frame. It draws labelled bounding boxes so you can see what it decided and why.</p>
+            </section>
+
+            <section class="project-section" id="search">
+                <h2>Search</h2>
+                <p>The search side is the inverse: give it one face and it finds every photo that person appears in, across a whole local image library. It uses a facenet pipeline — <strong>MTCNN</strong> for detection and <strong>InceptionResnet</strong> for 512-dimensional embeddings — and compares against the library by cosine distance, all behind a small Flask web UI for browsing the matches.</p>
+            </section>
+
+            <section class="project-section" id="engineering">
+                <h2>Engineering touches</h2>
+                <ul>
+                    <li><strong>Resumable</strong> — processing state is pickled, so a run over thousands of photos can stop and pick up where it left off.</li>
+                    <li><strong>Progress &amp; ETA</strong> — live progress tracking with estimated time remaining instead of a silent wait.</li>
+                    <li><strong>Metrics</strong> — per-image stats (face counts, match rates, timing) logged to CSV and visualised in an interactive Dash dashboard.</li>
+                </ul>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p><strong>Grouping:</strong> Python, the <code>face_recognition</code> library (HOG/CNN detection + encodings), PIL/OpenCV for drawing, pickle for state, Dash + Matplotlib + Pandas for the metrics dashboard. <strong>Search:</strong> Python, facenet-pytorch (MTCNN + InceptionResnet), Flask for the browse UI.</p>
+            </section>
+        </main>
     </div>
 
-    <div class="project-header">
-        <h1>Face Grouping Project</h1>
-        <div class="project-tech-tags">
-            <span class="tag">Python</span>
-            <span class="tag">OpenCV</span>
-            <span class="tag">face_recognition</span>
-            <span class="tag">NumPy</span>
-            <span class="tag">Dash</span>
-        </div>
-        <div class="project-actions">
-            <a href="#" class="visit-link">
-                <i class="ri-external-link-line"></i>
-                View Demo
-            </a>
-        </div>
-    </div>
-
-    <div class="project-content">
-        <div class="project-section">
-            <h2>Project Description</h2>
-            <p>An automated facial recognition and photo organization tool designed to process and group photos based on facial detection. The primary use case demonstrated is organizing photos from a "Szalagavato" (Hungarian graduation ceremony) event, making it easier to sort and categorize large collections of photos by the people appearing in them.</p>
-        </div>
-
-        <div class="project-section">
-            <h2>Technologies Used</h2>
-            <ul>
-                <li>Python (core programming language)</li>
-                <li>face_recognition library (for face detection and encoding)</li>
-                <li>PIL (Python Imaging Library) for image manipulation and drawing</li>
-                <li>OpenCV (computer vision library for image processing)</li>
-                <li>NumPy (for numerical operations on image data)</li>
-                <li>Pickle (for saving and loading processing state)</li>
-                <li>CSV (for metrics tracking and analysis)</li>
-                <li>Dash (for interactive web-based visualization)</li>
-                <li>Matplotlib (for statistical graphs and analysis)</li>
-                <li>Pandas (for data manipulation and analysis)</li>
-            </ul>
-        </div>
-
-        <div class="project-section">
-            <h2>Key Features</h2>
-            <h3>Advanced Face Processing</h3>
-            <ul>
-                <li>Configurable face detection models (HOG or CNN)</li>
-                <li>Adjustable matching threshold for face similarity</li>
-                <li>Face location detection and encoding</li>
-                <li>Visual feedback with customizable bounding boxes</li>
-                <li>Specialized group photo handling</li>
-            </ul>
-
-            <h3>Smart Processing Features</h3>
-            <ul>
-                <li>Resume capability (saves state between runs)</li>
-                <li>Progress tracking with time estimation</li>
-                <li>Intelligent cleanup operations</li>
-                <li>Metrics collection and analysis</li>
-                <li>Folder structure optimization</li>
-            </ul>
-
-            <h3>Performance Optimization</h3>
-            <ul>
-                <li>Choice between fast (HOG) and accurate (CNN) detection models</li>
-                <li>Efficient face encoding and matching algorithms</li>
-                <li>Progress tracking with estimated time remaining</li>
-            </ul>
-
-            <h3>Data Analysis and Metrics</h3>
-            <ul>
-                <li>Detailed CSV metrics for each processed image</li>
-                <li>Track processing time, face counts, and match rates</li>
-                <li>Graph-based analysis of face relationships</li>
-                <li>Interactive visualization dashboard</li>
-                <li>Comprehensive statistical analysis</li>
-            </ul>
-        </div>
-
-        <div class="project-section">
-            <h2>Technical Implementation</h2>
-            <ul>
-                <li>Face Detection: Uses the face_recognition library with support for both HOG and CNN models</li>
-                <li>Face Matching: Implements face distance calculations with configurable threshold</li>
-                <li>State Management: Utilizes pickle for saving processing state</li>
-                <li>Metrics Tracking: Records detailed processing metrics in CSV format</li>
-                <li>Image Handling: Uses PIL for image manipulation and drawing detection boxes</li>
-                <li>Error Handling: Robust error handling and progress tracking</li>
-                <li>Directory Management: Smart organization and optimization of photo collections</li>
-            </ul>
-        </div>
-    </div>
+    <script src="project.js"></script>
 </body>
 </html>

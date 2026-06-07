@@ -637,12 +637,224 @@ section:not(#landing) h2::after {
   padding: 5rem 2rem;
 }
 
+/* ════════════ Bento / mosaic projects grid ════════════ */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 210px;
+  grid-auto-flow: dense;
+  gap: 1rem;
   width: 100%;
   max-width: 1100px;
+}
+
+/* The card itself fills its grid cell */
+.project-card {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+.project-card .project-link {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.project-card .project-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ── Tile sizes ─────────────────────────────────────── */
+/* Big feature tile: 2×2 */
+.tile-lg { grid-column: span 2; grid-row: span 2; }
+.tile-lg .project-image,
+.tile-lg .project-image--ph { height: 52%; }
+.tile-lg .project-content { flex: 1; justify-content: flex-start; padding: 1.25rem; overflow: hidden; }
+.tile-lg .project-content h3 { font-size: 1.55rem; margin-bottom: 0.4rem; }
+.tile-lg .project-content p { font-size: 0.92rem; line-height: 1.55; -webkit-line-clamp: 3; }
+
+/* Wide tile: 2×1, image/placeholder on the left, text on the right */
+.tile-wide { grid-column: span 2; grid-row: span 1; }
+.tile-wide .project-link { flex-direction: row; }
+.tile-wide .project-image,
+.tile-wide .project-image--ph { width: 42%; height: 100%; flex-shrink: 0; border-bottom: none; border-right: 1px solid rgba(37, 38, 39, 0.08); }
+.tile-wide .project-content { border-top: none; padding: 1rem 1.1rem; }
+.tile-wide .project-content h3 { font-size: 1.2rem; }
+.tile-wide .project-content p { font-size: 0.85rem; -webkit-line-clamp: 2; }
+
+/* Base small tile: 1×1, no image, compact */
+.project-card:not(.tile-lg):not(.tile-wide) .project-image,
+.project-card:not(.tile-lg):not(.tile-wide) .project-image--ph { display: none; }
+.project-card:not(.tile-lg):not(.tile-wide) .project-content {
+  border-top: none;
+  justify-content: flex-start;
+  /* extra top padding clears the absolute index numeral */
+  padding: 2.4rem 1.1rem 1.1rem;
+  overflow: hidden;
+}
+.project-card:not(.tile-lg):not(.tile-wide) .project-content h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+.project-card:not(.tile-lg):not(.tile-wide) .project-content p {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin-bottom: 0.6rem;
+  -webkit-line-clamp: 2;
+}
+.project-card:not(.tile-lg):not(.tile-wide) .card-badge { margin-bottom: 0.5rem; }
+
+/* Clamp long descriptions so tiles stay tidy */
+.project-content p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Tags pinned to the bottom of every tile */
+.project-content .tech-tags { margin-top: auto; }
+
+/* ── Grouped sections ("who it's for") ────────────────── */
+.project-group { width: 100%; max-width: 1100px; margin: 0 auto; }
+.project-group + .project-group { margin-top: 3.5rem; }
+
+.project-group-head {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(37, 38, 39, 0.12);
+}
+
+.project-group-head .grp-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  white-space: nowrap;
+}
+
+.project-group-head h3 {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  line-height: 1;
+}
+
+.project-group-head .grp-count {
+  margin-left: auto;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--grey);
+  white-space: nowrap;
+}
+
+.project-group .projects-grid { margin: 0; }
+
+/* ── Type badge on each card ───────────────────────────── */
+.card-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  border: 1px solid rgba(196, 169, 107, 0.5);
+  padding: 0.16rem 0.5rem;
+  margin-bottom: 0.6rem;
+  border-radius: 999px;
+}
+.tile-lg .card-badge { font-size: 0.68rem; }
+
+[data-theme="dark"] .project-group-head h3 { color: #E8E4D8; }
+[data-theme="dark"] .project-group-head { border-color: rgba(232, 228, 216, 0.15); }
+
+/* ── Editorial index numerals ─────────────────────────── */
+.card-index {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.85rem;
+  z-index: 3;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  color: var(--gold-dark);
+  opacity: 0.9;
+  pointer-events: none;
+  text-shadow: 0 1px 2px rgba(253, 251, 241, 0.7);
+}
+.tile-lg .card-index { font-size: 1rem; }
+
+/* Title shifts to gold on hover */
+.project-content h3 { transition: color 0.25s ease; }
+.project-card:hover .project-content h3 { color: var(--gold-dark); }
+
+/* ── Decorative closing "ghost" tile ──────────────────── */
+.tile-ghost .project-link {
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed rgba(37, 38, 39, 0.25);
+  color: var(--grey);
+  text-align: center;
+  gap: 0.4rem;
+  transition: all 0.3s ease;
+}
+.tile-ghost { border: none !important; box-shadow: none !important; }
+.tile-ghost:hover { transform: none; box-shadow: none; }
+.tile-ghost .project-link:hover { border-color: var(--charcoal); color: var(--charcoal); }
+.tile-ghost i { font-size: 1.6rem; color: rgba(37, 38, 39, 0.3); }
+.tile-ghost span {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ── Staggered reveal ─────────────────────────────────── */
+.projects-grid .project-card {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.projects-grid .project-card.tile-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--tile-delay, 0ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .projects-grid .project-card { opacity: 1; transform: none; transition: none; }
+}
+
+/* Dark theme tweaks for the bento */
+[data-theme="dark"] .card-index { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); }
+[data-theme="dark"] .tile-wide .project-image,
+[data-theme="dark"] .tile-wide .project-image--ph { border-right-color: rgba(232, 228, 216, 0.12); }
+
+@media (max-width: 880px) {
+  .projects-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+  .tile-lg { grid-column: span 2; grid-row: span 2; }
+  .tile-wide { grid-column: span 2; grid-row: span 1; }
+  .project-card { grid-column: span 1; }
+}
+
+@media (max-width: 560px) {
+  .projects-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
+  .project-card,
+  .tile-lg,
+  .tile-wide { grid-column: span 1; grid-row: span 1; }
+  .tile-wide .project-link { flex-direction: column; }
+  .tile-wide .project-image,
+  .tile-wide .project-image--ph { width: 100%; height: 160px; border-right: none; }
+  .project-card:not(.tile-lg):not(.tile-wide) .project-content,
+  .tile-lg .project-content { min-height: 150px; }
 }
 
 .project-card {
@@ -689,23 +901,56 @@ section:not(#landing) h2::after {
   color: var(--paper);
 }
 
+/* Lock variant for personal / non-public projects */
+.card-lock {
+  cursor: default;
+  color: var(--grey);
+}
+.card-lock:hover {
+  background: rgba(253, 251, 241, 0.9);
+  color: var(--charcoal);
+}
+
 .project-image {
   width: 100%;
   height: 220px;
   overflow: hidden;
 }
 
+/* Placeholder image for cards without a screenshot yet */
+.project-image--ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(238, 216, 170, 0.10) 0 14px,
+      transparent 14px 28px);
+  border-bottom: 1px solid rgba(37, 38, 39, 0.08);
+}
+
+.project-image--ph i {
+  font-size: 2.2rem;
+  color: rgba(37, 38, 39, 0.25);
+  transition: color 0.3s ease;
+}
+
+.tile-lg .project-image--ph i { font-size: 3.2rem; }
+.tile-wide .project-image--ph i { font-size: 2.6rem; }
+
+.project-card:hover .project-image--ph i { color: var(--gold-dark); }
+
 .project-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(0.3) sepia(0.08);
+  filter: saturate(0.96);
   transition: all 0.5s ease;
 }
 
 .project-card:hover .project-image img {
-  transform: scale(1.04);
-  filter: grayscale(0) sepia(0);
+  transform: scale(1.03);
+  filter: saturate(1.05);
 }
 
 .project-content {

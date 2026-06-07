@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shush — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#2E8B83; --accent-soft:rgba(46,139,131,0.13)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Products</span>
+            <span class="sep">/</span>
+            <span class="current">Shush</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#idea">The idea</a>
+                    <a href="#how">How it works</a>
+                    <a href="#predict">Predict, don't react</a>
+                    <a href="#privacy">Privacy by design</a>
+                    <a href="#gallery">Gallery</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">Kotlin</span>
+                    <span class="tag">Compose</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Whisper</span>
+                    <span class="tag">Ollama</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a href="https://github.com/cs0m1/shush" target="_blank" class="primary"><i class="ri-github-fill"></i> Source</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Shush</h1>
+            <span class="project-eyebrow">Local-AI · Android + Python</span>
+            <p class="project-tagline">A conversation mood ring that tells you when to shut up — before you regret it.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/shush.jpg" alt="shush illustration">
+            </div>
+
+            <p class="project-lead">Your phone becomes a dumb microphone and a single breathing circle. Everything else — transcription, judging the mood, deciding when you're about to cross a line — happens on your own machine. Nothing ever leaves the room.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">~100<span class="unit">ms</span></span><span class="label">circle latency</span></div>
+                <div class="project-stat"><span class="num">~1<span class="unit">s</span></span><span class="label">live transcript</span></div>
+                <div class="project-stat"><span class="num">EN·HU·ET</span><span class="label">multilingual</span></div>
+                <div class="project-stat"><span class="num">0</span><span class="label">bytes to the cloud</span></div>
+            </div>
+
+            <section class="project-section" id="idea">
+                <h2>The idea</h2>
+                <p>It started as a friend's joke — "someone should make an app that tells you when to shut up." In a heated conversation it's hard to notice your own voice climbing until it's too late. Shush is the device that notices for you: a calm circle that warms to amber as things get tense and goes red when you're about to say the thing you can't take back.</p>
+            </section>
+
+            <section class="project-section" id="how">
+                <h2>How it works</h2>
+                <div class="flow">
+                    <div class="flow-step"><i class="ri-smartphone-line"></i><span class="flow-label">Phone</span><span class="flow-sub">mic → PCM audio</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-wifi-line"></i><span class="flow-label">LAN socket</span><span class="flow-sub">WebSocket stream</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-branch">
+                        <div class="flow-step"><i class="ri-pulse-line"></i><span class="flow-label">Fast layer</span><span class="flow-sub">loudness → the circle</span></div>
+                        <div class="flow-step"><i class="ri-chat-voice-line"></i><span class="flow-label">Slow layer</span><span class="flow-sub">Whisper + Ollama judge</span></div>
+                    </div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-alarm-warning-line"></i><span class="flow-label">Verdict</span><span class="flow-sub">calm → tense → stop</span></div>
+                </div>
+                <p>The phone (Kotlin + Jetpack Compose) streams raw PCM audio over a LAN WebSocket to a Python server. The server runs a deliberate <strong>two-layer design</strong> so the interface always feels instant:</p>
+                <ul>
+                    <li><strong>Fast layer</strong> — a NumPy loop tracks loudness and a rolling 5-second history, driving the circle's size and a "voices rising" early-warning the moment things start climbing, even before anyone is loud.</li>
+                    <li><strong>Slow layer</strong> — faster-whisper transcribes each phrase and a local LLM (Ollama, <code>llama3.2:3b</code>) reads the escalation arc and returns a verdict plus a trend: easing, steady, or rising.</li>
+                </ul>
+                <p>Live speaker counting uses SpeechBrain ECAPA voice embeddings, clustered online so the circle knows how many people are talking.</p>
+            </section>
+
+            <section class="project-section" id="predict">
+                <h2>Predict, don't just react</h2>
+                <p>The whole point is to warn you <em>early</em>. Two trajectory signals feed the alarm: an acoustic one that flags your voice rising above your own rolling baseline, and a verbal one where the judge reserves the red "stop" for an imminent blow-up and uses amber for the build-up. When the trend is rising, the circle physically throbs.</p>
+            </section>
+
+            <section class="project-section" id="privacy">
+                <h2>Privacy by design</h2>
+                <p>Privacy isn't a setting, it's the architecture. Audio never leaves your network; every WebSocket frame is AES-256-GCM encrypted; pairing is trust-on-first-use over mDNS auto-discovery, so there's no token to type and none broadcast. Transcripts and voiceprints are deliberately <strong>not</strong> stored by default.</p>
+            </section>
+
+            <section class="project-section" id="gallery">
+                <h2>Gallery</h2>
+                <div class="gallery-grid">
+                    <div class="img-placeholder shot"><i class="ri-smartphone-line"></i><span>The one-circle phone UI, idle vs. listening</span></div>
+                    <div class="img-placeholder shot"><i class="ri-government-line"></i><span>Server console — STT + judge on the GPU</span></div>
+                </div>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p><strong>Android:</strong> Kotlin, Jetpack Compose, OkHttp WebSocket, AudioRecord (PCM16 mono 16 kHz). <strong>Server:</strong> Python, websockets, NumPy, faster-whisper (multilingual medium), SpeechBrain ECAPA diarization, Ollama for the judge. <strong>Ops:</strong> AES-GCM crypto, zeroconf/mDNS discovery, Docker + docker-compose with GPU passthrough.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

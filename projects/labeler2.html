@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labeler — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#BF4040; --accent-soft:rgba(191,64,64,0.12)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Experiments</span>
+            <span class="sep">/</span>
+            <span class="current">Labeler</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#why">Why build it</a>
+                    <a href="#workflow">The workflow</a>
+                    <a href="#example">Label by example</a>
+                    <a href="#tracking">Tracking the camera</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">Python</span>
+                    <span class="tag">Flask</span>
+                    <span class="tag">OpenCV</span>
+                    <span class="tag">CUDA</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a class="disabled"><i class="ri-lock-line"></i> Personal · not public</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Labeler</h1>
+            <span class="project-eyebrow">Computer Vision · Tooling</span>
+            <p class="project-tagline">A labeling studio that does the boring part for you — capture an object once, and it finds it across every frame.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/labeler2.jpg" alt="labeler2 illustration">
+            </div>
+
+            <p class="project-lead">Building a computer-vision dataset means drawing the same box thousands of times. Labeler is the tool I built to cut that down — a project-based annotator that auto-propagates labels using template matching and camera tracking instead of brute-force clicking.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">GPU</span><span class="label">OpenCV CUDA matching</span></div>
+                <div class="project-stat"><span class="num">2-pass</span><span class="label">coarse → fine search</span></div>
+                <div class="project-stat"><span class="num">auto</span><span class="label">label by example</span></div>
+                <div class="project-stat"><span class="num">video</span><span class="label">→ smart frame sampling</span></div>
+            </div>
+
+            <section class="project-section" id="why">
+                <h2>Why build it</h2>
+                <p>I kept needing labelled image and video data for other projects, and the existing tools were either heavyweight or didn't do the one thing I wanted: <em>label something once and let the computer find the rest</em>. So I built my own around that idea, with projects, labels, per-frame annotations and stats — the usual scaffolding — but with assistance baked into the core.</p>
+            </section>
+
+            <section class="project-section" id="workflow">
+                <h2>The workflow</h2>
+                <div class="flow">
+                    <div class="flow-step"><i class="ri-video-upload-line"></i><span class="flow-label">Upload</span><span class="flow-sub">images or video</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-film-line"></i><span class="flow-label">Sample</span><span class="flow-sub">smart frame extraction</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-crop-2-line"></i><span class="flow-label">Capture</span><span class="flow-sub">grab an object once</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-magic-line"></i><span class="flow-label">Auto-match</span><span class="flow-sub">find it everywhere</span></div>
+                </div>
+                <p>A project starts from uploaded images or videos. Video is sampled into frames (uniform, with smarter sampling for big clips), and long-running steps like extraction and displacement run as background jobs you can poll. Everything's stored per project: frames, labels, annotations and stats.</p>
+            </section>
+
+            <section class="project-section" id="example">
+                <h2>Label by example</h2>
+                <p>The headline feature: <strong>capture an object as a template, and the tool finds it across all your frames.</strong> Matching is multi-scale and <em>coarse-to-fine</em> — a quarter-resolution pass locates candidates, then a full-resolution pass confirms them — and it supports an alpha mask so irregular shapes match cleanly. When a GPU is available it runs on OpenCV's CUDA path (built and tuned on an RTX 5060), so matching a template across a whole project is fast rather than a coffee break.</p>
+            </section>
+
+            <section class="project-section" id="tracking">
+                <h2>Tracking the camera</h2>
+                <p>In video, the camera moves even when objects don't. Labeler estimates that motion with <strong>phase-correlation displacement tracking</strong> between consecutive frames, so an annotation can shift along with the camera instead of being re-drawn — the difference between labelling every frame and labelling a handful.</p>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>Python + Flask backend (project, frame, label, annotation and stats APIs with background jobs), OpenCV for the vision core — multi-scale template matching with alpha masks and a CUDA fast path, phase-correlation displacement, and video frame sampling — and a vanilla-JS labeling front end.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

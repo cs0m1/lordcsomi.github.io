@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climbing Auto-Register — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#3A6EA5; --accent-soft:rgba(58,110,165,0.13)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Personal Tools</span>
+            <span class="sep">/</span>
+            <span class="current">Climbing Auto-Register</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#annoyance">The annoyance</a>
+                    <a href="#how">How it works</a>
+                    <a href="#touches">Nice touches</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">Python</span>
+                    <span class="tag">Playwright</span>
+                    <span class="tag">Fly.io</span>
+                    <span class="tag">Gmail</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a class="disabled"><i class="ri-lock-line"></i> Personal · not public</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Climbing Auto-Register</h1>
+            <span class="project-eyebrow">Automation · Deployed</span>
+            <p class="project-tagline">Never fill out the climbing-session form again — it watches my inbox, asks me yes or no, and signs me up.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/climbing-automation.jpg" alt="climbing-automation illustration">
+            </div>
+
+            <p class="project-lead">My university posts climbing-training sessions by email, and each one needs a Microsoft Form filled in to claim a spot. This little service does the watching, asking, and form-filling so I don't have to.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">2<span class="unit">×/day</span></span><span class="label">inbox checks</span></div>
+                <div class="project-stat"><span class="num">1-tap</span><span class="label">yes / no by email</span></div>
+                <div class="project-stat"><span class="num">→0</span><span class="label">scales to zero on Fly</span></div>
+                <div class="project-stat"><span class="num">48<span class="unit">h</span></span><span class="label">signed confirm links</span></div>
+            </div>
+
+            <section class="project-section" id="annoyance">
+                <h2>The annoyance</h2>
+                <p>Climbing sessions are announced on short notice, and if you want in you have to spot the email and fill out a form before the slots run out. Miss the email, miss the session. Classic candidate for automation.</p>
+            </section>
+
+            <section class="project-section" id="how">
+                <h2>How it works</h2>
+                <div class="flow">
+                    <div class="flow-step"><i class="ri-mail-line"></i><span class="flow-label">Watch</span><span class="flow-sub">Gmail scan, 2×/day</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-mail-check-line"></i><span class="flow-label">Ask</span><span class="flow-sub">YES / NO email to me</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-robot-2-line"></i><span class="flow-label">Act</span><span class="flow-sub">Playwright fills the form</span></div>
+                </div>
+                <p>The flow is fully hands-off after one tap:</p>
+                <ul>
+                    <li><strong>Watch</strong> — twice a day (8&nbsp;AM and 6&nbsp;PM Budapest time) it scans Gmail for a training announcement from the organiser, and pulls out the form link and deadline.</li>
+                    <li><strong>Ask</strong> — it emails me a clean <strong>YES / NO</strong> confirmation so I stay in control of which sessions I actually attend.</li>
+                    <li><strong>Act</strong> — tap YES and a Playwright browser fills out and submits the Microsoft Form with my details, then emails me a success/failure confirmation.</li>
+                </ul>
+            </section>
+
+            <section class="project-section" id="touches">
+                <h2>Nice touches</h2>
+                <ul>
+                    <li><strong>Signed links</strong> — the YES/NO buttons carry JWT tokens that expire after 48 hours, so a stale email can't trigger a registration.</li>
+                    <li><strong>Scale-to-zero</strong> — it lives on Fly.io and idles down to zero instances when nothing's happening, so it costs essentially nothing to keep running.</li>
+                    <li><strong>Hungarian</strong> — the confirmation emails are written in Hungarian, to match the source announcements.</li>
+                </ul>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>Python, the Gmail API for monitoring, Playwright for headless form-filling, JWT for the time-limited confirmation links, and Fly.io for deployment with scheduled twice-daily checks and auto-scaling to zero.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

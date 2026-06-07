@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Húsvét Vers — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#58954C; --accent-soft:rgba(88,149,76,0.13)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Products</span>
+            <span class="sep">/</span>
+            <span class="current">Húsvét Vers</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#what">What it is</a>
+                    <a href="#rhymes">The rhyme engine</a>
+                    <a href="#editor">The editor</a>
+                    <a href="#key">Bring your own key</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">FastAPI</span>
+                    <span class="tag">Gemini</span>
+                    <span class="tag">MCP</span>
+                    <span class="tag">Yjs</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a href="https://github.com/cs0m1/husveti_vers_ai" target="_blank" class="primary"><i class="ri-github-fill"></i> Source</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Húsvét Vers</h1>
+            <span class="project-eyebrow">AI Writing Tool · Hungarian</span>
+            <p class="project-tagline">A block-based editor for the Hungarian Easter <em>locsolóvers</em> — Gemini writes the verse and looks up real rhymes as it goes.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/husvet-vers.jpg" alt="husvet-vers illustration">
+            </div>
+
+            <p class="project-lead">Every Easter, Hungarian tradition calls for a <em>locsolóvers</em> — a short sprinkling-poem. This is a little writing studio for them: a block-based editor where Gemini drafts and refines the verse, and a custom rhyme tool keeps the rhymes actually Hungarian.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">MCP</span><span class="label">custom rhyme tool</span></div>
+                <div class="project-stat"><span class="num">live</span><span class="label">block editor · synced</span></div>
+                <div class="project-stat"><span class="num">SQLite</span><span class="label">versioned history</span></div>
+                <div class="project-stat"><span class="num">BYO</span><span class="label">your own Gemini key</span></div>
+            </div>
+
+            <section class="project-section" id="what">
+                <h2>What it is</h2>
+                <p>A focused tool for one tiny, very Hungarian job: writing a good Easter poem. You start a new poem or resume a saved one, and Gemini helps you compose it block by block. It's playful and one-of-a-kind — there's no generic "AI poem generator" energy here; it's built around the specific shape and tradition of the <em>locsolóvers</em>.</p>
+            </section>
+
+            <section class="project-section" id="rhymes">
+                <h2>The rhyme engine</h2>
+                <p>The piece I'm proudest of: a custom <strong>MCP (Model Context Protocol) server</strong> that gives the model a real rhyming dictionary. It scrapes <code>rimkereso.hu</code> for genuine Hungarian rhymes and returns them <strong>grouped by syllable count</strong> — so when Gemini needs a word that rhymes with <em>"locsolni,"</em> it isn't guessing, it's calling a tool and getting back real options that scan correctly. Good Hungarian rhyme is hard for an LLM alone; this closes that gap.</p>
+            </section>
+
+            <section class="project-section" id="editor">
+                <h2>The editor</h2>
+                <p>The poem isn't one text box — it's a canvas of editable blocks, backed by a FastAPI + WebSocket server. Documents and their blocks are stored in SQLite with <strong>version history</strong>, and edits sync through a Yjs/<code>y-py</code> CRDT so the document state stays consistent. You can keep several poems on the go and come back to any of them.</p>
+            </section>
+
+            <section class="project-section" id="key">
+                <h2>Bring your own key</h2>
+                <p>You supply your own Gemini API key, entered in the UI and kept client-side — so the tool runs on your quota and nothing of yours is funnelled through a shared backend key.</p>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p><strong>Backend:</strong> Python, FastAPI + uvicorn, python-socketio / WebSockets, SQLite for versioned document storage, <code>y-py</code> (Yjs CRDT) for sync, and a FastMCP rhyme server scraping <code>rimkereso.hu</code> with httpx + BeautifulSoup. <strong>AI:</strong> Google Gemini via <code>google-genai</code>, calling the rhyme server as an MCP tool. <strong>Frontend:</strong> vanilla JS block editor with Tailwind styling.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

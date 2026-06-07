@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex Tic-Tac-Toe AI — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#5B57C7; --accent-soft:rgba(91,87,199,0.12)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Experiments</span>
+            <span class="sep">/</span>
+            <span class="current">Hex Tic-Tac-Toe AI</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#game">The game (not mine)</a>
+                    <a href="#pipeline">The AlphaZero pipeline</a>
+                    <a href="#touches">Notable touches</a>
+                    <a href="#data">The data</a>
+                    <a href="#status">Status</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">PyTorch</span>
+                    <span class="tag">MCTS</span>
+                    <span class="tag">ResNet</span>
+                    <span class="tag">CUDA</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a href="https://github.com/cs0m1/hex-tic-tac-toe" target="_blank" class="primary"><i class="ri-github-fill"></i> Source</a>
+                <a href="https://hex-tic-tac-toe.did.science" target="_blank"><i class="ri-external-link-line"></i> Play the game ↗</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Hex Tic-Tac-Toe AI</h1>
+            <span class="project-eyebrow">Reinforcement Learning · AlphaZero</span>
+            <p class="project-tagline">Scrape two million human moves, bootstrap a network, then let it teach itself by playing itself.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/hex.jpg" alt="hex illustration">
+            </div>
+
+            <p class="project-lead">A from-scratch AlphaZero implementation for <em>Infinity Hex Tic-Tac-Toe</em>. I didn't build the game — I built the brain that learns to win it, from scraped human games all the way to self-play reinforcement learning.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">2<span class="unit">M+</span></span><span class="label">training positions</span></div>
+                <div class="project-stat"><span class="num">6</span><span class="label">residual blocks</span></div>
+                <div class="project-stat"><span class="num">35×35</span><span class="label">board encoding</span></div>
+                <div class="project-stat"><span class="num">&gt;55<span class="unit">%</span></span><span class="label">arena gate to promote</span></div>
+            </div>
+
+            <section class="project-section" id="game">
+                <h2>The game (not mine)</h2>
+                <p><strong>Infinity Hex Tic-Tac-Toe</strong> is a two-player connection game on an <em>infinite</em> hexagonal grid: you win by forming a straight line of exactly six of your own hexes along any of the three axes. Player one opens with a single hex; after that each turn places two. It's a clean, deep game — and it's <strong>not mine</strong>. It lives at an existing, still-playable site; I have no involvement with it beyond being fascinated by it.</p>
+                <p>What I built is the AI: an agent that learns this game well enough to play it strongly, using the same recipe that cracked Go.</p>
+            </section>
+
+            <section class="project-section" id="pipeline">
+                <h2>The AlphaZero pipeline</h2>
+                <div class="flow">
+                    <div class="flow-step"><i class="ri-download-cloud-2-line"></i><span class="flow-label">Scrape</span><span class="flow-sub">2M human moves</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-brain-line"></i><span class="flow-label">Bootstrap</span><span class="flow-sub">supervised ResNet</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-loop-left-line"></i><span class="flow-label">Self-play</span><span class="flow-sub">MCTS games</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-sword-line"></i><span class="flow-label">Arena</span><span class="flow-sub">promote if &gt;55%</span></div>
+                </div>
+                <p>The network is a dual-headed PyTorch ResNet — a 2-channel 35×35 board goes into a 6-block residual tower, splitting into a <strong>policy head</strong> (a probability over all 1,225 board cells) and a <strong>value head</strong> (a single win/loss forecast). Training runs in two phases:</p>
+                <ul>
+                    <li><strong>Supervised bootstrap</strong> — before any self-play, the network is taught human intuition on 2M+ scraped pro positions, so generation zero already plays sensibly.</li>
+                    <li><strong>Self-play RL loop</strong> — a persistent generation loop then improves it: <em>self-play</em> generates 100 MCTS-guided games per iteration, a <em>candidate</em> network trains on the freshest data with early stopping, and an <em>arena</em> plays 40 games candidate-vs-champion. The candidate only becomes the new champion if it wins over 55%.</li>
+                </ul>
+            </section>
+
+            <section class="project-section" id="touches">
+                <h2>Notable touches</h2>
+                <ul>
+                    <li><strong>Curriculum schedule</strong> — MCTS depth ramps from 100 up to 1,000 simulations as the agent matures, and early-game exploration shrinks over generations.</li>
+                    <li><strong>Blunder detection &amp; punishment</strong> — if the agent has a winning threat and ignores it (or fails to block a clear loss), the game short-circuits with a forced result instead of burning simulation budget.</li>
+                    <li><strong>Auto VRAM tuner</strong> — probes the GPU for the largest safe batch size before training and scales the learning rate to match, so it runs on whatever card it lands on.</li>
+                </ul>
+            </section>
+
+            <section class="project-section" id="data">
+                <h2>The data</h2>
+                <p>The supervised phase needs human games, so there's a whole harvesting pipeline in front of it — parallel scrapers that collect played games, plus analytics notebooks that study human blunders and Elo-vs-mistake patterns to shape the training set into the 2M-position dataset.</p>
+                <div class="gallery-grid">
+                    <div class="img-placeholder shot"><i class="ri-line-chart-line"></i><span>Blunder-vs-Elo analysis from the scraped game database</span></div>
+                    <div class="img-placeholder shot"><i class="ri-cpu-line"></i><span>Self-play arena — candidate vs. champion win rate over generations</span></div>
+                </div>
+            </section>
+
+            <section class="project-section" id="status">
+                <h2>Status</h2>
+                <p>Honest version: this one is a <strong>finished idea, unfinished project</strong>. The full pipeline runs and produces stronger generations, but I stopped before pushing it to its ceiling — and the game itself has gone quiet. I'm keeping it here because the engineering (scrape → bootstrap → self-play → gate) is some of the most involved ML work I've done, even if the scoreboard never got its final number.</p>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>PyTorch (dual-headed residual network), a custom MCTS, <code>ProcessPoolExecutor</code> self-play across CPU cores, CUDA with an automatic batch-size tuner, and a Python scraping + analytics stack (parallel harvesters, Jupyter dashboards) for the human-game dataset.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

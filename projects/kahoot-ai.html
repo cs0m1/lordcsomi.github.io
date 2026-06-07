@@ -3,113 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KahootAI Assistant - Portfolio</title>
+    <title>KahootAI Assistant — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
     <link href="../styles.css" rel="stylesheet">
     <link href="../fonts/remixicon.css" rel="stylesheet">
     <link href="project-styles.css" rel="stylesheet">
 </head>
-<body>
-    <a href="../index.html" class="minimalist-back">
-        <i class="ri-arrow-left-line"></i>
-    </a>
-    <div class="project-nav">
-        <a href="../index.html#projects">Personal Projects</a>
-        <span class="separator">/</span>
-        <span class="current">KahootAI Assistant</span>
+<body style="--accent:#6E2FAE; --accent-soft:rgba(110,47,174,0.12)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Products</span>
+            <span class="sep">/</span>
+            <span class="current">KahootAI Assistant</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#what">What it does</a>
+                    <a href="#build">How it's built</a>
+                    <a href="#overlay">The overlay</a>
+                    <a href="#privacy">Privacy</a>
+                    <a href="#shipping">Shipping it</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">Chrome MV3</span>
+                    <span class="tag">Gemini</span>
+                    <span class="tag">Actions</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a href="https://github.com/cs0m1/KahootAI-Assistant" target="_blank" class="primary"><i class="ri-github-fill"></i> Source</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>KahootAI Assistant</h1>
+            <span class="project-eyebrow">Browser Extension · Gemini AI</span>
+            <p class="project-tagline">Quiet, on-screen answer hints for Kahoot — powered by Gemini, styled to stay out of the way.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/kahoot-ai.jpg" alt="kahoot-ai illustration">
+            </div>
+
+            <p class="project-lead">A Chrome extension that reads the live Kahoot question and asks Gemini for the answer, surfacing it through a small, configurable floating indicator that you can park anywhere on screen.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">MV3</span><span class="label">manifest version</span></div>
+                <div class="project-stat"><span class="num">6</span><span class="label">overlay positions</span></div>
+                <div class="project-stat"><span class="num">100<span class="unit">%</span></span><span class="label">local · no tracking</span></div>
+                <div class="project-stat"><span class="num">MIT</span><span class="label">open source</span></div>
+            </div>
+
+            <section class="project-section" id="what">
+                <h2>What it does</h2>
+                <p>During a Kahoot game the extension watches the page, pulls the current question and answer options out of the DOM, and sends them to Google's Gemini for a best guess. The suggestion appears in a minimal floating badge rather than taking over the screen — the goal was assistance that stays calm and non-intrusive, not a giant cheat banner.</p>
+            </section>
+
+            <section class="project-section" id="build">
+                <h2>How it's built</h2>
+                <p>A clean Manifest V3 extension with the standard three-part split:</p>
+                <ul>
+                    <li><strong>Content script</strong> — reads the Kahoot DOM and injects the floating indicator.</li>
+                    <li><strong>Background service worker</strong> — handles the Gemini API calls off the page so keys and requests stay out of the content context.</li>
+                    <li><strong>Options page</strong> — where you drop in your own Gemini key and tune the overlay.</li>
+                </ul>
+            </section>
+
+            <section class="project-section" id="overlay">
+                <h2>The overlay</h2>
+                <p>The whole point was an indicator you barely notice until you want it. It's fully configurable: <strong>six</strong> anchor positions around the screen, three sizes (small / medium / large), adjustable opacity, and an auto-hide mode so it disappears when you're not looking at it.</p>
+            </section>
+
+            <section class="project-section" id="privacy">
+                <h2>Privacy</h2>
+                <p>Everything runs client-side. Your Gemini key lives in local storage, the extension only asks for the domains it actually needs, and nothing is collected or sent anywhere except Gemini for the answer itself. Open-source, MIT-licensed, so it's all auditable.</p>
+            </section>
+
+            <section class="project-section" id="shipping">
+                <h2>Shipping it</h2>
+                <p>Releases are automated: a GitHub Actions pipeline builds the extension and packages the distributable ZIP on each tagged release, so shipping a new version is a push, not a chore.</p>
+                <div class="gallery-grid">
+                    <div class="img-placeholder shot"><i class="ri-settings-3-line"></i><span>Options page — key entry + overlay settings</span></div>
+                    <div class="img-placeholder shot"><i class="ri-focus-3-line"></i><span>The floating indicator in its six positions</span></div>
+                </div>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>JavaScript (ES6+), Chrome Extension MV3 APIs (content scripts, background service worker, options page), Google Gemini API, and GitHub Actions for automated ZIP releases. MIT licensed.</p>
+            </section>
+        </main>
     </div>
 
-    <div class="project-header">
-        <h1>KahootAI Assistant</h1>
-        <div class="project-tech-tags">
-            <span class="tag">JavaScript</span>
-            <span class="tag">Chrome Extension</span>
-            <span class="tag">Gemini AI</span>
-            <span class="tag">HTML/CSS</span>
-        </div>
-        <div class="project-actions">
-            <a href="#" class="github-link">
-                <i class="ri-github-fill"></i>
-            </a>
-            <a href="#" class="visit-link">
-                <i class="ri-external-link-line"></i>
-                Chrome Web Store
-            </a>
-        </div>
-    </div>
-
-    <div class="project-content">
-        <div class="project-section">
-            <h2>Project Description</h2>
-            <p>A sophisticated browser extension that enhances the Kahoot learning experience by providing AI-powered answer suggestions through a minimalistic floating interface. The extension seamlessly integrates with Kahoot's platform to provide intelligent assistance while maintaining a non-intrusive user experience.</p>
-        </div>
-
-        <div class="project-section">
-            <h2>Technologies Used</h2>
-            <ul>
-                <li>JavaScript (ES6+)</li>
-                <li>Chrome Extension APIs</li>
-                <li>Google's Gemini AI API</li>
-                <li>HTML/CSS</li>
-                <li>Service Workers</li>
-                <li>GitHub Actions (CI/CD)</li>
-            </ul>
-        </div>
-
-        <div class="project-section">
-            <h2>Key Features</h2>
-            <h3>Chrome Extension Architecture</h3>
-            <ul>
-                <li>Manifest V3 implementation</li>
-                <li>Background service worker for API handling</li>
-                <li>Content scripts for DOM manipulation</li>
-                <li>Options page for user configuration</li>
-            </ul>
-
-            <h3>AI Integration</h3>
-            <ul>
-                <li>Integration with Google's Gemini API</li>
-                <li>Local processing for privacy</li>
-                <li>Real-time answer analysis</li>
-            </ul>
-
-            <h3>User Interface</h3>
-            <ul>
-                <li>Floating indicator with customizable position (6 different locations)</li>
-                <li>Adjustable size (Small, Medium, Large)</li>
-                <li>Configurable opacity</li>
-                <li>Auto-hide functionality</li>
-            </ul>
-
-            <h3>Security & Privacy</h3>
-            <ul>
-                <li>Local storage for sensitive data</li>
-                <li>Limited domain permissions</li>
-                <li>No external data collection</li>
-                <li>Open-source codebase</li>
-            </ul>
-        </div>
-
-        <div class="project-section">
-            <h2>Development Tools & Practices</h2>
-            <ul>
-                <li>Version Control: Git</li>
-                <li>Automated Deployment: GitHub Actions</li>
-                <li>Build Process: Automated ZIP generation</li>
-                <li>Testing: Chrome Extension testing environment</li>
-                <li>Documentation: Comprehensive README</li>
-            </ul>
-        </div>
-
-        <div class="project-section">
-            <h2>Project Highlights</h2>
-            <ul>
-                <li>Universal compatibility with Kahoot games and challenges</li>
-                <li>Privacy-focused design with local processing</li>
-                <li>Automated release pipeline</li>
-                <li>MIT Licensed open-source project</li>
-                <li>Modular and maintainable codebase</li>
-            </ul>
-        </div>
-    </div>
+    <script src="project.js"></script>
 </body>
 </html>

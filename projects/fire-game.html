@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firefighting AI — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#D26A1F; --accent-soft:rgba(210,106,31,0.13)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Experiments</span>
+            <span class="sep">/</span>
+            <span class="current">Firefighting AI</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#comp">The competition</a>
+                    <a href="#mine">My part</a>
+                    <a href="#bot">The winning bot</a>
+                    <a href="#roles">The three roles</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">Python</span>
+                    <span class="tag">gRPC</span>
+                    <span class="tag">A*</span>
+                    <span class="tag">Flask</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a href="https://github.com/HTibor/firegame_GeekDay2026" target="_blank"><i class="ri-github-fill"></i> Final bot ↗ (team)</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Firefighting AI</h1>
+            <span class="project-eyebrow">Competition · Multi-agent</span>
+            <p class="project-tagline">A fog-of-war firefighting game, a 24-hour sprint, and a squad of robots that learned to divide and conquer.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/fire-game.jpg" alt="fire-game illustration">
+            </div>
+
+            <p class="project-lead">A GeekDay 2026 team competition: control a squad of units on a 190×190 grid you can only partly see, find fires through fog of war, and put them out faster than rival teams. Our bot took <strong>2nd place</strong>.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">2nd</span><span class="label">GeekDay 2026</span></div>
+                <div class="project-stat"><span class="num">3</span><span class="label">specialised unit roles</span></div>
+                <div class="project-stat"><span class="num">A*</span><span class="label">on a 190×190 map</span></div>
+                <div class="project-stat"><span class="num">gRPC</span><span class="label">streaming + ACK flow</span></div>
+            </div>
+
+            <section class="project-section" id="comp">
+                <h2>The competition</h2>
+                <p>Each team scripts a bot that drives several units around a grid they can only partially see. Fires flare up with their own HP, water has to be fetched and applied, walls block the way — and you're racing rival teams to the same fires. It rewards exploration, coordination, and never wasting a move.</p>
+            </section>
+
+            <section class="project-section" id="mine">
+                <h2>My part</h2>
+                <p>This was a team project. The final, winning bot is a merge of everyone's work and <a href="https://github.com/HTibor/firegame_GeekDay2026" target="_blank">lives in a teammate's repo ↗</a>. What I brought was the foundation it ran on: the <strong>gRPC client</strong> that talked to the game server with proper ACK-gated flow control, an early version of the <strong>shared world model</strong> that fuses every unit's vision into one map, and a live <strong>web visualizer</strong> so we could watch what the bot believed during the 24-hour crunch.</p>
+            </section>
+
+            <section class="project-section" id="bot">
+                <h2>The winning bot</h2>
+                <p>On top of that foundation the team built something genuinely clever. A central <strong>world model</strong> fuses sightings into shared knowledge of fires, water and walls, with two nice touches: a <strong>fire tracker</strong> that follows each fire's HP and clusters nearby fires together, and a <strong>vision calibrator</strong> that <em>learns</em> each unit's real sight radius instead of assuming one. Movement is <strong>A*</strong> with a Manhattan heuristic, capped to stay fast across the full 190×190 board, and a stuck-detector remembers blocked cells so units stop re-bumping the same walls.</p>
+            </section>
+
+            <section class="project-section" id="roles">
+                <h2>The three roles</h2>
+                <p>A coordinator classifies each unit and hands it a brain — and the brains play very different games:</p>
+                <div class="flow">
+                    <div class="flow-step"><i class="ri-drone-line"></i><span class="flow-label">Drone</span><span class="flow-sub">find bounds → sweep → snipe</span></div>
+                    <div class="flow-step"><i class="ri-truck-line"></i><span class="flow-label">Truck</span><span class="flow-sub">fire → fight → water → refill</span></div>
+                    <div class="flow-step"><i class="ri-fire-line"></i><span class="flow-label">Fighter</span><span class="flow-sub">park on a cluster, grind</span></div>
+                </div>
+                <ul>
+                    <li><strong>Drones</strong> fly the perimeter to learn the map's bounds, sweep to scout, then snipe fires they spot.</li>
+                    <li><strong>Trucks</strong> run a water loop — go to a fire, fight it, go refill — with opportunistic snipes on the way.</li>
+                    <li><strong>Fighters</strong> are infinite-water bulldozers: park on a fire cluster's centroid and extinguish outward, never needing to refill.</li>
+                </ul>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>Python throughout: gRPC streaming client (threaded receive loop, ACK-gated commands), a shared world model with fire-clustering and per-unit vision calibration, A* pathfinding with stuck detection on a 190×190 grid, role-based unit state machines, and a Flask web visualizer of the bot's belief state.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

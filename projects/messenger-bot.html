@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uni Chat Monitor — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#A24E63; --accent-soft:rgba(162,78,99,0.13)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Personal Tools</span>
+            <span class="sep">/</span>
+            <span class="current">Uni Chat Monitor</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#problem">The problem</a>
+                    <a href="#pipeline">The pipeline</a>
+                    <a href="#ask">Ask it anything</a>
+                    <a href="#private">Private by design</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">Python</span>
+                    <span class="tag">Matrix</span>
+                    <span class="tag">Ollama</span>
+                    <span class="tag">ChromaDB</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a class="disabled"><i class="ri-lock-line"></i> Personal · not public</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Uni Chat Monitor</h1>
+            <span class="project-eyebrow">Local AI · Self-hosted</span>
+            <p class="project-tagline">My noisy uni group chat, quietly read by a local AI that pulls out the deadlines and lets me search the rest.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/messenger-bot.jpg" alt="messenger-bot illustration">
+            </div>
+
+            <p class="project-lead">A university Messenger group is a firehose — announcements, deadlines and links buried under hundreds of off-topic messages. This is a fully self-hosted watcher that reads the chat, keeps the signal, and throws away the noise — all on my own machine.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">100<span class="unit">%</span></span><span class="label">local · self-hosted</span></div>
+                <div class="project-stat"><span class="num">RAG</span><span class="label">ask-it-anything search</span></div>
+                <div class="project-stat"><span class="num">daily</span><span class="label">auto summaries</span></div>
+                <div class="project-stat"><span class="num">0</span><span class="label">ports exposed</span></div>
+            </div>
+
+            <section class="project-section" id="problem">
+                <h2>The problem</h2>
+                <p>Important things — a moved deadline, a submission link, a room change — get posted once and then immediately buried. Scrolling back to find them is the worst, and missing them is expensive. I wanted something that read the chat so I didn't have to.</p>
+            </section>
+
+            <section class="project-section" id="pipeline">
+                <h2>The pipeline</h2>
+                <div class="flow">
+                    <div class="flow-step"><i class="ri-messenger-line"></i><span class="flow-label">Messenger</span><span class="flow-sub">FB uni group</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-git-branch-line"></i><span class="flow-label">Bridge</span><span class="flow-sub">mautrix-meta → Synapse</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-step"><i class="ri-robot-2-line"></i><span class="flow-label">AI Bot</span><span class="flow-sub">classify · extract · summarise</span></div>
+                    <div class="flow-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="flow-branch">
+                        <div class="flow-step"><i class="ri-database-2-line"></i><span class="flow-label">ChromaDB</span><span class="flow-sub">vector memory</span></div>
+                        <div class="flow-step"><i class="ri-dashboard-3-line"></i><span class="flow-label">Dashboard</span><span class="flow-sub">FastAPI + React</span></div>
+                    </div>
+                </div>
+                <p>Messenger doesn't have a friendly API, so the chat is bridged into open infrastructure first:</p>
+                <ul>
+                    <li><strong>Bridge</strong> — <code>mautrix-meta</code> bridges the Facebook Messenger group into a <strong>Matrix</strong> room on a self-hosted Synapse server.</li>
+                    <li><strong>Understand</strong> — a Python bot listens to that room, classifies each message, and extracts deadlines, links and announcements with a local LLM.</li>
+                    <li><strong>Remember</strong> — everything is embedded into <strong>ChromaDB</strong>, and the bot posts a daily summary of what mattered.</li>
+                    <li><strong>Show</strong> — a FastAPI + React dashboard surfaces the extracted info and search.</li>
+                </ul>
+            </section>
+
+            <section class="project-section" id="ask">
+                <h2>Ask it anything</h2>
+                <p>Because every message is embedded in a local vector database, the chat becomes queryable. Ask "when's the database assignment due?" and a local Ollama model answers from the actual messages — retrieval-augmented over the group history, no cloud involved.</p>
+            </section>
+
+            <section class="project-section" id="private">
+                <h2>Private by design</h2>
+                <p>The whole stack runs in a Podman pod that shares a dedicated <strong>Tailscale</strong> node's network namespace. Nothing listens on the host — <strong>zero ports exposed</strong> — and I reach the dashboard from my phone over the tailnet at <code>http://uni-chat:8080</code> via MagicDNS, with ACLs controlling who else can. My machine's own Tailscale identity stays untouched.</p>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>Python bot (classification, extraction, daily summaries, RAG), <code>mautrix-meta</code> + Synapse for the Messenger→Matrix bridge, Ollama for the local LLM, ChromaDB for vector storage, FastAPI + React for the dashboard, and Tailscale + Podman for zero-exposure self-hosting.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

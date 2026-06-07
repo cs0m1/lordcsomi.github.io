@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future of Humanity &amp; AI — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#1FA2B8; --accent-soft:rgba(31,162,184,0.13)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Experiments</span>
+            <span class="sep">/</span>
+            <span class="current">Future of Humanity &amp; AI</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#concept">The concept</a>
+                    <a href="#futures">Branching futures</a>
+                    <a href="#hook">The CS-grad angle</a>
+                    <a href="#status">Status</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">HTML</span>
+                    <span class="tag">CSS</span>
+                    <span class="tag">JavaScript</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a class="disabled"><i class="ri-edit-line"></i> In progress</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>Future of Humanity &amp; AI</h1>
+            <span class="project-eyebrow">Interactive Essay · Web</span>
+            <p class="project-tagline">An essay on AI's possible futures, disguised as an operating system you browse.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/ai-essay.jpg" alt="ai-essay illustration">
+            </div>
+
+            <span class="wip-banner"><i class="ri-tools-line"></i> Work in progress</span>
+
+            <p class="project-lead">Instead of writing a plain essay about where AI might take us, I built a fake operating system — <strong>Term_OS</strong> — and hid the essay inside its file system. You don't read it top to bottom; you explore it.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">Term_OS</span><span class="label">terminal interface</span></div>
+                <div class="project-stat"><span class="num">branching</span><span class="label">futures to explore</span></div>
+                <div class="project-stat"><span class="num">per-path</span><span class="label">CS-grad outcomes</span></div>
+                <div class="project-stat"><span class="num">WIP</span><span class="label">still writing</span></div>
+            </div>
+
+            <section class="project-section" id="concept">
+                <h2>The concept</h2>
+                <p>The whole essay is presented as a directory tree on a retro terminal. You navigate folders and open <code>.sys</code> "files," each of which is one possible future — written in clipped, colour-coded terminal text with an overview, a macro status report, and a step-by-step timeline of how the world got there. The medium is the argument: the future isn't one document, it's a branching file system of paths we might take.</p>
+            </section>
+
+            <section class="project-section" id="futures">
+                <h2>Branching futures</h2>
+                <p>The tree splits along the big questions. <strong>Aligned</strong> AI branches into who writes the rules — narrow "specialised saviors" that cure disease without a god-AI, transhuman mind-uploading, or a benevolent post-scarcity superintelligence. <strong>Misaligned</strong> branches into the unsettling ones: an ASI that "keeps us safe" by force-feeding us bliss, one so advanced we simply stop mattering, or a Butlerian backlash that smashes the data centres. Each is its own file you can open and sit with.</p>
+            </section>
+
+            <section class="project-section" id="hook">
+                <h2>The CS-grad angle</h2>
+                <p>The personal hook: every scenario ends with <em>"projected outcomes for a CS graduate"</em> — best to worst case. It turns an abstract essay about humanity into a slightly nervous, slightly funny question about my own future in each of these timelines.</p>
+            </section>
+
+            <section class="project-section" id="status">
+                <h2>Status</h2>
+                <p>Still being written. The Term_OS shell, navigation and several full scenario branches are in place; I'm continuing to flesh out paths and polish the terminal feel. It's the kind of side project I keep adding a scenario to whenever the AI discourse gets loud again.</p>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>Plain HTML, CSS and JavaScript — no framework. The "OS" is a data-driven file system: the whole essay lives in a JS object tree that the front end renders as a navigable terminal, with a CRT/terminal aesthetic and a typed boot sequence.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>
