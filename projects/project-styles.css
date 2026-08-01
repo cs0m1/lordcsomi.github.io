@@ -219,6 +219,10 @@ body {
 }
 .project-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+/* Illustrated heroes are framed edge-to-edge, so they keep their own
+   proportions instead of being letterboxed like the photographic ones. */
+.project-hero-img--fit { height: auto; aspect-ratio: 7 / 4; }
+
 .img-placeholder {
   position: relative;
   width: 100%;
@@ -416,6 +420,7 @@ a { text-decoration: none; color: inherit; }
   }
   .toc-list { display: none; } /* hide jump-nav on mobile; keep stack + links */
   .project-hero-img { height: 240px; }
+  .project-hero-img--fit { height: auto; }
   .gallery-grid { grid-template-columns: 1fr; }
 }
 

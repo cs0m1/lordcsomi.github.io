@@ -1497,9 +1497,11 @@ textarea {
 }
 
 .comp-media {
+  display: block;
   margin: 0 0 1.5rem;
   max-width: 640px;
   border: 1px solid rgba(37, 38, 39, 0.15);
+  overflow: hidden;
 }
 
 [data-theme="dark"] .comp-media {
@@ -1509,7 +1511,16 @@ textarea {
 .comp-media img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  filter: saturate(0.96);
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.comp-media:hover img {
+  transform: scale(1.03);
+  filter: saturate(1.05);
 }
 
 .comp-links {
@@ -1590,6 +1601,14 @@ textarea {
 
 [data-theme="dark"] .project-image img {
   filter: grayscale(0.25) sepia(0.05) brightness(0.8);
+}
+
+[data-theme="dark"] .comp-media img {
+  filter: grayscale(0.25) sepia(0.05) brightness(0.8);
+}
+
+[data-theme="dark"] .comp-media:hover img {
+  filter: grayscale(0.25) sepia(0.05) brightness(0.88);
 }
 
 [data-theme="dark"] .top-nav {
@@ -1986,6 +2005,25 @@ textarea {
 
   .work-content:before {
     display: none;
+  }
+
+  #competitions {
+    padding: 3rem 1rem;
+  }
+
+  .comp-featured {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .comp-place-badge {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .comp-place-num {
+    font-size: 2.2rem;
   }
 
   #contact {
