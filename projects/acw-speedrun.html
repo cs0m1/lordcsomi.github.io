@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>254 ACW Speedrun Toolkit — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#44617F; --accent-soft:rgba(68,97,127,0.13)">
+    <header class="project-topbar">
+        <a href="../index.html#projects" class="topbar-back" aria-label="Back to projects"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#projects">Projects</a>
+            <span class="sep">/</span>
+            <span>Experiments</span>
+            <span class="sep">/</span>
+            <span class="current">Speedrun Toolkit</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#game">The game</a>
+                    <a href="#tools">The toolkit</a>
+                    <a href="#reading">Reading the source</a>
+                    <a href="#result">The result</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">Godot</span>
+                    <span class="tag">GDScript</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">ffmpeg</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a href="https://youtu.be/lBWOry0Zfho" target="_blank"><i class="ri-play-circle-line"></i> The run ↗</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>254 ACW Speedrun Toolkit</h1>
+            <span class="project-eyebrow">Reverse engineering · Telemetry</span>
+            <p class="project-tagline">Someone else's game jam entry, taken apart to find out how fast it could actually be finished.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/acw-speedrun.jpg" alt="254 ACW speedrun route illustration">
+            </div>
+
+            <p class="project-lead">254 ACW is a GMTK Game Jam 2026 platformer where every life lasts 60 seconds and the world persists between them. My first blind completion took about <strong>30 minutes</strong>. Routing it properly with tools I built for the job got it to <strong>1:46.49</strong>.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">1:46</span><span class="label">from ~30 min blind</span></div>
+                <div class="project-stat"><span class="num">60/s</span><span class="label">telemetry rows logged</span></div>
+                <div class="project-stat"><span class="num">222</span><span class="label">collision shapes drawn</span></div>
+                <div class="project-stat"><span class="num">7</span><span class="label">lives in the final route</span></div>
+            </div>
+
+            <section class="project-section" id="game">
+                <h2>The game</h2>
+                <p>Each run gives you 60 seconds before you die and the year advances. Levers you pull, boxes you push and items you carry all stay where you left them, so progress is made across lives rather than within one. Optimising it is a scheduling problem as much as a movement problem: what is worth doing in <em>this</em> life, given that the next one starts from scratch somewhere else.</p>
+            </section>
+
+            <section class="project-section" id="tools">
+                <h2>The toolkit</h2>
+                <p>I unpacked the shipped <code>.pck</code> and ran the recovered project natively in Godot, then added an autoload overlay alongside the original scripts. One call in the player's push loop is the only change to the game's own code; everything else observes from outside.</p>
+                <div class="flow">
+                    <div class="flow-step"><i class="ri-line-chart-line"></i><span class="flow-label">Telemetry</span><span class="flow-sub">one CSV row per physics frame</span></div>
+                    <div class="flow-step"><i class="ri-shape-line"></i><span class="flow-label">Collision view</span><span class="flow-sub">every hitbox, colour-coded</span></div>
+                    <div class="flow-step"><i class="ri-timer-flash-line"></i><span class="flow-label">Splits</span><span class="flow-sub">per segment, golds auto-saved</span></div>
+                    <div class="flow-step"><i class="ri-ghost-line"></i><span class="flow-label">Ghost</span><span class="flow-sub">best run, replayed live</span></div>
+                </div>
+                <ul>
+                    <li><strong>Telemetry.</strong> Position, velocity, state, held item, keys, year and both timers, written every physics frame. A second file diffs the save's persistent dictionary each frame, so every lever, firepit and item pickup is captured without touching the game's scripts.</li>
+                    <li><strong>Map rendering.</strong> The route maps are not screenshots. A Python pass walks the scene file and rebuilds every <code>CollisionShape2D</code>, so the map is the real collision geometry, and the recorded path is drawn on top with one colour per life.</li>
+                    <li><strong>Collision overlay.</strong> All 222 shapes drawn live in game as translucent boxes, coloured by what owns them, with disabled shapes greyed out so save state is visible at a glance.</li>
+                    <li><strong>Free camera.</strong> The camera detaches from the player without moving him, which makes it possible to check whether a route exists before spending lives finding out.</li>
+                    <li><strong>Segment splits.</strong> Each checkpoint times a leg rather than a running total, so one bad segment doesn't poison every one after it. Per-leg bests save themselves the moment they're beaten. Deaths are their own checkpoints, so a slow death animation lands on its own row.</li>
+                    <li><strong>Ghost.</strong> The best run replayed as a translucent figure, synced on the in-game clock rather than wall time so it survives menus, deaths and slow motion.</li>
+                </ul>
+            </section>
+
+            <section class="project-section" id="reading">
+                <h2>Reading the source</h2>
+                <p>The route came out of the game's code more than out of practice. Three things mattered, and none of them are visible from playing:</p>
+                <ul>
+                    <li>The scoring clock is only written to disk inside the death handler. One ending path skips it entirely, so an entire life can be erased from the final time.</li>
+                    <li>The death routine waits for the player to land <em>before</em> freezing him, and the wait exits on a velocity check that running never satisfies. That leaves a two-second window of full control after death, during which a carried item still moves with you and is saved where you end up.</li>
+                    <li>Interaction triggers are circles far larger than the objects that own them, which puts one pickup in reach from a ledge well below it.</li>
+                </ul>
+                <p>I reported the clock bug to the developer, who confirmed it was unintended and is on his list to fix.</p>
+            </section>
+
+            <section class="project-section" id="result">
+                <h2>The result</h2>
+                <p>The final route uses seven lives where an intuitive one uses five, because deaths are nearly free on the scoring clock and buying a year is cheaper than walking. Two lives are literally spawn-and-die. The telemetry is what made that legible: comparing two runs leg by leg showed that 6.5 seconds saved inside a timer-capped life turned into 19 seconds saved in the <em>next</em> life, because the item got parked further along and the following life pays for the trip out and back.</p>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>GDScript for the in-game overlay, telemetry, splits and ghost. Python for scene parsing, map rendering, route drawing, run comparison, save-state management and a physics sandbox for checking jumps without playing them. ffmpeg for the run video.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

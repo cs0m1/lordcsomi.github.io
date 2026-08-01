@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRESS TO DECREMENT — Csomós Ádám</title>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../fonts/remixicon.css" rel="stylesheet">
+    <link href="project-styles.css" rel="stylesheet">
+</head>
+<body style="--accent:#6E7B3F; --accent-soft:rgba(110,123,63,0.13)">
+    <header class="project-topbar">
+        <a href="../index.html#competitions" class="topbar-back" aria-label="Back to competitions"><i class="ri-arrow-left-line"></i></a>
+        <nav class="project-breadcrumb">
+            <a href="../index.html#competitions">Competitions</a>
+            <span class="sep">/</span>
+            <span>GMTK Game Jam 2026</span>
+            <span class="sep">/</span>
+            <span class="current">PRESS TO DECREMENT</span>
+        </nav>
+        <button class="topbar-theme" id="themeToggle" aria-label="Toggle light / dark"><i id="themeIcon" class="ri-moon-line"></i></button>
+    </header>
+
+    <div class="project-shell">
+
+        <!-- ── Sidebar ── -->
+        <aside class="project-toc">
+            <div>
+                <div class="toc-kicker">On this page</div>
+                <nav class="toc-list">
+                    <a href="#idea">The idea</a>
+                    <a href="#ladders">Three ladders</a>
+                    <a href="#body">Your body</a>
+                    <a href="#arch">The architecture</a>
+                    <a href="#endings">Three endings</a>
+                    <a href="#stack">Built with</a>
+                </nav>
+            </div>
+            <div>
+                <div class="toc-block-label">Stack</div>
+                <div class="toc-stack">
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">Canvas</span>
+                    <span class="tag">Web Audio</span>
+                    <span class="tag">ES Modules</span>
+                </div>
+            </div>
+            <div class="toc-links">
+                <a href="https://cs0m1.itch.io/press-to-decrement" target="_blank" rel="noopener"><i class="ri-gamepad-line"></i> Play it ↗</a>
+                <a href="https://itch.io/jam/gmtk-jam-2026/rate/4827418" target="_blank" rel="noopener"><i class="ri-star-line"></i> Jam entry ↗</a>
+            </div>
+        </aside>
+
+        <!-- ── Main ── -->
+        <main class="project-main">
+            <h1>PRESS TO DECREMENT</h1>
+            <span class="project-eyebrow">Game jam · Interactive fiction</span>
+            <p class="project-tagline">There is a button, and a number, and the number is ten.</p>
+
+            <div class="project-hero-img">
+                <img src="../images/projects/press-to-decrement.jpg" alt="PRESS TO DECREMENT illustration">
+            </div>
+
+            <p class="project-lead">My entry for the 96-hour GMTK Game Jam 2026, theme <em>COUNT DOWN</em>. It placed <strong>50th of 10,600 entries for Creativity</strong> — top 0.5% — and 172nd for Narrative. My first finished game.</p>
+
+            <div class="project-stats">
+                <div class="project-stat"><span class="num">50th</span><span class="label">Creativity · 10.6k entries</span></div>
+                <div class="project-stat"><span class="num">24</span><span class="label">cycles across four acts</span></div>
+                <div class="project-stat"><span class="num">3</span><span class="label">endings, none from a menu</span></div>
+                <div class="project-stat"><span class="num">0</span><span class="label">asset files</span></div>
+            </div>
+
+            <section class="project-section" id="idea">
+                <h2>The idea</h2>
+                <p>The countdown is the antagonist. Every press takes one off the number, and reaching zero is not a win — it closes a cycle, rebuilds the button slightly worse than it was, and starts again at ten. Zero is what <em>causes</em> the loop.</p>
+                <p>Which means the button is a machine that gets ground down every time you do what it asks. Over twenty-four cycles it works that out, and the game becomes a question about whether you keep pressing once you know.</p>
+            </section>
+
+            <section class="project-section" id="ladders">
+                <h2>Three ladders</h2>
+                <p>Everything in the game climbs one of three ladders in lockstep. If an idea couldn't be placed on one of them, it didn't go in. That rule is most of why a jam game with this much text stays coherent.</p>
+                <div class="flow">
+                    <div class="flow-step"><i class="ri-lightbulb-line"></i><span class="flow-label">Knowledge</span><span class="flow-sub">ignorant → suspicious → certain → resisting → surrendered</span></div>
+                    <div class="flow-step"><i class="ri-text"></i><span class="flow-label">Typography</span><span class="flow-sub">CAPS → Sentence case → lowercase</span></div>
+                    <div class="flow-step"><i class="ri-contrast-2-line"></i><span class="flow-label">The room</span><span class="flow-sub">flat gray → fully awake</span></div>
+                </div>
+                <ul>
+                    <li><strong>The typography is the character arc.</strong> All caps is a machine with no first person. Sentence case is a person emerging. Lowercase only happens when it has nothing left to defend. Three deliberate lowercase leaks land early, inside otherwise total tedium, and they do more than any effect in the game.</li>
+                    <li><strong>The room wakes up rather than the player sinking.</strong> A single <code>depth</code> value runs 0 → 1 across the whole game and drives palette, respiration, current and audio together.</li>
+                    <li><strong>Three registers of text that never blur.</strong> Speech gets a bubble and types out. System text gets no bubble and prints instantly, because <em>CYCLE COMPLETE</em> is the loop closing, not something anyone says to you. Giving it a speech bubble put it in the same voice as the button's confessions and flattened both.</li>
+                </ul>
+            </section>
+
+            <section class="project-section" id="body">
+                <h2>Your body</h2>
+                <p>You start as a cursor: an input device, as much a machine as the button is. The moment the button treats you as someone, you become one. The pointer gains weight, then mass and momentum, then a soft light — and when the button walls you off, pointing stops being enough and WASD is born mid-game. For the finale you are handed a plain arrow again. You are an operator, until you refuse.</p>
+            </section>
+
+            <section class="project-section" id="arch">
+                <h2>The architecture</h2>
+                <p>Plain HTML, CSS and native ES modules. <strong>No engine, no build step, and no asset files at all</strong> — everything is drawn to one canvas and every sound is synthesized at runtime. Three rules hold it together:</p>
+                <ul>
+                    <li><strong>The kernel knows nothing about any cycle.</strong> It owns the count and the zero-to-reset loop, and a cycle calls <code>decrement()</code> only for a press that <em>that cycle</em> considers valid. All the difficulty lives in the cycles, none in the kernel. A cycle with no build step falls back to a plain ten-press round using its real dialogue, so the game is always playable end to end and an unfinished cycle degrades instead of breaking.</li>
+                    <li><strong>The display may lie. The voice may not.</strong> Screen output runs through an optional lie policy; the button's speech always reports the truth. That seam is load-bearing, because the ending only works if you have learned to trust the voice over the interface.</li>
+                    <li><strong>One value gates every effect.</strong> Gradients, glow, grain, vignette, motes and bevel all multiply by the same atmosphere term. Anything that ignored it would leak the ending's mood into the opening and flatten the whole arc.</li>
+                </ul>
+                <p>The game is an ordered array of cycle modules, so cutting or reordering the game is editing a list.</p>
+            </section>
+
+            <section class="project-section" id="endings">
+                <h2>Three endings</h2>
+                <p>You never pick one off a list. Each ending is just the shape of what you did with the last ten seconds. Two of them drop you back at the title with nothing kept, because that is what those endings <em>are</em>; only one stops.</p>
+                <p>Every ending reports your total time in the room — a clock that has run across every session since your very first press, persisted with everything else, and never once mentioned until then. Each one also closes by telling you how many of the three you have found, so no exit is a dead end, but the menu only admits there are others once you have reached one.</p>
+            </section>
+
+            <section class="project-section" id="stack">
+                <h2>Built with</h2>
+                <p>JavaScript with native ES modules, a canvas renderer with its own draw and layout primitives, canvas-drawn and hit-tested widgets, Web Audio for every sound, and <code>localStorage</code> persistence that lets the button notice you left and came back. No framework, no engine, no images.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="project.js"></script>
+</body>
+</html>

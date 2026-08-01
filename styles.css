@@ -1496,6 +1496,49 @@ textarea {
   max-width: 640px;
 }
 
+.comp-media {
+  margin: 0 0 1.5rem;
+  max-width: 640px;
+  border: 1px solid rgba(37, 38, 39, 0.15);
+}
+
+[data-theme="dark"] .comp-media {
+  border-color: rgba(232, 228, 216, 0.12);
+}
+
+.comp-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.comp-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.comp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  border-bottom: 1px solid rgba(196, 169, 107, 0.45);
+  padding-bottom: 0.15rem;
+  transition: border-color 0.25s ease, opacity 0.25s ease;
+}
+
+.comp-link:hover {
+  border-bottom-color: var(--gold-dark);
+  opacity: 0.75;
+}
+
 .comp-also {
   margin-top: 1rem;
 }

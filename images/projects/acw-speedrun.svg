@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1376" height="768" viewBox="0 0 1376 768">
+  <defs>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="10" dy="14" stdDeviation="18" flood-color="#252627" flood-opacity="0.16"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <style>
+      .ink   { stroke:#252627; stroke-width:1.7; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .thin  { stroke:#6B6B6B; stroke-width:1.2; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .faint { stroke:#252627; stroke-width:1;   fill:none; opacity:.16; }
+      .fillsoft { fill:#252627; opacity:.05; }
+      .dot   { fill:#252627; }
+      .dotring { stroke:#252627; stroke-width:1.6; fill:#FDFBF1; }
+    </style>
+  </defs>
+
+  <rect width="1376" height="768" fill="#FDFBF1"/>
+
+  <g filter="url(#soft)">
+    <rect x="300" y="150" width="776" height="470" fill="#FDFBF1" stroke="#252627" stroke-width="1.7"/>
+  </g>
+
+  <!-- room grid: the world is read in 2000x1500 screens -->
+  <g class="faint">
+    <line x1="494" y1="150" x2="494" y2="620" stroke-dasharray="5 6"/>
+    <line x1="688" y1="150" x2="688" y2="620" stroke-dasharray="5 6"/>
+    <line x1="882" y1="150" x2="882" y2="620" stroke-dasharray="5 6"/>
+    <line x1="300" y1="385" x2="1076" y2="385" stroke-dasharray="5 6"/>
+  </g>
+
+  <!-- terrain: ledges climbing to the top right, floor along the bottom -->
+  <g>
+    <rect class="fillsoft" x="932" y="212" width="120" height="26"/>
+    <rect class="ink"      x="932" y="212" width="120" height="26"/>
+
+    <rect class="fillsoft" x="820" y="296" width="104" height="26"/>
+    <rect class="ink"      x="820" y="296" width="104" height="26"/>
+
+    <rect class="fillsoft" x="700" y="368" width="112" height="26"/>
+    <rect class="ink"      x="700" y="368" width="112" height="26"/>
+
+    <rect class="fillsoft" x="470" y="330" width="140" height="26"/>
+    <rect class="ink"      x="470" y="330" width="140" height="26"/>
+
+    <rect class="fillsoft" x="326" y="524" width="726" height="72"/>
+    <rect class="ink"      x="326" y="524" width="726" height="72"/>
+  </g>
+
+  <!-- ladder: its top platform is solid before the lever is ever pulled -->
+  <g>
+    <line class="ink" x1="646" y1="394" x2="646" y2="524"/>
+    <line class="ink" x1="682" y1="394" x2="682" y2="524"/>
+    <g class="thin">
+      <line x1="646" y1="416" x2="682" y2="416"/>
+      <line x1="646" y1="442" x2="682" y2="442"/>
+      <line x1="646" y1="468" x2="682" y2="468"/>
+      <line x1="646" y1="494" x2="682" y2="494"/>
+    </g>
+    <line class="ink" x1="632" y1="394" x2="696" y2="394"/>
+  </g>
+
+  <!-- water, and the boat that ends the run -->
+  <g class="thin">
+    <path d="M336 566 q14 -9 28 0 t28 0 t28 0 t28 0"/>
+    <path d="M336 582 q14 -9 28 0 t28 0 t28 0 t28 0"/>
+  </g>
+  <g>
+    <path class="ink" d="M352 548 l84 0 l-13 20 l-58 0 z"/>
+    <line class="ink" x1="394" y1="548" x2="394" y2="530"/>
+    <circle class="dot" cx="394" cy="526" r="4.5"/>
+  </g>
+
+  <!-- the route: out to the far ledge, then all the way back west -->
+  <path class="ink" stroke-dasharray="7 7" stroke-width="1.9"
+        d="M700 518
+           C 760 512, 782 470, 816 430
+           C 852 388, 874 340, 908 306
+           C 938 276, 962 244, 992 226"/>
+  <path class="ink" stroke-dasharray="7 7" stroke-width="1.9"
+        d="M992 226
+           C 946 258, 900 300, 868 330
+           C 826 368, 790 380, 756 380
+           C 706 380, 668 356, 610 342
+           C 552 328, 508 360, 470 404
+           C 432 448, 410 496, 396 528"/>
+
+  <!-- waypoints -->
+  <circle class="dotring" cx="700" cy="518" r="6"/>
+  <circle class="dotring" cx="816" cy="430" r="5"/>
+  <circle class="dotring" cx="992" cy="226" r="7"/>
+  <circle class="dotring" cx="756" cy="380" r="5"/>
+  <circle class="dotring" cx="470" cy="404" r="5"/>
+  <circle class="dotring" cx="396" cy="528" r="7"/>
+
+  <!-- stopwatch: the run is scored on a clock, not on wall time -->
+  <g transform="translate(392 232)">
+    <circle class="ink" cx="0" cy="0" r="44"/>
+    <circle class="thin" cx="0" cy="0" r="36"/>
+    <line class="ink" x1="-11" y1="-50" x2="11" y2="-50"/>
+    <line class="ink" x1="0" y1="-50" x2="0" y2="-44"/>
+    <line class="ink" x1="31" y1="-31" x2="39" y2="-39"/>
+    <line class="ink" x1="0" y1="0" x2="0" y2="-26" stroke-width="2"/>
+    <line class="ink" x1="0" y1="0" x2="19" y2="11" stroke-width="2"/>
+    <circle class="dot" cx="0" cy="0" r="3.2"/>
+    <g class="thin">
+      <line x1="0" y1="-36" x2="0" y2="-30"/>
+      <line x1="36" y1="0" x2="30" y2="0"/>
+      <line x1="0" y1="36" x2="0" y2="30"/>
+      <line x1="-36" y1="0" x2="-30" y2="0"/>
+    </g>
+  </g>
+
+  <!-- seven lives, one per year, the sixth is the free one -->
+  <g transform="translate(300 664)">
+    <g class="thin">
+      <line x1="0" y1="0" x2="776" y2="0"/>
+      <line x1="0" y1="-6" x2="0" y2="6"/>
+      <line x1="776" y1="-6" x2="776" y2="6"/>
+    </g>
+    <g>
+      <circle class="dotring" cx="70"  cy="0" r="7"/>
+      <circle class="dotring" cx="180" cy="0" r="7"/>
+      <circle class="dotring" cx="290" cy="0" r="7"/>
+      <circle class="dotring" cx="400" cy="0" r="7"/>
+      <circle class="dotring" cx="510" cy="0" r="7"/>
+      <circle class="dot"     cx="620" cy="0" r="7" opacity=".18"/>
+      <circle class="dotring" cx="620" cy="0" r="7" stroke-dasharray="3 3"/>
+      <circle class="dotring" cx="730" cy="0" r="7"/>
+    </g>
+  </g>
+
+  <rect width="1376" height="768" filter="url(#grain)" opacity="0.035"/>
+</svg>
