@@ -221,7 +221,40 @@ body {
 
 /* Illustrated heroes are framed edge-to-edge, so they keep their own
    proportions instead of being letterboxed like the photographic ones. */
-.project-hero-img--fit { height: auto; aspect-ratio: 7 / 4; }
+.project-hero-img--fit { height: auto; aspect-ratio: 63 / 50; }
+
+/* ── Screenshot grid ─────────────────────────────────────────── */
+.shot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem 1.25rem;
+  margin: 1.75rem 0 0.5rem;
+}
+.shot-grid figure { margin: 0; }
+.shot-grid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid rgba(37, 38, 39, 0.12);
+}
+.shot-grid figcaption {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--grey);
+  margin-top: 0.65rem;
+}
+.shot-grid figcaption b {
+  display: block;
+  font-weight: 400;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
 
 .img-placeholder {
   position: relative;
@@ -338,6 +371,51 @@ body {
   color: var(--grey);
 }
 
+/* ── Results table ───────────────────────────────────────────── */
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  margin: 1.75rem 0 1rem;
+}
+.results-table th {
+  font-size: 0.68rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey);
+  text-align: left;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(37, 38, 39, 0.14);
+}
+.results-table td {
+  font-size: 0.95rem;
+  font-weight: 300;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(37, 38, 39, 0.08);
+}
+.results-table th + th,
+.results-table td + td {
+  text-align: right;
+  width: 5.5rem;
+}
+.results-table th:nth-child(3),
+.results-table td:nth-child(3) { width: 7rem; }
+.results-table .criteria { color: var(--charcoal); }
+.results-table .rank { font-weight: 500; color: var(--charcoal); }
+.results-table .pct,
+.results-table .score { color: var(--grey); font-variant-numeric: tabular-nums; }
+.results-table tr.is-best .criteria,
+.results-table tr.is-best .rank,
+.results-table tr.is-best .pct { color: var(--accent); }
+.project-section p.results-note {
+  font-size: 0.82rem;
+  line-height: 1.75;
+  color: var(--grey);
+  opacity: 1;
+  margin-top: 1.25rem;
+}
+
 .wip-banner {
   display: inline-flex;
   align-items: center;
@@ -353,6 +431,33 @@ body {
 }
 
 .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+
+/* ── Player quotes ───────────────────────────────────────────── */
+.quote-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1.75rem 0 1rem;
+}
+.quote-grid blockquote {
+  margin: 0;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid rgba(37, 38, 39, 0.12);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--charcoal);
+}
+.quote-grid cite {
+  display: block;
+  margin-top: 0.7rem;
+  font-size: 0.66rem;
+  font-style: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
 
 /* ── Flow chart ──────────────────────────────────────────────── */
 .flow {
@@ -419,9 +524,14 @@ a { text-decoration: none; color: inherit; }
     border-bottom: 1px solid rgba(37, 38, 39, 0.12);
   }
   .toc-list { display: none; } /* hide jump-nav on mobile; keep stack + links */
+  .results-table td { font-size: 0.86rem; }
+  .results-table th + th,
+  .results-table td + td { width: 4.4rem; }
   .project-hero-img { height: 240px; }
   .project-hero-img--fit { height: auto; }
   .gallery-grid { grid-template-columns: 1fr; }
+  .shot-grid { grid-template-columns: 1fr; }
+  .quote-grid { grid-template-columns: 1fr; }
 }
 
 /* ── Dark theme ──────────────────────────────────────────────── */
@@ -448,3 +558,14 @@ a { text-decoration: none; color: inherit; }
 [data-theme="dark"] .project-hero-img { border-color: rgba(232, 228, 216, 0.12); }
 [data-theme="dark"] .project-stat .num { color: #E8E4D8; }
 [data-theme="dark"] .project-stats { border-color: rgba(232, 228, 216, 0.15); }
+[data-theme="dark"] .results-table th { border-bottom-color: rgba(232, 228, 216, 0.15); }
+[data-theme="dark"] .results-table td { border-bottom-color: rgba(232, 228, 216, 0.09); }
+[data-theme="dark"] .results-table .criteria,
+[data-theme="dark"] .results-table .rank { color: #E8E4D8; }
+[data-theme="dark"] .project-section p.results-note { color: rgba(232, 228, 216, 0.55); }
+[data-theme="dark"] .shot-grid img { border-color: rgba(232, 228, 216, 0.14); }
+[data-theme="dark"] .shot-grid figcaption { color: rgba(232, 228, 216, 0.55); }
+[data-theme="dark"] .quote-grid blockquote {
+  border-color: rgba(232, 228, 216, 0.14);
+  color: #E8E4D8;
+}

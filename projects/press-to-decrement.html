@@ -29,11 +29,16 @@
             <div>
                 <div class="toc-kicker">On this page</div>
                 <nav class="toc-list">
+                    <a href="#results">Results</a>
+                    <a href="#screens">Screens</a>
                     <a href="#idea">The idea</a>
                     <a href="#ladders">Three ladders</a>
                     <a href="#body">Your body</a>
+                    <a href="#dog">The dog</a>
                     <a href="#arch">The architecture</a>
                     <a href="#endings">Three endings</a>
+                    <a href="#said">What players said</a>
+                    <a href="#change">What I would change</a>
                     <a href="#stack">Built with</a>
                 </nav>
             </div>
@@ -59,17 +64,67 @@
             <p class="project-tagline">There is a button, and a number, and the number is ten.</p>
 
             <div class="project-hero-img project-hero-img--fit">
-                <img src="../images/projects/press-to-decrement.jpg" alt="PRESS TO DECREMENT illustration">
+                <img src="../images/projects/press-to-decrement/cover.gif" alt="Animated cover art — a cursor drifts to the red button, the counter falls from ten to nine and the button answers &quot;you don't have to&quot;">
             </div>
 
-            <p class="project-lead">My entry for the 96-hour GMTK Game Jam 2026, theme <em>COUNT DOWN</em>. It placed <strong>50th of 10,600 entries for Creativity</strong> — top 0.5% — and 172nd for Narrative. My first finished game.</p>
+            <p class="project-lead">My entry for the 96-hour GMTK Game Jam 2026, theme <em>COUNT DOWN</em>. Life took most of that window, so the whole thing was built in roughly <strong>24 hours</strong> of actual work. It placed <strong>50th of 10,600 entries for Creativity</strong> — top 0.5% — and 172nd for Narrative. My first finished game.</p>
 
             <div class="project-stats">
                 <div class="project-stat"><span class="num">50th</span><span class="label">Creativity · 10.6k entries</span></div>
-                <div class="project-stat"><span class="num">24</span><span class="label">cycles across four acts</span></div>
-                <div class="project-stat"><span class="num">3</span><span class="label">endings, none from a menu</span></div>
+                <div class="project-stat"><span class="num">~24<span class="unit">h</span></span><span class="label">of the 96-hour window</span></div>
+                <div class="project-stat"><span class="num">24</span><span class="label">cycles, four acts</span></div>
+                <div class="project-stat"><span class="num">3</span><span class="label">endings, no menu</span></div>
                 <div class="project-stat"><span class="num">0</span><span class="label">asset files</span></div>
             </div>
+
+            <section class="project-section" id="results">
+                <h2>Results</h2>
+                <p>Final placement across all five judged criteria, from 29 ratings. With one day of work behind it I was hoping to land somewhere near 1000th — <strong>top 10%</strong> — which would already have been a result I was happy with. Four of the five columns came in ahead of that.</p>
+                <table class="results-table">
+                    <thead>
+                        <tr><th scope="col">Criteria</th><th scope="col">Rank</th><th scope="col">Percentile</th><th scope="col">Score</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="is-best"><td class="criteria">Creativity</td><td class="rank">#50</td><td class="pct">Top 0.5%</td><td class="score">4.552</td></tr>
+                        <tr><td class="criteria">Narrative</td><td class="rank">#172</td><td class="pct">Top 1.6%</td><td class="score">4.138</td></tr>
+                        <tr><td class="criteria">Enjoyment</td><td class="rank">#531</td><td class="pct">Top 5%</td><td class="score">3.966</td></tr>
+                        <tr><td class="criteria">Artwork</td><td class="rank">#1486</td><td class="pct">Top 14%</td><td class="score">3.862</td></tr>
+                        <tr><td class="criteria">Audio</td><td class="rank">#2933</td><td class="pct">Top 28%</td><td class="score">3.103</td></tr>
+                    </tbody>
+                </table>
+                <p class="results-note">Scores are adjusted by itch.io from the raw score using the median number of ratings per game in the jam. Audio is the weakest column and I agree with it — every sound is synthesized at runtime, and with only a day to build I never got past the first pass on it.</p>
+            </section>
+
+            <section class="project-section" id="screens">
+                <h2>Screens</h2>
+                <p>The same three objects the whole way through — a number, a button, and a cursor. Everything that changes between these shots is the room waking up around them.</p>
+                <div class="shot-grid">
+                    <figure>
+                        <img src="../images/projects/press-to-decrement/menu.jpg" alt="Title screen with a single red PRESS TO BEGIN button">
+                        <figcaption><b>Title</b>One button, no menu, no options. The title is barely legible until you have finished once.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="../images/projects/press-to-decrement/24_ask.jpg" alt="Cycle 1, a flat grey room with the counter at ten">
+                        <figcaption><b>Cycle 1 · Press</b>Flat grey, no atmosphere, machine voice in all caps. Ten presses and nothing else happens.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="../images/projects/press-to-decrement/08_rhythm.jpg" alt="Cycle 8, the room darker with a faint glow under the counter">
+                        <figcaption><b>Cycle 8 · The rhythm</b>The room has started to wake up. Presses now have to land on a beat, and the voice has stopped shouting.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="../images/projects/press-to-decrement/10_delay.jpg" alt="Cycle 10, the button greyed out with a calibrating countdown beneath it">
+                        <figcaption><b>Cycle 10 · The delay</b>The button goes dead and calibrates for ten seconds. The waiting is the point — it talks the whole time.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="../images/projects/press-to-decrement/20_dog.jpg" alt="Cycle 20, a small dog standing below the button">
+                        <figcaption><b>Cycle 20 · The distraction</b>A dog walks in. You can press, or you can not press, and the game notices which.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="../images/projects/press-to-decrement/21_others.jpg" alt="Cycle 21, dozens of cursors scattered across the screen">
+                        <figcaption><b>Cycle 21 · The others</b>Every cursor that ever pressed this button, on screen at once. Yours is no longer the only one.</figcaption>
+                    </figure>
+                </div>
+            </section>
 
             <section class="project-section" id="idea">
                 <h2>The idea</h2>
@@ -97,6 +152,14 @@
                 <p>You start as a cursor: an input device, as much a machine as the button is. The moment the button treats you as someone, you become one. The pointer gains weight, then mass and momentum, then a soft light — and when the button walls you off, pointing stops being enough and WASD is born mid-game. For the finale you are handed a plain arrow again. You are an operator, until you refuse.</p>
             </section>
 
+            <section class="project-section" id="dog">
+                <h2>The dog</h2>
+                <p>Cycle 20 is the one people remember, and it is the only cycle in the game that never blocks you. The button works perfectly. Nothing is refused, nothing is timed, nothing warns you. A dog walks into the room and starts making its way toward you, forever — you cannot wait it out and you cannot send it home.</p>
+                <p>Standing near it counts <em>up</em>, and the closer you stand the faster it climbs. So the honest reading of the cycle is a chore: lead the dog away, sprint back, bank a few presses, repeat. That is the trap. The cycle is not testing whether you can beat an obstacle, it is testing what you do when there is no obstacle at all.</p>
+                <p>What makes it work is that the button spends the whole cycle telling you to go to the dog, and <strong>every word of it is true</strong>. <em>It came on its own. I didn't ask it to. It likes you. The button isn't going anywhere. Nobody's timing you. I'd go over, if I could go anywhere.</em> There is no lie to catch it in. It is the kindest the game ever gets, and it is a weapon — it knows the player wants permission, so it hands the permission over and lets you spend your own time.</p>
+                <p>Stand there long enough and it stops working the angle entirely. At ninety-nine pets it says <em>ninety-nine, and you spent every one of them on a dog. It isn't real. You know that. I made it out of the same rectangles as me. It was still worth it.</em> Every ending is reached the same way: not by choosing an option, but by being caught doing something. The dog is the gentlest version of that, and it is the reason the harsher ones land.</p>
+            </section>
+
             <section class="project-section" id="arch">
                 <h2>The architecture</h2>
                 <p>Plain HTML, CSS and native ES modules. <strong>No engine, no build step, and no asset files at all</strong> — everything is drawn to one canvas and every sound is synthesized at runtime. Three rules hold it together:</p>
@@ -112,6 +175,50 @@
                 <h2>Three endings</h2>
                 <p>You never pick one off a list. Each ending is just the shape of what you did with the last ten seconds. Two of them drop you back at the title with nothing kept, because that is what those endings <em>are</em>; only one stops.</p>
                 <p>Every ending reports your total time in the room — a clock that has run across every session since your very first press, persisted with everything else, and never once mentioned until then. Each one also closes by telling you how many of the three you have found, so no exit is a dead end, but the menu only admits there are others once you have reached one.</p>
+            </section>
+
+            <section class="project-section" id="said">
+                <h2>What players said</h2>
+                <p>Twenty-five comments on the jam page, from 29 ratings. These are the ones that changed how I think about the game.</p>
+                <div class="quote-grid">
+                    <blockquote>
+                        “I loved the narrative and the visuals subtly shifting, you don't even notice how much it has changed until the end.”
+                        <cite>cdougii</cite>
+                    </blockquote>
+                    <blockquote>
+                        “I followed instructions. But at what cost. I pet the dog though.”
+                        <cite>NemoPearwall</cite>
+                    </blockquote>
+                    <blockquote>
+                        “The narrator reminded me of a mix between GLaDOS and the guy from Clickholding. The art style was clean and simple, but the complexity of clicking the button after each round was a fun surprise.”
+                        <cite>IrishGh0st91</cite>
+                    </blockquote>
+                    <blockquote>
+                        “I was shocked to find out all this was made without an engine, only HTML and CSS.”
+                        <cite>Draguarys Dev</cite>
+                    </blockquote>
+                    <blockquote>
+                        “I struggled with the early cycles because there wasn't much of interest to hold onto, but by the time I got to the dog and the mouse with momentum I started to get curious about where this was going.”
+                        <cite>qrparker</cite>
+                    </blockquote>
+                    <blockquote>
+                        “Hit the theme the best from the 10 games I played, but was annoyed when it came to hovering the button and waiting for what felt like 10 seconds.”
+                        <cite>Ninjin42</cite>
+                    </blockquote>
+                </div>
+            </section>
+
+            <section class="project-section" id="change">
+                <h2>What I would change</h2>
+                <p>The scores and the comments agree with each other, which makes the post-mortem easy to write.</p>
+                <ul>
+                    <li><strong>Let people skip ahead on a replay.</strong> This is the real mistake. There are three endings and no way to reach a later cycle directly, so wanting to see a second one means sitting through the entire game again — including the slow cycles. At least one player told me they were curious and still didn't do it. That is a design failure, not a content problem, and a cycle-select after your first ending is the first thing I would build.</li>
+                    <li><strong>Cut the slow cycles, or shorten them hard.</strong> The delay cycle makes the button go dead for ten seconds while it talks. If you are reading, it works. If you are playing, it is a pause with nothing in it. It only ever had one job — force the text to be read instead of skipped — and there are cheaper ways to buy that.</li>
+                    <li><strong>Fix the reset key.</strong> Pressing <code>R</code> wipes your progress with no confirmation, which a player hit by accident. That one is just a bug in disguise.</li>
+                    <li><strong>Audio deserved a second pass.</strong> #2933 is the weakest column by a wide margin and it is fair. Every sound is synthesized at runtime, which was the right call for a no-asset build, but I stopped at the first version that worked.</li>
+                    <li><strong>Front-load one hook.</strong> The early cycles are deliberately tedious so the shift has something to shift <em>from</em>, but several people nearly stopped before the dog. The arc needs one earlier moment that promises the game is going somewhere.</li>
+                </ul>
+                <p>What I would not change is the structure. Keeping the kernel ignorant of the cycles is why a game written in a day is coherent at all, and it is the part I would reuse tomorrow.</p>
             </section>
 
             <section class="project-section" id="stack">
